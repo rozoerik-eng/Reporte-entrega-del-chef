@@ -3,469 +3,665 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard · Entrega del Chef</title>
+<title>Informe Ejecutivo · Entrega del Chef · Junio 2026</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-:root {
-  --brand:#E8462A; --brand-dark:#C2381F; --brand-light:#FEF0EE;
-  --green:#22C55E; --green-bg:#F0FDF4; --green-border:#86EFAC;
-  --yellow:#F59E0B; --yellow-bg:#FFFBEB; --yellow-border:#FCD34D;
-  --red:#EF4444; --red-bg:#FEF2F2; --red-border:#FCA5A5;
-  --blue:#3B82F6; --blue-bg:#EFF6FF; --blue-border:#93C5FD;
-  --purple:#8B5CF6;
-  --bg:#F1F5F9; --card:#FFFFFF; --text:#0F172A; --muted:#64748B;
-  --border:#E2E8F0;
+:root{
+  --brand:#E8462A;--brand-dark:#C2381F;--brand-light:#FEF0EE;
+  --green:#22C55E;--green-bg:#F0FDF4;--green-border:#86EFAC;
+  --yellow:#F59E0B;--yellow-bg:#FFFBEB;--yellow-border:#FCD34D;
+  --red:#EF4444;--red-bg:#FEF2F2;--red-border:#FCA5A5;
+  --blue:#3B82F6;--blue-bg:#EFF6FF;--blue-border:#93C5FD;
+  --purple:#8B5CF6;--purple-bg:#F5F3FF;--purple-border:#C4B5FD;
+  --bg:#F1F5F9;--card:#fff;--text:#0F172A;--muted:#64748B;--border:#E2E8F0;
   --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
-  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
-  --radius:14px; --radius-sm:8px;
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1);
+  --r:14px;--rs:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:10px;}
 
-/* HEADER */
-.header{background:linear-gradient(135deg,#0F172A 0%,#1E293B 60%,#1a2744 100%);position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.4);}
-.header-top{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;flex-wrap:wrap;gap:10px;}
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,#0F172A 0%,#1E293B 55%,#1e2a4a 100%);position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.4);}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;flex-wrap:wrap;gap:10px;}
 .brand{display:flex;align-items:center;gap:12px;}
 .brand-logo{width:42px;height:42px;background:var(--brand);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 0 3px rgba(232,70,42,.25);}
 .brand h1{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;}
 .brand p{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1.2px;}
-.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.pill-live{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:#4ADE80;}
-.dot-live{width:6px;height:6px;background:#4ADE80;border-radius:50%;animation:blink 1.5s ease infinite;}
+.hdr-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;}
+.pill-live{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:#4ADE80;}
+.pill-bta{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.35);color:#93C5FD;}
+.dot{width:6px;height:6px;border-radius:50%;background:#4ADE80;animation:blink 1.5s ease infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
-.btn{padding:7px 14px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+.btn{padding:7px 14px;border-radius:var(--rs);border:none;cursor:pointer;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
 .btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.18);}
 .btn-ghost:hover{background:rgba(255,255,255,.2);}
 .btn-green{background:#22C55E;color:#fff;}
 .btn-green:hover{background:#16A34A;}
-.month-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;color:#fff;font-size:12px;font-weight:700;}
+.mpill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;color:#fff;font-size:12px;font-weight:700;}
 select.msv{background:transparent;border:none;color:#fff;font-size:12px;cursor:pointer;font-weight:700;outline:none;}
 select.msv option{background:#1E293B;}
 
-/* NAV */
+/* ── PHASE BANNER ── */
+.phase-banner{background:linear-gradient(135deg,#1e3a5f 0%,#1e4d3a 100%);border-bottom:1px solid rgba(255,255,255,.08);}
+.phase-inner{display:flex;align-items:center;justify-content:space-between;padding:8px 28px;flex-wrap:wrap;gap:8px;}
+.phase-cycle{display:flex;align-items:center;gap:0;}
+.ph-step{display:flex;align-items:center;gap:6px;padding:5px 12px;font-size:11px;font-weight:700;color:rgba(255,255,255,.4);white-space:nowrap;}
+.ph-step.done{color:#4ADE80;}
+.ph-step.current{color:#fff;background:rgba(255,255,255,.1);border-radius:6px;}
+.ph-step.next{color:rgba(255,255,255,.6);}
+.ph-arrow{color:rgba(255,255,255,.25);font-size:12px;margin:0 -2px;}
+.ph-icon{font-size:13px;}
+.phase-note{font-size:11px;color:rgba(255,255,255,.55);font-style:italic;}
+
+/* ── NAV ── */
 .nav{display:flex;padding:0 28px;overflow-x:auto;}
-.nav-item{padding:10px 16px;color:rgba(255,255,255,.5);font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;}
+.nav-item{padding:9px 15px;color:rgba(255,255,255,.5);font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;}
 .nav-item:hover{color:rgba(255,255,255,.85);}
 .nav-item.active{color:#fff;border-bottom-color:var(--brand);}
 
-/* MAIN */
+/* ── MAIN ── */
 .main{padding:24px 28px;max-width:1380px;margin:0 auto;}
 .section{display:none;}
 .section.active{display:block;}
 
-/* SEC HEADER */
-.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+/* ── SEC ── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
 .sec-title{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;}
 .sec-icon{width:38px;height:38px;border-radius:10px;background:var(--brand-light);display:flex;align-items:center;justify-content:center;font-size:18px;}
 .sec-badge{font-size:11px;background:var(--border);color:var(--muted);padding:4px 10px;border-radius:20px;font-weight:600;}
 
-/* ALERT */
-.alert{display:flex;gap:12px;padding:13px 16px;border-radius:var(--radius-sm);margin-bottom:20px;font-size:13px;line-height:1.6;}
+/* ── ALERTS ── */
+.alert{display:flex;gap:12px;padding:14px 16px;border-radius:var(--rs);margin-bottom:18px;font-size:13px;line-height:1.65;}
+.alert strong{font-weight:800;}
+.alert-phase{background:linear-gradient(135deg,#EFF6FF,#F0FDF4);border:1px solid #93C5FD;color:#1E3A5F;}
 .alert-info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1E40AF;}
-.alert-warn{background:var(--yellow-bg);border:1px solid var(--yellow-border);color:#92400E;}
-.alert-success{background:var(--green-bg);border:1px solid var(--green-border);color:#166534;}
-.alert-icon{font-size:18px;flex-shrink:0;}
+.alert-warn{background:var(--yellow-bg);border:1px solid var(--yellow-border);color:#78350F;}
+.alert-success{background:var(--green-bg);border:1px solid var(--green-border);color:#14532D;}
+.alert-bta{background:var(--purple-bg);border:1px solid var(--purple-border);color:#4C1D95;}
+.alert-geo{background:#FFF7ED;border:1px solid #FED7AA;color:#7C2D12;}
+.ai{font-size:20px;flex-shrink:0;margin-top:1px;}
 
-/* KPI GRID */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:14px;margin-bottom:22px;}
-.kpi{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--border);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:default;}
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px;margin-bottom:22px;}
+.kpi{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid var(--border);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;}
 .kpi:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
-.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--k-color,var(--brand));}
-.kpi-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
-.kpi-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;line-height:1.3;}
-.kpi-emoji{font-size:20px;}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--brand));}
+.kpi-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.kpi-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;line-height:1.3;}
+.kpi-ico{font-size:20px;}
 .kpi-val{font-size:24px;font-weight:900;letter-spacing:-1px;line-height:1;}
-.kpi-sub{font-size:11px;color:var(--muted);margin-top:5px;}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px;}
 .kpi-tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;margin-top:6px;}
-.t-great{background:#DCFCE7;color:#15803D;}
-.t-good{background:#DBEAFE;color:#1D4ED8;}
-.t-warn{background:#FEF3C7;color:#92400E;}
-.t-bad{background:#FEE2E2;color:#B91C1C;}
-.t-na{background:#F1F5F9;color:#64748B;}
+.tg{background:#DCFCE7;color:#15803D;} .tb{background:#DBEAFE;color:#1D4ED8;}
+.tw{background:#FEF3C7;color:#92400E;} .tr{background:#FEE2E2;color:#B91C1C;}
+.tn{background:#F1F5F9;color:#64748B;}
 
-/* TOOLTIP */
+/* ── TOOLTIP ── */
 .tip{position:relative;display:inline-flex;align-items:center;}
-.tip-i{width:14px;height:14px;background:#94A3B8;color:#fff;border-radius:50%;font-size:9px;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:4px;font-weight:800;}
-.tip-box{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#0F172A;color:#E2E8F0;font-size:11px;padding:8px 12px;border-radius:8px;width:220px;line-height:1.5;z-index:999;box-shadow:var(--shadow-lg);pointer-events:none;}
+.tip-i{width:14px;height:14px;background:#94A3B8;color:#fff;border-radius:50%;font-size:9px;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:4px;font-weight:800;flex-shrink:0;}
+.tip-box{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#0F172A;color:#E2E8F0;font-size:11px;padding:9px 12px;border-radius:8px;width:230px;line-height:1.5;z-index:999;box-shadow:var(--shadow-lg);pointer-events:none;}
 .tip-box::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#0F172A;}
 .tip:hover .tip-box{display:block;}
 
-/* GRID */
+/* ── GRIDS ── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
 .g21{display:grid;grid-template-columns:2fr 1fr;gap:18px;}
+.g12{display:grid;grid-template-columns:1fr 2fr;gap:18px;}
 
-/* CARD */
-.card{background:var(--card);border-radius:var(--radius);padding:22px;border:1px solid var(--border);box-shadow:var(--shadow);}
-.card-title{font-size:12px;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;}
-.card-title .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);}
+/* ── CARD ── */
+.card{background:var(--card);border-radius:var(--r);padding:22px;border:1px solid var(--border);box-shadow:var(--shadow);}
+.card-title{font-size:11px;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.6px;}
+.card-title .cdot{width:8px;height:8px;border-radius:50%;background:var(--brand);}
 
-/* TABLE */
-.tscroll{overflow-x:auto;}
+/* ── TABLE ── */
+.tscr{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;}
 th{text-align:left;padding:9px 12px;background:#F8FAFC;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:800;border-bottom:2px solid var(--border);white-space:nowrap;}
 td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
 tbody tr:hover td{background:#FAFBFF;}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:800;text-transform:uppercase;}
-.b-green{background:#DCFCE7;color:#15803D;}
-.b-gray{background:#F1F5F9;color:#475569;}
-.b-yellow{background:#FEF3C7;color:#92400E;}
+.bg{background:#DCFCE7;color:#15803D;} .br{background:#FEE2E2;color:#B91C1C;}
+.by{background:#FEF3C7;color:#92400E;} .bb{background:#DBEAFE;color:#1D4ED8;}
+.bgr{background:#F1F5F9;color:#475569;}
 
-/* CREATIVE CARDS */
-.creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;margin-bottom:22px;}
-.cc{background:var(--card);border-radius:var(--radius);border:2px solid var(--border);padding:18px;transition:all .2s;position:relative;overflow:hidden;}
+/* ── DIVIDER ── */
+.dv{height:1px;background:var(--border);margin:18px 0;}
+
+/* ── CREATIVE CARDS ── */
+.cc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:22px;}
+.cc{background:var(--card);border-radius:var(--r);border:2px solid var(--border);padding:18px;transition:all .2s;position:relative;overflow:hidden;}
 .cc:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
-.cc.S{border-color:#22C55E;background:linear-gradient(135deg,#F0FDF4 0%,#fff 60%);}
-.cc.A{border-color:#3B82F6;background:linear-gradient(135deg,#EFF6FF 0%,#fff 60%);}
-.cc.B{border-color:#F59E0B;background:linear-gradient(135deg,#FFFBEB 0%,#fff 60%);}
-.cc.C{border-color:#EF4444;background:linear-gradient(135deg,#FEF2F2 0%,#fff 60%);}
-.cc.P{border-color:#CBD5E1;background:#F8FAFC;opacity:.78;}
-.cc-tier{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;}
-.tS{background:#22C55E;} .tA{background:#3B82F6;} .tB{background:#F59E0B;} .tC{background:#EF4444;} .tP{background:#94A3B8;}
-.cc-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:13px;padding-right:36px;line-height:1.3;}
+.cc.S{border-color:#22C55E;background:linear-gradient(135deg,#F0FDF4,#fff 60%);}
+.cc.A{border-color:#3B82F6;background:linear-gradient(135deg,#EFF6FF,#fff 60%);}
+.cc.B{border-color:#F59E0B;background:linear-gradient(135deg,#FFFBEB,#fff 60%);}
+.cc.C{border-color:#EF4444;background:linear-gradient(135deg,#FEF2F2,#fff 60%);}
+.cc.P{border-color:#CBD5E1;background:#F8FAFC;opacity:.75;}
+.cc-tier{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;}
+.cc-name{font-size:13px;font-weight:800;margin-bottom:12px;padding-right:34px;line-height:1.3;}
 .cc-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .cs{display:flex;flex-direction:column;gap:2px;}
-.cs-lbl{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
-.cs-val{font-size:17px;font-weight:900;}
-.cs-val.gd{color:var(--green);} .cs-val.bd{color:var(--red);}
+.cs-l{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.cs-v{font-size:17px;font-weight:900;}
+.cs-v.gd{color:var(--green);} .cs-v.bd{color:var(--red);}
 .cc-foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
-.cc-verdict{font-size:11px;color:var(--muted);line-height:1.5;margin-top:5px;}
+.cc-learning{font-size:11px;color:var(--text);line-height:1.55;margin-top:5px;}
 
-/* FUNNEL */
-.funnel{display:flex;flex-direction:column;align-items:center;}
+/* ── FUNNEL ── */
+.funnel{display:flex;flex-direction:column;align-items:center;gap:0;}
 .f-row{width:100%;display:flex;justify-content:center;}
-.f-block{border-radius:10px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border:2px solid;transition:all .2s;}
-.f-block:hover{box-shadow:var(--shadow-md);}
-.f-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;}
-.f-name{font-weight:700;font-size:13px;}
-.f-sub{font-size:10px;color:var(--muted);}
-.f-val{font-size:22px;font-weight:900;text-align:right;}
-.f-connector{display:flex;flex-direction:column;align-items:center;padding:3px 0;gap:2px;}
+.fb{border-radius:10px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border:2px solid;transition:all .2s;}
+.fb:hover{box-shadow:var(--shadow-md);}
+.fb-n{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;}
+.fb-name{font-weight:700;font-size:13px;}
+.fb-sub{font-size:10px;color:var(--muted);}
+.fb-val{font-size:22px;font-weight:900;text-align:right;}
+.f-conn{display:flex;flex-direction:column;align-items:center;padding:3px 0;gap:2px;}
 .f-line{width:2px;height:14px;background:var(--border);}
-.conv-pill{background:#fff;border:1px solid var(--border);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:800;color:var(--muted);}
+.cpill{border-radius:20px;padding:2px 10px;font-size:11px;font-weight:800;border:1px solid var(--border);background:#fff;color:var(--muted);}
 .cp-hi{color:var(--green);border-color:var(--green-border);background:var(--green-bg);}
 .cp-lo{color:var(--red);border-color:var(--red-border);background:var(--red-bg);}
 
-/* INSIGHTS */
-.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.ii{border-radius:var(--radius);padding:16px;border:1px solid;display:flex;gap:12px;}
+/* ── CYCLE VISUAL ── */
+.cycle-wrap{display:flex;align-items:stretch;gap:0;margin-bottom:22px;}
+.cy-step{flex:1;position:relative;padding:22px 18px 18px;border:2px solid var(--border);border-radius:0;transition:all .2s;}
+.cy-step:first-child{border-radius:14px 0 0 14px;}
+.cy-step:last-child{border-radius:0 14px 14px 0;}
+.cy-step.done{border-color:#22C55E;background:var(--green-bg);}
+.cy-step.active-step{border-color:#3B82F6;background:var(--blue-bg);box-shadow:0 0 0 3px rgba(59,130,246,.2);}
+.cy-step.upcoming{border-color:var(--border);background:#FAFBFF;opacity:.7;}
+.cy-num{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
+.cy-num.done{color:var(--green);}
+.cy-num.active-step{color:var(--blue);}
+.cy-num.upcoming{color:var(--muted);}
+.cy-icon{font-size:28px;margin-bottom:8px;}
+.cy-name{font-size:14px;font-weight:800;margin-bottom:4px;}
+.cy-sub{font-size:11px;color:var(--muted);line-height:1.5;}
+.cy-date{font-size:10px;font-weight:700;margin-top:8px;padding:2px 8px;border-radius:10px;display:inline-block;}
+.cd-done{background:#DCFCE7;color:#15803D;}
+.cd-now{background:#DBEAFE;color:#1D4ED8;}
+.cd-soon{background:#F1F5F9;color:#64748B;}
+.cy-arrow{display:flex;align-items:center;font-size:20px;color:#94A3B8;margin:0 -1px;z-index:1;}
+
+/* ── INSIGHT CARDS ── */
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ii{border-radius:var(--r);padding:16px;border:1px solid;display:flex;gap:12px;}
 .ii.pos{background:var(--green-bg);border-color:var(--green-border);}
 .ii.neg{background:var(--red-bg);border-color:var(--red-border);}
 .ii.warn{background:var(--yellow-bg);border-color:var(--yellow-border);}
 .ii.info{background:var(--blue-bg);border-color:var(--blue-border);}
-.ii-icon{font-size:22px;flex-shrink:0;}
+.ii.bta{background:var(--purple-bg);border-color:var(--purple-border);}
+.ii-ic{font-size:22px;flex-shrink:0;}
 .ii-title{font-size:13px;font-weight:800;margin-bottom:4px;}
 .ii-text{font-size:12px;line-height:1.6;}
 
-/* RECS */
-.rec-list{display:flex;flex-direction:column;gap:12px;}
-.ri{display:flex;gap:14px;padding:16px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);transition:all .2s;}
-.ri:hover{box-shadow:var(--shadow-md);border-color:var(--brand);}
-.ri-num{width:34px;height:34px;border-radius:10px;background:var(--brand);color:#fff;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ri-body{flex:1;}
-.ri-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
-.ri-title{font-weight:800;font-size:14px;}
+/* ── NEXT MONTH PLAN ── */
+.plan-grid{display:flex;flex-direction:column;gap:12px;}
+.pi{display:flex;gap:14px;padding:16px;background:var(--card);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--shadow);transition:all .2s;}
+.pi:hover{box-shadow:var(--shadow-md);border-color:var(--brand);}
+.pi-num{width:34px;height:34px;border-radius:10px;background:var(--brand);color:#fff;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pi-body{flex:1;}
+.pi-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.pi-title{font-weight:800;font-size:14px;}
 .pr{font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;text-transform:uppercase;white-space:nowrap;}
 .pr-u{background:#FEE2E2;color:#B91C1C;}
 .pr-h{background:#FEF3C7;color:#92400E;}
 .pr-m{background:#DBEAFE;color:#1D4ED8;}
-.ri-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+.pr-g{background:#DCFCE7;color:#15803D;}
+.pi-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+.pi-result{font-size:11px;font-weight:700;margin-top:6px;color:var(--green);}
 
-/* FORM */
-.fs-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--brand-light);}
+/* ── FORM ── */
+.fs-t{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--brand-light);}
 .fg{display:flex;flex-direction:column;gap:5px;}
 .fl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
-.fi{padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;color:var(--text);background:var(--card);outline:none;transition:border-color .2s;width:100%;}
+.fi{padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--rs);font-size:14px;color:var(--text);background:var(--card);outline:none;transition:border-color .2s;width:100%;}
 .fi:focus{border-color:var(--brand);}
 .fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px;margin-bottom:20px;}
-.divider{height:1px;background:var(--border);margin:18px 0;}
 .src-note{font-size:10px;color:var(--muted);margin-top:8px;}
 
-/* CHART */
+/* ── CHART ── */
 .chart-wrap{position:relative;}
 
-/* PRINT */
+/* ── PRINT ── */
 @media print{
-  .header-actions,.nav,.btn{display:none!important;}
+  .hdr-right,.nav,.btn,.phase-banner{display:none!important;}
   .section{display:block!important;page-break-before:always;}
   .section:first-of-type{page-break-before:auto;}
   body{background:#fff;}
   .main{padding:12px;}
+  .cycle-wrap{flex-wrap:wrap;}
+  .cy-step{border-radius:8px!important;margin:4px;}
 }
-
-/* RESPONSIVE */
 @media(max-width:860px){
-  .g2,.g3,.g21{grid-template-columns:1fr;}
-  .insight-grid{grid-template-columns:1fr;}
+  .g2,.g3,.g21,.g12{grid-template-columns:1fr;}
+  .ig{grid-template-columns:1fr;}
   .kpi-grid{grid-template-columns:repeat(2,1fr);}
-  .main,.header-top,.nav{padding-left:14px;padding-right:14px;}
+  .main,.hdr-top,.nav,.phase-inner{padding-left:14px;padding-right:14px;}
+  .cycle-wrap{flex-direction:column;}
+  .cy-step{border-radius:10px!important;}
+  .cy-arrow{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-top">
+<!-- ══════ HEADER ══════ -->
+<header class="hdr">
+  <div class="hdr-top">
     <div class="brand">
       <div class="brand-logo">🍽️</div>
       <div>
         <h1>Entrega del Chef</h1>
-        <p>Dashboard Ejecutivo · Meta Ads</p>
+        <p>Informe Ejecutivo de Marketing Digital · Bogotá</p>
       </div>
     </div>
-    <div class="header-actions">
-      <div class="pill-live"><div class="dot-live"></div>Meta Ads · Datos reales</div>
-      <div class="month-pill">📅&nbsp;<select class="msv" id="monthSel"><option value="jun2026">Junio 2026</option></select></div>
+    <div class="hdr-right">
+      <div class="pill pill-live"><div class="dot"></div>Meta Ads · Datos reales</div>
+      <div class="pill pill-bta">📍 Bogotá D.C.</div>
+      <div class="mpill">📅&nbsp;<select class="msv" id="monthSel"><option value="jun2026">Junio 2026</option></select></div>
       <button class="btn btn-ghost" onclick="goTab(8)">➕ Nuevo mes</button>
       <button class="btn btn-ghost" onclick="window.print()">🖨️ PDF</button>
     </div>
   </div>
+
+  <!-- CICLO DE VENTAS EN HEADER -->
+  <div class="phase-banner">
+    <div class="phase-inner">
+      <div class="phase-cycle">
+        <div class="ph-step done"><span class="ph-icon">✅</span> 1. PRESENTACIÓN</div>
+        <span class="ph-arrow">›</span>
+        <div class="ph-step current"><span class="ph-icon">📊</span> 2. EVALUACIÓN → Jul 2026</div>
+        <span class="ph-arrow">›</span>
+        <div class="ph-step next"><span class="ph-icon">💬</span> 3. CONVERSIÓN</div>
+        <span class="ph-arrow">›</span>
+        <div class="ph-step next"><span class="ph-icon">🚀</span> 4. ASCENSIÓN</div>
+      </div>
+      <div class="phase-note">Junio 2026 · Fase 1 completada — Toma de datos en Bogotá</div>
+    </div>
+  </div>
+
   <nav class="nav" id="navBar">
     <div class="nav-item active" onclick="goTab(0,this)">📊 Resumen</div>
     <div class="nav-item" onclick="goTab(1,this)">🎯 Campañas</div>
     <div class="nav-item" onclick="goTab(2,this)">🎨 Creativos</div>
     <div class="nav-item" onclick="goTab(3,this)">🔻 Embudo</div>
     <div class="nav-item" onclick="goTab(4,this)">📈 Crecimiento</div>
-    <div class="nav-item" onclick="goTab(5,this)">🏆 KPIs Anuales</div>
-    <div class="nav-item" onclick="goTab(6,this)">💡 Insights</div>
-    <div class="nav-item" onclick="goTab(7,this)">🚀 Recomendaciones</div>
+    <div class="nav-item" onclick="goTab(5,this)">🏆 KPIs Acum.</div>
+    <div class="nav-item" onclick="goTab(6,this)">💡 Aprendizajes</div>
+    <div class="nav-item" onclick="goTab(7,this)">🗓️ Plan Julio</div>
     <div class="nav-item" onclick="goTab(8,this)">🔄 Actualizar</div>
   </nav>
 </header>
 
 <main class="main">
 
-<!-- ═══ TAB 0 · RESUMEN ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 0 · RESUMEN EJECUTIVO
+══════════════════════════════════════════════════ -->
 <section class="section active" id="tab0">
-  <div class="sec-header">
+  <div class="sec-hdr">
     <div class="sec-title"><div class="sec-icon">📊</div>Resumen Ejecutivo</div>
-    <div class="sec-badge">Junio 2026 · Meta Ads API</div>
+    <div class="sec-badge">Junio 2026 · 1–29 jun · Bogotá D.C.</div>
   </div>
 
-  <div class="alert alert-warn">
-    <span class="alert-icon">⚠️</span>
-    <div><strong>Aclaración — "Contactos Meta (34)":</strong> El campo <code>lead</code> de la API de Meta registró 34. Para campañas de mensajería, este dato puede venir de <strong>etiquetas de WhatsApp Business</strong> (ej. "Lead"), de formularios adjuntos, o de la clasificación interna de Meta. <strong>No son leads calificados validados.</strong> Tu KPI real son las <strong>312 conversaciones de WhatsApp iniciadas</strong> a $2.626 COP cada una.</div>
+  <!-- CONTEXTO ESTRATÉGICO -->
+  <div class="alert alert-phase">
+    <span class="ai">🎯</span>
+    <div>
+      <strong>Junio 2026 — Fase 1: Presentación y Toma de Datos (Bogotá)</strong><br>
+      Este primer mes tuvo un objetivo estratégico claro: <strong>conocer cómo responde la audiencia bogotana</strong> a cada tipo de creativo, mensaje y formato. Las campañas se mantuvieron activas intencionalmente para recopilar datos suficientes, incluso cuando algunos indicadores como el costo por contacto podían parecer elevados. <strong>Esto es normal y esperado en la fase de presentación.</strong> Con estos datos ahora tenemos la base para construir julio con decisiones respaldadas por evidencia real de Bogotá.
+    </div>
   </div>
 
+  <!-- KPIs -->
   <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- NOTA SOBRE CAMPAÑA PAUSADA Y CONTACTOS META -->
+  <div class="g2" style="margin-bottom:18px">
+    <div class="alert alert-geo" style="margin-bottom:0">
+      <span class="ai">📍</span>
+      <div>
+        <strong>¿Por qué se pausó la segunda campaña?</strong><br>
+        La "Nueva campaña de Interacción" mostraba indicadores atractivos (CTR 5.48%, costo/conv. $1.814) pero estaba <strong>segmentada para toda Colombia</strong>, no exclusivamente para Bogotá. Sus números son aparentemente mejores porque un público nacional más amplio reduce el CPM. Al no servir a clientes fuera de Bogotá, fue pausada correctamente. <strong>Sus datos no son comparables</strong> con la campaña bogotana activa.
+      </div>
+    </div>
+    <div class="alert alert-info" style="margin-bottom:0">
+      <span class="ai">🤔</span>
+      <div>
+        <strong>Sobre los "34 Contactos Meta":</strong><br>
+        El campo <em>lead</em> de la API de Meta registró 34 contactos. Para campañas de mensajería este dato puede provenir de <strong>etiquetas de WhatsApp Business</strong> (ej. contactos etiquetados como "Lead") o de clasificación interna de Meta. <strong>No son leads calificados validados</strong>. El indicador principal real de tus campañas son las <strong>312 conversaciones de WhatsApp iniciadas</strong>.
+      </div>
+    </div>
+  </div>
 
   <div class="g2">
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Distribución de inversión por campaña</div>
+      <div class="card-title"><div class="cdot"></div>Inversión por campaña — Bogotá vs Colombia</div>
       <div class="chart-wrap" style="height:230px"><canvas id="cPie"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Inversión vs Conversaciones WA por campaña</div>
+      <div class="card-title"><div class="cdot"></div>Inversión vs conversaciones de WhatsApp</div>
       <div class="chart-wrap" style="height:230px"><canvas id="cBar0"></canvas></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ TAB 1 · CAMPAÑAS ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 1 · CAMPAÑAS
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab1">
-  <div class="sec-header">
+  <div class="sec-hdr">
     <div class="sec-title"><div class="sec-icon">🎯</div>Rendimiento por Campaña</div>
-    <div class="sec-badge">2 campañas · Junio 2026</div>
+    <div class="sec-badge">Junio 2026 · 2 campañas</div>
+  </div>
+
+  <div class="alert alert-geo">
+    <span class="ai">⚠️</span>
+    <div><strong>Importante para interpretar estos datos:</strong> Las dos campañas NO son comparables directamente. La campaña activa estaba segmentada solo para <strong>Bogotá</strong>. La pausada cubría <strong>toda Colombia</strong> — su mejor CTR y menor costo se explica en parte por el CPM más barato de un público nacional amplio. La decisión de pausarla fue correcta porque el negocio opera solo en Bogotá.</div>
   </div>
 
   <div class="g2" style="margin-bottom:18px">
+    <!-- CAMPAÑA BOGOTÁ - ACTIVA -->
     <div class="card" style="border-top:4px solid #22C55E">
       <div style="display:flex;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-        <div><span class="badge b-green" style="margin-bottom:6px">● ACTIVA</span><div style="font-size:14px;font-weight:800;line-height:1.3;margin-top:4px">Max/Presentación/<br>Interacción/ABO/Whatsapp</div></div>
-        <div style="text-align:right"><div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">Invertido</div><div style="font-size:24px;font-weight:900">$657.929</div><div style="font-size:10px;color:var(--muted)">COP · 80.3% del total</div></div>
+        <div>
+          <span class="badge bg" style="margin-bottom:6px">● ACTIVA · BOGOTÁ</span>
+          <div style="font-size:14px;font-weight:800;line-height:1.3;margin-top:4px">Max/Presentación/<br>Interacción/ABO/Whatsapp</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">📍 Segmentada exclusivamente en Bogotá D.C.</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Invertido</div>
+          <div style="font-size:24px;font-weight:900">$657.929</div>
+          <div style="font-size:10px;color:var(--muted)">COP · 80.3% del total</div>
+        </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
-        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Alcance</div><div style="font-size:18px;font-weight:900">24.288</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Alcance Bogotá</div><div style="font-size:18px;font-weight:900">24.288</div></div>
         <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Clics</div><div style="font-size:18px;font-weight:900">1.410</div></div>
-        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">CTR</div><div style="font-size:18px;font-weight:900;color:#F59E0B">3.49%</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">CTR Bogotá</div><div style="font-size:18px;font-weight:900;color:#F59E0B">3.49%</div></div>
         <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Conv. WA</div><div style="font-size:18px;font-weight:900;color:#3B82F6">223</div></div>
         <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Costo/Conv.</div><div style="font-size:18px;font-weight:900">$2.950</div></div>
         <div>
-          <div class="tip" style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Contactos Meta<span class="tip-i">i</span><div class="tip-box">Campo "lead" de la API de Meta. Para campañas de mensajería puede corresponder a etiquetas de WhatsApp Business o clasificación interna de Meta.</div></div>
+          <div class="tip" style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Contactos Meta<span class="tip-i">i</span><div class="tip-box">Campo "lead" de la API de Meta. Para campañas de mensajería puede corresponder a etiquetas de WhatsApp Business. No son leads calificados validados.</div></div>
           <div style="font-size:18px;font-weight:900;color:#94A3B8">21</div>
         </div>
       </div>
-      <div style="padding:10px;background:#F0FDF4;border-radius:8px;font-size:11px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
-        <span>✅ Mejor: <strong>HOMBRE EN LA COCINA</strong></span>
-        <span>❌ Peor: <strong>LA MAMÁ CON EL BEBÉ</strong></span>
+      <div style="padding:10px;background:#F0FDF4;border-radius:8px;font-size:11px">
+        ✅ <strong>Datos válidos para Bogotá.</strong> Estos son los indicadores reales de tu mercado objetivo. El costo por conversación ($2.950) refleja el CPM bogotano y es la base de referencia para optimizar en julio.
       </div>
     </div>
 
-    <div class="card" style="border-top:4px solid #94A3B8">
-      <div style="display:flex;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-        <div><span class="badge b-gray" style="margin-bottom:6px">⏸ PAUSADA</span><div style="font-size:14px;font-weight:800;line-height:1.3;margin-top:4px">Nueva campaña de<br>Interacción</div></div>
-        <div style="text-align:right"><div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">Invertido</div><div style="font-size:24px;font-weight:900">$161.480</div><div style="font-size:10px;color:var(--muted)">COP · 19.7% del total</div></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
-        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Alcance</div><div style="font-size:18px;font-weight:900">4.060</div></div>
-        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Clics</div><div style="font-size:18px;font-weight:900">338</div></div>
-        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">CTR</div><div style="font-size:18px;font-weight:900;color:#22C55E">5.48%</div></div>
-        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Conv. WA</div><div style="font-size:18px;font-weight:900;color:#3B82F6">89</div></div>
-        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Costo/Conv.</div><div style="font-size:18px;font-weight:900;color:#22C55E">$1.814</div></div>
+    <!-- CAMPAÑA COLOMBIA - PAUSADA -->
+    <div class="card" style="border-top:4px solid #F97316;position:relative">
+      <div style="position:absolute;top:12px;right:12px;background:#FEF3C7;color:#92400E;font-size:9px;font-weight:800;padding:3px 8px;border-radius:10px;text-transform:uppercase">⚠️ Colombia — No comparable</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;padding-right:160px">
         <div>
-          <div class="tip" style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Contactos Meta<span class="tip-i">i</span><div class="tip-box">Campo "lead" de la API de Meta. Para campañas de mensajería puede corresponder a etiquetas de WhatsApp Business o clasificación interna de Meta.</div></div>
-          <div style="font-size:18px;font-weight:900;color:#94A3B8">13</div>
+          <span class="badge bgr" style="margin-bottom:6px">⏸ PAUSADA · COLOMBIA</span>
+          <div style="font-size:14px;font-weight:800;line-height:1.3;margin-top:4px">Nueva campaña de<br>Interacción</div>
+          <div style="font-size:11px;color:#D97706;margin-top:4px">🇨🇴 Segmentada en TODA Colombia — datos no válidos para Bogotá</div>
         </div>
       </div>
-      <div style="padding:10px;background:#FFFBEB;border-radius:8px;font-size:11px;color:#92400E">
-        ⚠️ Esta campaña tenía <strong>mejor CTR (5.48%)</strong> y <strong>menor costo/conv. ($1.814)</strong> que la activa. Fue pausada. Se recomienda migrar sus creativos ganadores a la campaña activa.
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Alcance nacional</div><div style="font-size:18px;font-weight:900;color:var(--muted)">4.060</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Clics</div><div style="font-size:18px;font-weight:900;color:var(--muted)">338</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">CTR nacional</div><div style="font-size:18px;font-weight:900;color:var(--muted)">5.48%</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Conv. WA</div><div style="font-size:18px;font-weight:900;color:var(--muted)">89</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Costo/Conv.</div><div style="font-size:18px;font-weight:900;color:var(--muted)">$1.814</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Contactos Meta</div><div style="font-size:18px;font-weight:900;color:var(--muted)">13</div></div>
+      </div>
+      <div style="padding:10px;background:#FFF7ED;border-radius:8px;font-size:11px;color:#7C2D12;line-height:1.6">
+        📍 <strong>¿Por qué fue pausada?</strong> Los números son más bajos no porque la campaña sea "mejor" — sino porque un público nacional de Colombia es más amplio y barato que el bogotano exclusivo. Fue pausada correctamente porque los clientes de Entrega del Chef <strong>son solo de Bogotá</strong>. Alcanzar personas en Medellín, Cali o Barranquilla es presupuesto perdido.
       </div>
     </div>
   </div>
 
   <div class="g2">
     <div class="card">
-      <div class="card-title"><div class="dot"></div>CTR por campaña — mayor es mejor (%)</div>
+      <div class="card-title"><div class="cdot"></div>CTR — Bogotá (válido) vs Colombia (referencia)</div>
       <div class="chart-wrap" style="height:200px"><canvas id="cCampCTR"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Costo por conversación WA — menor es mejor (COP)</div>
+      <div class="card-title"><div class="cdot"></div>Costo por conversación WA</div>
       <div class="chart-wrap" style="height:200px"><canvas id="cCampCPR"></canvas></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ TAB 2 · CREATIVOS ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 2 · CREATIVOS
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab2">
-  <div class="sec-header">
-    <div class="sec-title"><div class="sec-icon">🎨</div>Rendimiento por Creativo</div>
-    <div class="sec-badge">6 anuncios · Por eficiencia</div>
+  <div class="sec-hdr">
+    <div class="sec-title"><div class="sec-icon">🎨</div>Aprendizajes por Creativo — Bogotá</div>
+    <div class="sec-badge">Fase de Presentación completada</div>
   </div>
-  <div class="alert alert-info">
-    <span class="alert-icon">ℹ️</span>
-    <div><strong>Tier de rendimiento:</strong>&nbsp; <span style="background:#DCFCE7;color:#15803D;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">S · Escalar 🚀</span> &nbsp;<span style="background:#DBEAFE;color:#1D4ED8;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">A · Mantener ✅</span> &nbsp;<span style="background:#FEF3C7;color:#92400E;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">B · Optimizar 🔧</span> &nbsp;<span style="background:#FEE2E2;color:#B91C1C;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">C · Revisar ⚠️</span> &nbsp;<span style="background:#F1F5F9;color:#475569;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">P · Pausado 🔒</span></div>
+
+  <div class="alert alert-phase">
+    <span class="ai">📚</span>
+    <div><strong>Resultado clave de la Fase de Presentación:</strong> Ahora sabemos exactamente qué tipo de creativo conecta con el bogotano. El tier de rendimiento refleja qué escalar, qué mejorar y qué pausar en la Fase de Evaluación de julio. <strong>Cada creativo fue un experimento valioso.</strong></div>
   </div>
-  <div class="creative-grid" id="creativeGrid"></div>
+
+  <div class="cc-grid" id="creativeGrid"></div>
+
   <div class="g2">
     <div class="card">
-      <div class="card-title"><div class="dot"></div>CTR por creativo — mayor es mejor (%)</div>
+      <div class="card-title"><div class="cdot"></div>CTR en Bogotá por creativo — mayor es mejor (%)</div>
       <div class="chart-wrap" style="height:220px"><canvas id="cAdCTR"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Costo por conversación WA — menor es mejor (COP)</div>
+      <div class="card-title"><div class="cdot"></div>Costo por conversación WA — menor es mejor (COP)</div>
       <div class="chart-wrap" style="height:220px"><canvas id="cAdCPR"></canvas></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ TAB 3 · EMBUDO ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 3 · EMBUDO
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab3">
-  <div class="sec-header">
+  <div class="sec-hdr">
     <div class="sec-title"><div class="sec-icon">🔻</div>Embudo de Conversión</div>
-    <div class="sec-badge">Junio 2026</div>
+    <div class="sec-badge">Junio 2026 · Bogotá</div>
   </div>
-  <div class="alert alert-warn">
-    <span class="alert-icon">📋</span>
-    <div><strong>Cotizaciones y Ventas</strong> se completan desde tu CRM. Las 3 primeras etapas vienen de Meta Ads automáticamente. Agrégalos en la pestaña <em>"Actualizar"</em>.</div>
+  <div class="alert alert-phase">
+    <span class="ai">💡</span>
+    <div><strong>Fase 1 — solo mide hasta WhatsApp.</strong> En la Fase de Presentación el objetivo era llevar personas a una conversación de WhatsApp. Las etapas de Cotización y Venta se activarán formalmente en la Fase de Conversión con el protocolo de cierre ya definido. Agrega los datos de CRM desde la pestaña "Actualizar".</div>
   </div>
   <div class="g21">
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Embudo de conversión paso a paso</div>
-      <div id="funnelViz" class="funnel" style="padding:8px 0;gap:0"></div>
+      <div class="card-title"><div class="cdot"></div>Embudo completo — Bogotá · Junio 2026</div>
+      <div id="funnelViz" class="funnel" style="gap:0;padding:6px 0"></div>
     </div>
     <div>
       <div class="card" style="margin-bottom:18px">
-        <div class="card-title"><div class="dot"></div>Tasas de conversión entre etapas</div>
-        <div class="chart-wrap" style="height:210px"><canvas id="cFunnel"></canvas></div>
+        <div class="card-title"><div class="cdot"></div>Tasas de conversión por etapa</div>
+        <div class="chart-wrap" style="height:200px"><canvas id="cFunnel"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title"><div class="dot"></div>Detalle por etapa</div>
-        <div id="funnelStats" style="display:flex;flex-direction:column;gap:0"></div>
+        <div class="card-title"><div class="cdot"></div>Detalle numérico</div>
+        <div id="funnelStats"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ TAB 4 · CRECIMIENTO ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 4 · CRECIMIENTO
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab4">
-  <div class="sec-header">
+  <div class="sec-hdr">
     <div class="sec-title"><div class="sec-icon">📈</div>Crecimiento Mensual</div>
-    <div class="sec-badge">Histórico · Actualizable</div>
+    <div class="sec-badge">Histórico · Bogotá</div>
   </div>
   <div class="alert alert-success">
-    <span class="alert-icon">✅</span>
-    <div>Junio 2026 es el primer mes. Los gráficos crecen automáticamente al agregar nuevos meses desde <em>"Actualizar"</em>.</div>
+    <span class="ai">✅</span>
+    <div>Junio 2026 es el punto de partida — el <strong>benchmark de Bogotá</strong>. Cada mes que agregues mostrará la evolución real de tu negocio frente a este primer mes de datos. Los gráficos se actualizan automáticamente.</div>
   </div>
   <div class="g2" style="margin-bottom:18px">
-    <div class="card"><div class="card-title"><div class="dot"></div>Inversión mensual (COP)</div><div class="chart-wrap" style="height:200px"><canvas id="cMSpend"></canvas></div></div>
-    <div class="card"><div class="card-title"><div class="dot"></div>Conversaciones WA iniciadas por mes</div><div class="chart-wrap" style="height:200px"><canvas id="cMConv"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="cdot"></div>Inversión mensual (COP)</div><div class="chart-wrap" style="height:200px"><canvas id="cMSpend"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="cdot"></div>Conversaciones WhatsApp por mes</div><div class="chart-wrap" style="height:200px"><canvas id="cMConv"></canvas></div></div>
   </div>
   <div class="g2">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>
-        <div class="tip">Contactos Meta por mes<span class="tip-i">i</span><div class="tip-box">Campo "lead" de la API de Meta. Puede venir de etiquetas de WhatsApp Business. No son leads calificados validados.</div></div>
-      </div>
-      <div class="chart-wrap" style="height:200px"><canvas id="cMLeads"></canvas></div>
-    </div>
-    <div class="card"><div class="card-title"><div class="dot"></div>CTR mensual (%)</div><div class="chart-wrap" style="height:200px"><canvas id="cMCTR"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="cdot"></div>Contactos Meta por mes <span class="tip" style="font-size:11px">ⓘ<div class="tip-box">Campo "lead" API de Meta. Origen incierto para campañas de mensajería — puede ser etiquetas WhatsApp Business.</div></span></div><div class="chart-wrap" style="height:200px"><canvas id="cMLeads"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="cdot"></div>CTR mensual en Bogotá (%)</div><div class="chart-wrap" style="height:200px"><canvas id="cMCTR"></canvas></div></div>
   </div>
 </section>
 
-<!-- ═══ TAB 5 · KPIs ANUALES ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 5 · KPIs ACUMULADOS
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab5">
-  <div class="sec-header">
+  <div class="sec-hdr">
     <div class="sec-title"><div class="sec-icon">🏆</div>KPIs Acumulados 2026</div>
-    <div class="sec-badge">Desde inicio de actividad</div>
+    <div class="sec-badge">Desde inicio · Bogotá</div>
   </div>
   <div class="kpi-grid" id="annualKpis"></div>
   <div class="g2">
-    <div class="card"><div class="card-title"><div class="dot"></div>Acumulado por métrica clave</div><div class="chart-wrap" style="height:220px"><canvas id="cAnnBar"></canvas></div></div>
-    <div class="card"><div class="card-title"><div class="dot"></div>Distribución de resultados</div><div class="chart-wrap" style="height:220px"><canvas id="cAnnPie"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="cdot"></div>Acumulado anual — métricas clave</div><div class="chart-wrap" style="height:220px"><canvas id="cAnnBar"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="cdot"></div>Distribución de resultados</div><div class="chart-wrap" style="height:220px"><canvas id="cAnnPie"></canvas></div></div>
   </div>
 </section>
 
-<!-- ═══ TAB 6 · INSIGHTS ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 6 · APRENDIZAJES
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab6">
-  <div class="sec-header">
-    <div class="sec-title"><div class="sec-icon">💡</div>Análisis e Insights Automáticos</div>
-    <div class="sec-badge">Generado: 30 jun 2026</div>
+  <div class="sec-hdr">
+    <div class="sec-title"><div class="sec-icon">💡</div>Aprendizajes de la Fase de Presentación</div>
+    <div class="sec-badge">Bogotá · Junio 2026</div>
   </div>
-  <div class="insight-grid">
-    <div class="ii pos"><div class="ii-icon">🚀</div><div><div class="ii-title">ESCALAR · HOMBRE EN LA COCINA</div><div class="ii-text">CTR 6.31% (mayor activo), CPC $353 (menor), costo/conv. $2.166. El creativo ganador del mes. Mover presupuesto aquí es la acción con mayor retorno disponible.</div></div></div>
-    <div class="ii pos"><div class="ii-icon">♻️</div><div><div class="ii-title">RESCATAR · Nuevo anuncio Copia 2</div><div class="ii-text">CTR 6.61% (el más alto de toda la cuenta), CPC $347, costo/conv. $1.256. Está en la campaña pausada. Migrar a la campaña activa puede reducir el costo/conv. a la mitad.</div></div></div>
-    <div class="ii neg"><div class="ii-icon">⛔</div><div><div class="ii-title">PAUSAR HOY · LA MAMÁ CON EL BEBÉ</div><div class="ii-text">Gasta $257.944 COP (31.5% del presupuesto). CTR 2.70% (el más bajo activo), costo/conv. $3.908 (el más alto). Cada día activo pierde dinero frente a los otros creativos.</div></div></div>
-    <div class="ii neg"><div class="ii-icon">📉</div><div><div class="ii-title">ALERTA · CTR en caída</div><div class="ii-text">Meta reporta tendencia negativa de CTR en los creativos principales: "HOMBRE EN LA COCINA" −32.15%, "LA MAMÁ CON EL BEBÉ" −15.20%. Es fatiga de audiencia. Se necesitan creativos nuevos para julio.</div></div></div>
-    <div class="ii warn"><div class="ii-icon">🤔</div><div><div class="ii-title">DATO INCIERTO · Los 34 "Contactos Meta"</div><div class="ii-text">El campo <em>lead</em> de la API marcó 34. Para campañas de mensajería puede ser etiquetas de WhatsApp Business ("Lead"), formularios adjuntos, o clasificación interna. Tu KPI real son las <strong>312 conversaciones de WhatsApp</strong>.</div></div></div>
-    <div class="ii warn"><div class="ii-icon">⚠️</div><div><div class="ii-title">CRÍTICO · Sin píxel de compras</div><div class="ii-text">ROAS = N/A en toda la cuenta. Sin el píxel con evento "Purchase" Meta no puede optimizar para ventas reales, solo para conversaciones. Instalarlo es la mejora de infraestructura más importante.</div></div></div>
-    <div class="ii info"><div class="ii-icon">💬</div><div><div class="ii-title">OPORTUNIDAD · 312 chats sin seguimiento medible</div><div class="ii-text">Cada conversación costó $2.626 COP. ¿Cuántas recibieron respuesta en menos de 5 min? Mejorar el proceso de cierre en WhatsApp puede duplicar ventas sin aumentar inversión en ads.</div></div></div>
-    <div class="ii info"><div class="ii-icon">🎯</div><div><div class="ii-title">OPORTUNIDAD · La campaña pausada era más eficiente</div><div class="ii-text">CTR 5.48% vs 3.49% activa, costo/conv. $1.814 vs $2.950. Los datos sugieren que fue pausada prematuramente. Migrar sus creativos puede mejorar significativamente los resultados de julio.</div></div></div>
+  <div class="alert alert-phase">
+    <span class="ai">🎓</span>
+    <div><strong>Este no es un informe de fallos — es un inventario de conocimiento.</strong> Cada insight representa aprendizaje real sobre el mercado bogotano que usaremos para construir la estrategia de julio. Una Fase de Presentación exitosa es aquella que entrega datos accionables, y esta lo hizo.</div>
+  </div>
+  <div class="ig">
+    <div class="ii pos"><div class="ii-ic">🏆</div><div><div class="ii-title">APRENDIZAJE CLAVE · El bogotano responde al creativo de cocina masculina</div><div class="ii-text">"HOMBRE EN LA COCINA" logró el CTR más alto (6.31%) y el menor costo por conversación activo ($2.166) en Bogotá. Esto valida que <strong>el perfil del chef masculino conecta con la audiencia bogotana</strong>. Este insight guía la producción de creativos de julio.</div></div></div>
+    <div class="ii pos"><div class="ii-ic">📱</div><div><div class="ii-title">APRENDIZAJE CLAVE · WhatsApp funciona como canal de contacto inicial</div><div class="ii-text">312 conversaciones iniciadas en WhatsApp a $2.626 COP cada una confirma que <strong>la audiencia bogotana está dispuesta a iniciar contacto por WhatsApp</strong>. Este dato valida la estrategia de mensajería y da base para construir el protocolo de conversión de la Fase 3.</div></div></div>
+    <div class="ii info"><div class="ii-ic">📍</div><div><div class="ii-title">VALIDADO · La segmentación Bogotá tiene su propio benchmark de costos</div><div class="ii-text">El CPM bogotano ($17.597 COP) es más alto que el promedio nacional porque es un mercado más concentrado y competido. El CTR de 3.75% sobre este CPM confirma que <strong>el mensaje es relevante para el bogotano</strong>. La campaña nacional fue pausada correctamente.</div></div></div>
+    <div class="ii info"><div class="ii-ic">🎬</div><div><div class="ii-title">APRENDIZAJE · El creativo femenino necesita ajuste</div><div class="ii-text">"LA MUJER PREPARANDO PLATO" tuvo rendimiento intermedio. "LA MAMÁ CON EL BEBÉ" tuvo el CTR más bajo (2.70%) y el mayor costo/conv. activo ($3.908). Esto indica que el enfoque de "madre + bebé" no resuena con la <strong>audiencia bogotana de este servicio</strong>. Rediseñar el ángulo en julio.</div></div></div>
+    <div class="ii warn"><div class="ii-ic">⏱️</div><div><div class="ii-title">A INVESTIGAR · Los 34 contactos Meta</div><div class="ii-text">La API de Meta registró 34 "leads" cuyo origen exacto no está claro — pueden ser etiquetas de WhatsApp Business o clasificación interna. <strong>Acción para julio: revisar en WhatsApp Business Manager los contactos etiquetados como "Lead"</strong> para entender si hay pipeline real detrás de este número.</div></div></div>
+    <div class="ii warn"><div class="ii-ic">🔄</div><div><div class="ii-title">A MEJORAR · Fatiga creativa detectada en semana 3</div><div class="ii-text">Meta reporta tendencia negativa de CTR en los creativos principales hacia el final del mes. <strong>Esto es natural en una fase de presentación de 4 semanas</strong> — la audiencia bogotana empieza a reconocer los anuncios. Para julio se planean nuevas variaciones antes de que inicie la campaña.</div></div></div>
+    <div class="ii bta"><div class="ii-ic">🛒</div><div><div class="ii-title">PENDIENTE CRÍTICO · Activar medición de ventas</div><div class="ii-text">Sin píxel de compra configurado, no hay ROAS medible. Esto estaba previsto para la Fase de Presentación donde el objetivo era conversaciones, no ventas directas. <strong>Para la Fase de Evaluación (julio) se instala el píxel</strong> y se comienza a medir el ciclo completo hasta la venta.</div></div></div>
+    <div class="ii bta"><div class="ii-ic">💬</div><div><div class="ii-title">OPORTUNIDAD CONFIRMADA · 312 conversaciones son activo real</div><div class="ii-text">Las 312 personas que iniciaron un chat de WhatsApp son el activo más valioso de junio. Muchas pueden estar en la etapa de consideración. <strong>Con el protocolo de conversión de la Fase 3 activo, estas personas son pipeline recuperable</strong> — se pueden re-impactar con retargeting en julio.</div></div></div>
   </div>
 </section>
 
-<!-- ═══ TAB 7 · RECOMENDACIONES ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 7 · PLAN JULIO — FASE DE EVALUACIÓN
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab7">
-  <div class="sec-header">
-    <div class="sec-title"><div class="sec-icon">🚀</div>Recomendaciones Estratégicas</div>
-    <div class="sec-badge">Plan de acción · Julio 2026</div>
+  <div class="sec-hdr">
+    <div class="sec-title"><div class="sec-icon">🗓️</div>Plan Julio 2026 — Fase de Evaluación</div>
+    <div class="sec-badge">Con datos reales de Bogotá · Jun 2026</div>
   </div>
-  <div class="rec-list">
-    <div class="ri"><div class="ri-num">1</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Pausar "LA MAMÁ CON EL BEBÉ" y reasignar su presupuesto</div><span class="pr pr-u">🔴 Urgente</span></div><div class="ri-desc">Consume $257.944 COP (31.5%) con el CTR más bajo (2.70%) y el costo por conversación más alto de todos los creativos activos ($3.908). Mover ese dinero a "HOMBRE EN LA COCINA" puede generar 60–70 conversaciones adicionales con el mismo presupuesto. <strong>Acción: pausar hoy.</strong></div></div></div>
-    <div class="ri"><div class="ri-num">2</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Migrar "Nuevo anuncio · Copia 2" a la campaña activa</div><span class="pr pr-u">🔴 Urgente</span></div><div class="ri-desc">Tiene el CTR más alto (6.61%), CPC más bajo ($347) y costo/conv. de solo $1.256. Está en la campaña pausada. Duplicar este anuncio a "Max/ABO" puede bajar el costo promedio por conversación de $2.950 a ~$2.000. <strong>Acción: duplicar el anuncio esta semana.</strong></div></div></div>
-    <div class="ri"><div class="ri-num">3</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Crear 3–4 variaciones nuevas de "HOMBRE EN LA COCINA"</div><span class="pr pr-h">🟡 Alta</span></div><div class="ri-desc">Su CTR bajó 32.15% — señal clara de fatiga creativa. Producir variaciones: diferente copy, fondo, ángulo de cámara, CTA. Testear con presupuesto pequeño antes de escalar la ganadora. <strong>Acción: briefing de creativos esta semana.</strong></div></div></div>
-    <div class="ri"><div class="ri-num">4</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Validar el origen de los 34 "Contactos Meta"</div><span class="pr pr-h">🟡 Alta</span></div><div class="ri-desc">Revisar en WhatsApp Business Manager si hay contactos etiquetados como "Lead". También verificar si alguna campaña tiene formulario adjunto (Lead Ad). Entender este número es importante para saber si hay un pipeline real detrás o es solo una métrica de Meta.</div></div></div>
-    <div class="ri"><div class="ri-num">5</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Instalar píxel de Meta con evento de compra</div><span class="pr pr-h">🟡 Alta</span></div><div class="ri-desc">Sin el píxel no hay ROAS real ni optimización hacia ventas. Pasos: instalar píxel en la landing o WhatsApp flow → evento "Purchase" con valor → evento "Lead" en formularios. Permite crear audiencias lookalike de compradores. <strong>Acción: implementar semana 1 de julio.</strong></div></div></div>
-    <div class="ri"><div class="ri-num">6</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Protocolo de respuesta y seguimiento en WhatsApp</div><span class="pr pr-m">🔵 Media</span></div><div class="ri-desc">Tienes 312 conversaciones iniciadas a $2.626 COP c/u. Crear guión de ventas, plantillas de respuesta rápida y flujo de seguimiento (día 1 → 3 → 7) puede duplicar el cierre sin aumentar inversión en ads.</div></div></div>
-    <div class="ri"><div class="ri-num">7</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Campaña de retargeting para conversaciones no convertidas</div><span class="pr pr-m">🔵 Media</span></div><div class="ri-desc">Crear audiencia personalizada con "personas que enviaron mensaje en los últimos 30 días" y mostrarles un anuncio de oferta o prueba. Es la audiencia más caliente disponible y actualmente no recibe un segundo impacto.</div></div></div>
+
+  <!-- CICLO VISUAL -->
+  <div class="cycle-wrap">
+    <div class="cy-step done">
+      <div class="cy-num done">✅ Fase 1 · Completada</div>
+      <div class="cy-icon">🎯</div>
+      <div class="cy-name">Presentación</div>
+      <div class="cy-sub">Lanzar presencia en Meta Ads en Bogotá. Validar audiencia, creativos y canales. Toma de datos base.</div>
+      <div class="cy-date cd-done">Junio 2026 ✓</div>
+    </div>
+    <div class="cy-arrow">›</div>
+    <div class="cy-step active-step">
+      <div class="cy-num active-step">→ Fase 2 · En curso</div>
+      <div class="cy-icon">📊</div>
+      <div class="cy-name">Evaluación</div>
+      <div class="cy-sub">Optimizar con datos reales de Bogotá. Escalar creativos ganadores. Eliminar lo que no funciona. Reducir CPM y costo/conv.</div>
+      <div class="cy-date cd-now">Julio 2026 → Próximo</div>
+    </div>
+    <div class="cy-arrow">›</div>
+    <div class="cy-step upcoming">
+      <div class="cy-num upcoming">Fase 3 · Próxima</div>
+      <div class="cy-icon">💬</div>
+      <div class="cy-name">Conversión</div>
+      <div class="cy-sub">Protocolo de cierre en WhatsApp activo. Seguimiento estructurado de leads. Medición de ventas reales con píxel. ROAS visible.</div>
+      <div class="cy-date cd-soon">Agosto 2026</div>
+    </div>
+    <div class="cy-arrow">›</div>
+    <div class="cy-step upcoming">
+      <div class="cy-num upcoming">Fase 4 · Futuro</div>
+      <div class="cy-icon">🚀</div>
+      <div class="cy-name">Ascensión</div>
+      <div class="cy-sub">Presentar nuevo producto o servicio a clientes ya convertidos. Campañas de upsell y fidelización. Maximizar valor del cliente.</div>
+      <div class="cy-date cd-soon">Sept 2026 +</div>
+    </div>
+  </div>
+
+  <div class="alert alert-bta">
+    <span class="ai">📋</span>
+    <div><strong>Objetivo de julio (Fase de Evaluación):</strong> Tomar las decisiones que los datos de junio ahora permiten tomar. Reducir el costo por conversación al menos un 30%, escalar lo que funciona y eliminar lo que no. Preparar la infraestructura para medir ventas reales en agosto.</div>
+  </div>
+
+  <div class="plan-grid">
+    <div class="pi"><div class="pi-num">1</div><div class="pi-body">
+      <div class="pi-head"><div class="pi-title">Escalar "HOMBRE EN LA COCINA" con 3 nuevas variaciones</div><span class="pr pr-u">🔴 Semana 1</span></div>
+      <div class="pi-desc">El creativo ganador de Bogotá (CTR 6.31%, costo/conv. $2.166). Para la Fase de Evaluación necesitamos nuevas variaciones del mismo concepto: diferente copy, ángulo de cámara, duración del video, CTA. Probar 3 versiones con $50.000 COP cada una antes de escalar la ganadora. Junio confirmó que el concepto funciona en Bogotá — julio confirma qué variación es la más rentable.</div>
+      <div class="pi-result">→ Meta: CTR ≥ 5% en Bogotá, costo/conv. ≤ $2.500 COP</div>
+    </div></div>
+
+    <div class="pi"><div class="pi-num">2</div><div class="pi-body">
+      <div class="pi-head"><div class="pi-title">Pausar "LA MAMÁ CON EL BEBÉ" y redirigir su presupuesto</div><span class="pr pr-u">🔴 Semana 1</span></div>
+      <div class="pi-desc">Los datos de Bogotá son claros: CTR 2.70%, $3.908 por conversación, solo 66 chats con el mayor gasto de todos los creativos activos ($257.944 COP). Este creativo no conecta con la audiencia bogotana. En la Fase de Evaluación no hay espacio para experimentos que ya demostraron bajo rendimiento. Su presupuesto se redirige a los creativos validados.</div>
+      <div class="pi-result">→ Liberación: $257.944 COP hacia creativos con CTR ≥ 5%</div>
+    </div></div>
+
+    <div class="pi"><div class="pi-num">3</div><div class="pi-body">
+      <div class="pi-head"><div class="pi-title">Instalar Píxel de Meta con evento de compra — inicio medición de ventas</div><span class="pr pr-u">🔴 Semana 1</span></div>
+      <div class="pi-desc">La Fase de Presentación funcionó sin píxel porque el objetivo era conversaciones. La Fase de Evaluación requiere medir el ciclo completo. Instalación: píxel en la landing page o flujo de WhatsApp → evento "Purchase" con valor de venta → evento "Lead" en formularios de contacto. Esto activa el ROAS real y permite a Meta optimizar para compradores, no solo conversadores.</div>
+      <div class="pi-result">→ ROAS visible desde semana 2 de julio</div>
+    </div></div>
+
+    <div class="pi"><div class="pi-num">4</div><div class="pi-body">
+      <div class="pi-head"><div class="pi-title">Crear protocolo de conversión para WhatsApp — iniciar Fase 3</div><span class="pr pr-h">🟡 Semana 1–2</span></div>
+      <div class="pi-desc">Las 312 conversaciones de junio son el activo más valioso del mes. Para transformarlas en ventas se necesita un protocolo: tiempo máximo de respuesta (≤ 5 min), guión de presentación del servicio, manejo de objeciones, llamado a la acción de cierre y seguimiento en día 1 → 3 → 7. La Fase 3 del ciclo (Conversión) empieza formalmente aquí pero se puede preparar en julio.</div>
+      <div class="pi-result">→ Meta: tasa de conversión chat→venta ≥ 15% en agosto</div>
+    </div></div>
+
+    <div class="pi"><div class="pi-num">5</div><div class="pi-body">
+      <div class="pi-head"><div class="pi-title">Campaña de retargeting para las 312 conversaciones de junio</div><span class="pr pr-h">🟡 Semana 2</span></div>
+      <div class="pi-desc">Las personas que iniciaron un chat de WhatsApp en junio son la audiencia más caliente disponible. Crear una audiencia personalizada en Meta con "personas que enviaron mensaje en los últimos 30 días" e impactarlas con un anuncio diferente: una oferta especial, testimonial de cliente, o presentación del menú semanal. El costo de re-impactar a esta audiencia es significativamente menor que adquirir una nueva.</div>
+      <div class="pi-result">→ Estimado: 30–50 conversiones adicionales sin costo de prospección nueva</div>
+    </div></div>
+
+    <div class="pi"><div class="pi-num">6</div><div class="pi-body">
+      <div class="pi-head"><div class="pi-title">Validar origen de los 34 Contactos Meta en WhatsApp Business Manager</div><span class="pr pr-m">🔵 Semana 1</span></div>
+      <div class="pi-desc">Revisar en WhatsApp Business Manager si hay contactos etiquetados como "Lead" que correspondan a esos 34. Si existen, es pipeline real que puede avanzar a cotización ahora mismo. Si no existen como contactos etiquetados, el número de Meta no tiene correlación con leads reales y podemos descartarlo del seguimiento operativo.</div>
+      <div class="pi-result">→ Claridad sobre 34 posibles clientes en el pipeline actual</div>
+    </div></div>
+
+    <div class="pi"><div class="pi-num">7</div><div class="pi-body">
+      <div class="pi-head"><div class="pi-title">Ajustar creativos femeninos con nuevo ángulo para Bogotá</div><span class="pr pr-m">🔵 Semana 2–3</span></div>
+      <div class="pi-desc">Los creativos "LA MUJER PREPARANDO PLATO" y "LA MAMÁ CON EL BEBÉ" no lograron los CTR esperados. El aprendizaje de junio sugiere probar un ángulo diferente: mujer ejecutiva o profesional bogotana recibiendo la entrega en casa u oficina — más alineado con el perfil de cliente urbano de Bogotá que trabaja y tiene poco tiempo para cocinar.</div>
+      <div class="pi-result">→ Nuevo A/B test con concepto "mujer profesional + comodidad"</div>
+    </div></div>
   </div>
 </section>
 
-<!-- ═══ TAB 8 · ACTUALIZAR ═══ -->
+<!-- ══════════════════════════════════════════════════
+     TAB 8 · ACTUALIZAR
+══════════════════════════════════════════════════ -->
 <section class="section" id="tab8">
-  <div class="sec-header">
+  <div class="sec-hdr">
     <div class="sec-title"><div class="sec-icon">🔄</div>Agregar Nuevo Mes</div>
+    <div class="sec-badge">Sistema de actualización mensual</div>
   </div>
   <div class="alert alert-info">
-    <span class="alert-icon">📌</span>
-    <div>Encuentra los datos de Meta Ads en: <strong>Administrador de anuncios → Columnas personalizadas</strong>. Los datos de ventas los ingresas desde tu CRM o registro manual.</div>
+    <span class="ai">📌</span>
+    <div>Los datos de Meta Ads los encuentras en: <strong>Administrador de anuncios → Columnas personalizadas → Exportar</strong>. Los datos de ventas los ingresas desde tu CRM o registro manual. Al guardar, todos los gráficos de crecimiento se actualizan automáticamente.</div>
   </div>
 
   <div class="card" style="margin-bottom:18px">
-    <div class="fs-title">📅 Período</div>
+    <div class="fs-t">📅 Período</div>
     <div class="fgrid" style="margin-bottom:0">
       <div class="fg"><label class="fl">Mes</label>
         <select class="fi" id="nMes">
@@ -475,27 +671,24 @@ tbody tr:hover td{background:#FAFBFF;}
       <div class="fg"><label class="fl">Año</label><input type="number" class="fi" id="nAno" value="2026"></div>
     </div>
 
-    <div class="divider"></div>
-    <div class="fs-title">📊 Datos de Meta Ads</div>
+    <div class="dv"></div>
+    <div class="fs-t">📊 Datos de Meta Ads (solo Bogotá)</div>
     <div class="fgrid">
       <div class="fg"><label class="fl">Inversión total (COP)</label><input type="number" class="fi" id="nSpend" placeholder="Ej: 1200000"></div>
-      <div class="fg"><label class="fl">Alcance</label><input type="number" class="fi" id="nReach" placeholder="Ej: 38000"></div>
+      <div class="fg"><label class="fl">Alcance en Bogotá</label><input type="number" class="fi" id="nReach" placeholder="Ej: 38000"></div>
       <div class="fg"><label class="fl">Impresiones</label><input type="number" class="fi" id="nImp" placeholder="Ej: 65000"></div>
       <div class="fg"><label class="fl">Clics</label><input type="number" class="fi" id="nClics" placeholder="Ej: 2800"></div>
       <div class="fg"><label class="fl">CTR (%)</label><input type="number" class="fi" id="nCTR" step="0.01" placeholder="Ej: 4.30"></div>
       <div class="fg"><label class="fl">CPC (COP)</label><input type="number" class="fi" id="nCPC" placeholder="Ej: 430"></div>
       <div class="fg"><label class="fl">CPM (COP)</label><input type="number" class="fi" id="nCPM" placeholder="Ej: 18500"></div>
       <div class="fg"><label class="fl">Conversaciones WA iniciadas</label><input type="number" class="fi" id="nConv" placeholder="Ej: 430"></div>
-      <div class="fg">
-        <label class="fl">
-          <div class="tip">Contactos Meta (campo "lead")<span class="tip-i">i</span><div class="tip-box" style="left:0;transform:none">El campo "lead" de la API de Meta para campañas de mensajería. Puede venir de etiquetas de WhatsApp Business o clasificación interna de Meta. No son leads calificados validados.</div></div>
-        </label>
-        <input type="number" class="fi" id="nLeads" placeholder="Ej: 45">
-      </div>
+      <div class="fg"><label class="fl">
+        <div class="tip">Contactos Meta (campo "lead")<span class="tip-i">i</span><div class="tip-box" style="left:0;transform:none">El campo "lead" de la API Meta para campañas de mensajería. Puede venir de etiquetas de WhatsApp Business. No son leads calificados validados.</div></div>
+      </label><input type="number" class="fi" id="nLeads" placeholder="Ej: 45"></div>
     </div>
 
-    <div class="divider"></div>
-    <div class="fs-title">🛒 Datos del CRM / Ventas manuales</div>
+    <div class="dv"></div>
+    <div class="fs-t">🛒 Datos del CRM / Ventas (registro manual)</div>
     <div class="fgrid">
       <div class="fg"><label class="fl">Cotizaciones enviadas</label><input type="number" class="fi" id="nQuotes" placeholder="Ej: 35"></div>
       <div class="fg"><label class="fl">Ventas cerradas</label><input type="number" class="fi" id="nSales" placeholder="Ej: 15"></div>
@@ -510,11 +703,11 @@ tbody tr:hover td{background:#FAFBFF;}
   </div>
 
   <div class="card">
-    <div class="card-title"><div class="dot"></div>Historial de datos registrados</div>
-    <div class="tscroll">
+    <div class="card-title"><div class="cdot"></div>Historial de datos registrados — Bogotá</div>
+    <div class="tscr">
       <table>
         <thead><tr>
-          <th>Mes</th><th>Inversión</th><th>Alcance</th><th>Impresiones</th><th>Clics</th><th>CTR</th><th>Conv. WA</th><th>Costo/Conv.</th><th>Contactos Meta ⓘ</th><th>Cotizaciones</th><th>Ventas</th><th>Ingresos</th><th>ROAS</th>
+          <th>Mes</th><th>Inversión</th><th>Alcance Bog.</th><th>Impresiones</th><th>Clics</th><th>CTR</th><th>Conv. WA</th><th>Costo/Conv.</th><th>Cont. Meta ⓘ</th><th>Cotizaciones</th><th>Ventas</th><th>Ingresos</th><th>ROAS</th>
         </tr></thead>
         <tbody id="histTbody"></tbody>
       </table>
@@ -526,327 +719,333 @@ tbody tr:hover td{background:#FAFBFF;}
 </main>
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
 const HIST = [{
   key:'jun2026', label:'Jun 2026',
   spend:819409, reach:26657, imp:46564, clicks:1748,
   ctr:3.75, cpc:469, cpm:17597, conv:312, leads:34,
   quotes:0, sales:0, revenue:0, ticket:0,
   get cprConv(){ return this.conv>0 ? Math.round(this.spend/this.conv) : 0; },
-  get roas(){ return this.spend>0&&this.revenue>0 ? (this.revenue/this.spend).toFixed(2) : 'N/A'; }
+  get roas(){ return this.revenue>0 ? (this.revenue/this.spend).toFixed(2) : 'N/A'; }
 }];
 
 const CAMPS = [
-  { name:'Max/Presentación/ABO', status:'ACTIVE',  spend:657929, reach:24288, imp:40401, clicks:1410, ctr:3.49, cpc:467, cpm:16285, conv:223, cpr:2950, leads:21, freq:1.66 },
-  { name:'Nueva campaña',        status:'PAUSED',  spend:161480, reach:4060,  imp:6163,  clicks:338,  ctr:5.48, cpc:478, cpm:26202, conv:89,  cpr:1814, leads:13, freq:1.52 }
+  { name:'Max/Presentación/ABO',   geo:'Bogotá',   status:'ACTIVE', spend:657929, reach:24288, imp:40401, clicks:1410, ctr:3.49, cpc:467, cpm:16285, conv:223, cpr:2950, leads:21, freq:1.66 },
+  { name:'Nueva campaña',          geo:'Colombia',  status:'PAUSED', spend:161480, reach:4060,  imp:6163,  clicks:338,  ctr:5.48, cpc:478, cpm:26202, conv:89,  cpr:1814, leads:13, freq:1.52 }
 ];
 
 const ADS_RAW = [
-  { name:'HOMBRE EN LA COCINA',      spend:132149, clicks:374, ctr:6.31, cpc:353, imp:5929,  conv:61, cpr:2166, leads:11, freq:1.16, status:'ACTIVE'      },
+  { name:'HOMBRE EN LA COCINA',      spend:132149, clicks:374, ctr:6.31, cpc:353, imp:5929,  conv:61, cpr:2166, leads:11, freq:1.16, status:'ACTIVE' },
   { name:'Nuevo anuncio · Copia 2',  spend:76598,  clicks:221, ctr:6.61, cpc:347, imp:3343,  conv:61, cpr:1256, leads:5,  freq:1.29, status:'CAMP_PAUSED' },
-  { name:'LA MUJER PREP. PLATO',     spend:255253, clicks:435, ctr:3.53, cpc:587, imp:12325, conv:95, cpr:2687, leads:8,  freq:1.54, status:'ACTIVE'      },
+  { name:'LA MUJER PREP. PLATO',     spend:255253, clicks:435, ctr:3.53, cpc:587, imp:12325, conv:95, cpr:2687, leads:8,  freq:1.54, status:'ACTIVE' },
   { name:'Nuevo anuncio · Copia',    spend:57639,  clicks:61,  ctr:3.88, cpc:945, imp:1573,  conv:13, cpr:4434, leads:7,  freq:1.28, status:'CAMP_PAUSED' },
-  { name:'LA MAMÁ CON EL BEBÉ',      spend:257944, clicks:581, ctr:2.70, cpc:444, imp:21548, conv:66, cpr:3908, leads:2,  freq:1.62, status:'ACTIVE'      },
+  { name:'LA MAMÁ CON EL BEBÉ',      spend:257944, clicks:581, ctr:2.70, cpc:444, imp:21548, conv:66, cpr:3908, leads:2,  freq:1.62, status:'ACTIVE' },
   { name:'Nuevo anuncio · Copia 2b', spend:24983,  clicks:50,  ctr:4.35, cpc:500, imp:1150,  conv:14, cpr:1785, leads:1,  freq:1.21, status:'CAMP_PAUSED' },
 ];
 const ADS = [...ADS_RAW].sort((a,b) => a.cpr - b.cpr);
 
-const VERDICTS = {
-  'HOMBRE EN LA COCINA':     'Mejor CTR activo (6.31%), CPC más bajo ($353), mejor costo/conv. activo ($2.166). Escalar presupuesto aquí.',
-  'Nuevo anuncio · Copia 2': 'CTR más alto de toda la cuenta (6.61%), costo/conv. $1.256. Migrar urgente a la campaña activa.',
-  'LA MUJER PREP. PLATO':    'Rendimiento intermedio. Mayor volumen de conversaciones (95) con inversión alta ($255k).',
-  'Nuevo anuncio · Copia':   'CPC más alto ($945), costo/conv. más alto de los pausados ($4.434). Revisar o pausar.',
-  'LA MAMÁ CON EL BEBÉ':     '⚠️ PAUSAR. CTR más bajo (2.70%), costo/conv. más alto activo ($3.908). Gasta 31.5% con menor eficiencia.',
-  'Nuevo anuncio · Copia 2b':'Bajo volumen. Sin datos suficientes para evaluar. Campaña pausada.',
+const LEARNINGS = {
+  'HOMBRE EN LA COCINA':     'El bogotano conecta con este concepto. CTR más alto activo (6.31%), menor costo/conv. ($2.166). ESCALAR en julio con nuevas variaciones.',
+  'Nuevo anuncio · Copia 2': 'Mejor CTR de toda la cuenta (6.61%) a pesar de ser campaña nacional. El concepto funciona — migrar a campaña bogotana en julio.',
+  'LA MUJER PREP. PLATO':    'Rendimiento intermedio en Bogotá. Mayor volumen de conversaciones pero con mayor inversión. Optimizar copy y CTA en julio.',
+  'Nuevo anuncio · Copia':   'CPC más alto ($945), menor eficiencia. Campaña pausada. Revisar concepto antes de reutilizar en Bogotá.',
+  'LA MAMÁ CON EL BEBÉ':     'Datos claros: el perfil "mamá + bebé" no resuena con la audiencia bogotana de este servicio. Rediseñar ángulo hacia perfil profesional urbano para julio.',
+  'Nuevo anuncio · Copia 2b':'Volumen muy bajo — datos insuficientes para conclusión en Bogotá. Campaña pausada.',
 };
 
-function tierOf(ad) {
-  if (ad.status !== 'ACTIVE') return 'P';
-  if (ad.ctr >= 5.5 && ad.cpr <= 2500) return 'S';
-  if (ad.ctr >= 4.0 || ad.cpr <= 2200) return 'A';
-  if (ad.ctr >= 3.0 && ad.cpr <= 3200) return 'B';
+function tierOf(a) {
+  if (a.status !== 'ACTIVE') return 'P';
+  if (a.ctr >= 5.5 && a.cpr <= 2500) return 'S';
+  if (a.ctr >= 4.0 || a.cpr <= 2200) return 'A';
+  if (a.ctr >= 3.0 && a.cpr <= 3200) return 'B';
   return 'C';
 }
 
 let FUNNEL = { imp:46564, clicks:1748, conv:312, leads:34, quotes:0, sales:0 };
 
-// ─── NAV ────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
 function goTab(i, el) {
   document.querySelectorAll('.section').forEach((s,j) => s.classList.toggle('active', j===i));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   (el || document.querySelectorAll('.nav-item')[i]).classList.add('active');
-  if (i===3) buildFunnel();
 }
 
-// ─── FORMAT ─────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// FORMAT
+// ═══════════════════════════════════════════
 function n(v) { return Number(v).toLocaleString('es-CO'); }
 
-// ─── KPI GRID ───────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// KPI GRID — RESUMEN
+// ═══════════════════════════════════════════
 function buildKpis() {
   const d = HIST[0];
   const kpis = [
-    { lbl:'Inversión Total',   val:'$'+n(d.spend),      sub:'COP',                         color:'#E8462A', ico:'💰', tag:null },
-    { lbl:'Alcance',           val:n(d.reach),           sub:'personas únicas',             color:'#3B82F6', ico:'👥', tag:null },
-    { lbl:'Impresiones',       val:n(d.imp),             sub:'veces mostrado',              color:'#8B5CF6', ico:'👁️', tag:null },
-    { lbl:'Clics',             val:n(d.clicks),          sub:'total',                       color:'#F59E0B', ico:'🖱️', tag:null },
-    { lbl:'CTR',               val:d.ctr+'%',            sub:'tasa de clics promedio',      color:'#22C55E', ico:'📊', tag:{c:'t-great',t:'▲ Supera benchmark industria'} },
-    { lbl:'CPC',               val:'$'+n(d.cpc),         sub:'COP por clic',               color:'#F97316', ico:'💸', tag:null },
-    { lbl:'CPM',               val:'$'+n(d.cpm),         sub:'COP por 1.000 impresiones',  color:'#06B6D4', ico:'📉', tag:null },
-    { lbl:'Conv. WA Iniciadas',val:n(d.conv),            sub:'⭐ KPI principal real',       color:'#3B82F6', ico:'💬', tag:{c:'t-good',t:'KPI principal de campaña'} },
-    { lbl:'Costo / Conv. WA',  val:'$'+n(d.cprConv),    sub:'COP por chat de WhatsApp',   color:'#E8462A', ico:'📌', tag:null },
-    { lbl:'Contactos Meta ⓘ',  val:'34',                 sub:'campo "lead" API · ver nota', color:'#94A3B8', ico:'🤔', tag:{c:'t-warn',t:'⚠️ Origen incierto · ver alerta'} },
-    { lbl:'Ventas',            val:d.sales||'—',         sub:'ingresar desde CRM',         color:'#8B5CF6', ico:'🛒', tag:{c:'t-na',t:'Pendiente — datos CRM'} },
-    { lbl:'ROAS',              val:d.roas,               sub:'sin datos de venta aún',     color:'#22C55E', ico:'📈', tag:{c:'t-na',t:'Requiere píxel + ventas'} },
+    { l:'Inversión Total',      v:'$'+n(d.spend),    s:'COP · Solo Bogotá',          c:'#E8462A', i:'💰', t:null },
+    { l:'Alcance Bogotá',       v:n(d.reach),        s:'personas únicas en Bogotá',  c:'#3B82F6', i:'📍', t:null },
+    { l:'Impresiones',          v:n(d.imp),          s:'veces mostrado',             c:'#8B5CF6', i:'👁️', t:null },
+    { l:'Clics',                v:n(d.clicks),       s:'total en Bogotá',            c:'#F59E0B', i:'🖱️', t:null },
+    { l:'CTR Bogotá',           v:d.ctr+'%',         s:'supera benchmark (~1.5%)',   c:'#22C55E', i:'📊', t:{c:'tg',t:'▲ Excelente en Bogotá'} },
+    { l:'CPC',                  v:'$'+n(d.cpc),      s:'COP por clic',              c:'#F97316', i:'💸', t:null },
+    { l:'CPM Bogotá',           v:'$'+n(d.cpm),      s:'costo por 1.000 imp.',      c:'#06B6D4', i:'📉', t:{c:'tn',t:'Mercado bogotano premium'} },
+    { l:'Conv. WhatsApp',       v:n(d.conv),         s:'⭐ KPI principal Fase 1',    c:'#3B82F6', i:'💬', t:{c:'tb',t:'KPI real de campaña'} },
+    { l:'Costo por Conv. WA',   v:'$'+n(d.cprConv),  s:'COP por chat iniciado',     c:'#E8462A', i:'📌', t:null },
+    { l:'Contactos Meta ⓘ',     v:'34',              s:'ver nota · origen incierto', c:'#94A3B8', i:'🤔', t:{c:'tw',t:'⚠️ Validar en WA Business'} },
+    { l:'Ventas',               v:d.sales||'—',      s:'agregar desde CRM',         c:'#8B5CF6', i:'🛒', t:{c:'tn',t:'Se mide desde Fase 3'} },
+    { l:'ROAS',                 v:d.roas,            s:'activo desde Fase 2 (jul)',  c:'#22C55E', i:'📈', t:{c:'tn',t:'Requiere píxel de compra'} },
   ];
-  document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
-    <div class="kpi" style="--k-color:${k.color}">
-      <div class="kpi-head"><div class="kpi-label">${k.lbl}</div><div class="kpi-emoji">${k.ico}</div></div>
-      <div class="kpi-val">${k.val}</div>
-      <div class="kpi-sub">${k.sub}</div>
-      ${k.tag ? `<div class="kpi-tag ${k.tag.c}">${k.tag.t}</div>` : ''}
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k=>`
+    <div class="kpi" style="--kc:${k.c}">
+      <div class="kpi-hd"><div class="kpi-lbl">${k.l}</div><div class="kpi-ico">${k.i}</div></div>
+      <div class="kpi-val">${k.v}</div>
+      <div class="kpi-sub">${k.s}</div>
+      ${k.t?`<div class="kpi-tag ${k.t.c}">${k.t.t}</div>`:''}
     </div>`).join('');
 }
 
-// ─── CREATIVE CARDS ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// CREATIVE CARDS
+// ═══════════════════════════════════════════
 function buildCreatives() {
+  const TC = {S:'#22C55E',A:'#3B82F6',B:'#F59E0B',C:'#EF4444',P:'#94A3B8'};
+  const TL = {S:'S · Escalar en Jul 🚀',A:'A · Mantener ✅',B:'B · Optimizar 🔧',C:'C · Pausar ⚠️',P:'P · Campaña pausada 🔒'};
   document.getElementById('creativeGrid').innerHTML = ADS.map(a => {
     const t = tierOf(a);
-    const tierColor = {S:'#22C55E',A:'#3B82F6',B:'#F59E0B',C:'#EF4444',P:'#94A3B8'}[t];
-    const tierLabel = {S:'S · Escalar 🚀',A:'A · Mantener ✅',B:'B · Optimizar 🔧',C:'C · Revisar ⚠️',P:'P · Pausado 🔒'}[t];
-    return `
-    <div class="cc ${t}">
-      <div class="cc-tier t${t}" style="background:${tierColor}">${t}</div>
+    return `<div class="cc ${t}">
+      <div class="cc-tier" style="background:${TC[t]}">${t}</div>
       <div class="cc-name">${a.name}</div>
       <div class="cc-stats">
-        <div class="cs"><div class="cs-lbl">CTR</div><div class="cs-val ${a.ctr>=5.5?'gd':a.ctr<3?'bd':''}">${a.ctr}%</div></div>
-        <div class="cs"><div class="cs-lbl">CPC (COP)</div><div class="cs-val ${a.cpc<=380?'gd':a.cpc>=800?'bd':''}">${n(a.cpc)}</div></div>
-        <div class="cs"><div class="cs-lbl">Conversaciones</div><div class="cs-val">${a.conv}</div></div>
-        <div class="cs"><div class="cs-lbl">Costo/Conv.</div><div class="cs-val ${a.cpr<=2000?'gd':a.cpr>=3800?'bd':''}">${n(a.cpr)}</div></div>
-        <div class="cs"><div class="cs-lbl">Invertido (COP)</div><div class="cs-val">${n(a.spend)}</div></div>
-        <div class="cs"><div class="cs-lbl">Frecuencia</div><div class="cs-val">${a.freq}</div></div>
+        <div class="cs"><div class="cs-l">CTR Bogotá</div><div class="cs-v ${a.ctr>=5.5?'gd':a.ctr<3?'bd':''}">${a.ctr}%</div></div>
+        <div class="cs"><div class="cs-l">CPC (COP)</div><div class="cs-v ${a.cpc<=380?'gd':a.cpc>=800?'bd':''}">${n(a.cpc)}</div></div>
+        <div class="cs"><div class="cs-l">Conversaciones</div><div class="cs-v">${a.conv}</div></div>
+        <div class="cs"><div class="cs-l">Costo/Conv.</div><div class="cs-v ${a.cpr<=2000?'gd':a.cpr>=3800?'bd':''}">${n(a.cpr)}</div></div>
+        <div class="cs"><div class="cs-l">Invertido (COP)</div><div class="cs-v">${n(a.spend)}</div></div>
+        <div class="cs"><div class="cs-l">Frecuencia</div><div class="cs-v">${a.freq}</div></div>
       </div>
       <div class="cc-foot">
-        <div class="badge ${a.status==='ACTIVE'?'b-green':a.status==='CAMP_PAUSED'?'b-yellow':'b-gray'}" style="margin-bottom:6px">
-          ${a.status==='ACTIVE'?'● Activo':a.status==='CAMP_PAUSED'?'⏸ Campaña pausada':'⏸ Pausado'}
-        </div>
-        &nbsp;<span style="font-size:10px;background:${tierColor}22;color:${tierColor};padding:1px 7px;border-radius:10px;font-weight:800">${tierLabel}</span>
-        <div class="cc-verdict">${VERDICTS[a.name]||''}</div>
+        <span class="badge ${a.status==='ACTIVE'?'bg':a.status==='CAMP_PAUSED'?'by':'bgr'}">${a.status==='ACTIVE'?'● Activo Bogotá':a.status==='CAMP_PAUSED'?'⏸ Camp. pausada':'⏸ Pausado'}</span>
+        &nbsp;<span style="font-size:10px;background:${TC[t]}22;color:${TC[t]};padding:1px 7px;border-radius:10px;font-weight:800">${TL[t]}</span>
+        <div class="cc-learning">${LEARNINGS[a.name]||''}</div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ─── FUNNEL ─────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// FUNNEL
+// ═══════════════════════════════════════════
 function buildFunnel() {
   const F = FUNNEL;
   const steps = [
-    { n:1, lbl:'Impresiones',      sub:'Anuncio mostrado en el feed',      val:F.imp,    color:'#8B5CF6' },
-    { n:2, lbl:'Clics al anuncio', sub:'Persona hizo clic',               val:F.clicks, color:'#3B82F6' },
-    { n:3, lbl:'Conv. WhatsApp',   sub:'Chat iniciado en WA',             val:F.conv,   color:'#F59E0B' },
-    { n:4, lbl:'Contactos Meta',   sub:'Campo "lead" API Meta (incierto)',  val:F.leads,  color:'#E8462A' },
-    { n:5, lbl:'Cotizaciones',     sub:'Propuesta enviada (CRM)',          val:F.quotes, color:'#EF4444' },
-    { n:6, lbl:'Ventas cerradas',  sub:'Venta confirmada (CRM)',           val:F.sales,  color:'#22C55E' },
+    { n:1, lbl:'Impresiones',       sub:'Anuncio mostrado en Bogotá',        val:F.imp,    color:'#8B5CF6' },
+    { n:2, lbl:'Clics al anuncio',  sub:'Persona hizo clic',                val:F.clicks, color:'#3B82F6' },
+    { n:3, lbl:'Conv. WhatsApp',    sub:'Chat iniciado — KPI Fase 1',        val:F.conv,   color:'#22C55E' },
+    { n:4, lbl:'Contactos Meta',    sub:'Campo "lead" API · origen incierto',val:F.leads,  color:'#F59E0B' },
+    { n:5, lbl:'Cotizaciones',      sub:'Propuesta enviada (CRM)',           val:F.quotes, color:'#E8462A' },
+    { n:6, lbl:'Ventas cerradas',   sub:'Fase 3 · Conversión',              val:F.sales,  color:'#22C55E' },
   ];
-  const pct = (a, b) => b > 0 ? ((a/b)*100).toFixed(1)+'%' : '—';
+  const pct = (a,b) => b>0 ? ((a/b)*100).toFixed(1)+'%' : '—';
   const maxW = 100;
-
-  document.getElementById('funnelViz').innerHTML = steps.map((s, i) => {
-    const w = Math.max(32, maxW - i*12);
-    const prev = i > 0 ? steps[i-1].val : s.val;
-    const rate = i > 0 ? parseFloat(pct(s.val, prev)) : null;
-    const cls = rate !== null ? (rate >= 20 ? 'cp-hi' : rate < 10 ? 'cp-lo' : '') : '';
-    return `
-      ${i > 0 ? `<div class="f-connector"><div class="f-line"></div><div class="conv-pill ${cls}">${pct(s.val, prev)} conv.</div><div class="f-line"></div></div>` : ''}
-      <div class="f-row">
-        <div class="f-block" style="width:${w}%;border-color:${s.color}35;background:${s.color}0A">
-          <div style="display:flex;align-items:center;gap:10px">
-            <div class="f-num" style="background:${s.color}">${s.n}</div>
-            <div><div class="f-name">${s.lbl}</div><div class="f-sub">${s.sub}</div></div>
-          </div>
-          <div class="f-val" style="color:${s.color}">${s.val > 0 ? n(s.val) : '—'}</div>
-        </div>
-      </div>`;
+  document.getElementById('funnelViz').innerHTML = steps.map((s,i) => {
+    const w = Math.max(32, maxW - i*11);
+    const prev = i>0 ? steps[i-1].val : s.val;
+    const rate = i>0 ? parseFloat(pct(s.val,prev)) : null;
+    const cls = rate!==null ? (rate>=20?'cp-hi':rate<10?'cp-lo':'') : '';
+    return `${i>0?`<div class="f-conn"><div class="f-line"></div><div class="cpill ${cls}">${pct(s.val,prev)} conv.</div><div class="f-line"></div></div>`:''}
+    <div class="f-row"><div class="fb" style="width:${w}%;border-color:${s.color}35;background:${s.color}08">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="fb-n" style="background:${s.color}">${s.n}</div>
+        <div><div class="fb-name">${s.lbl}</div><div class="fb-sub">${s.sub}</div></div>
+      </div>
+      <div class="fb-val" style="color:${s.color}">${s.val>0?n(s.val):'—'}</div>
+    </div></div>`;
   }).join('');
 
   const rates = [
-    { lbl:'Impresiones → Clics',             r: pct(F.clicks, F.imp) },
-    { lbl:'Clics → Conv. WhatsApp',          r: pct(F.conv,   F.clicks) },
-    { lbl:'Conv. WA → Contactos Meta',       r: pct(F.leads,  F.conv) },
-    { lbl:'Contactos Meta → Cotizaciones',   r: pct(F.quotes, F.leads) },
-    { lbl:'Cotizaciones → Ventas',           r: pct(F.sales,  F.quotes) },
+    {l:'Impresiones → Clics',           r:pct(F.clicks,F.imp)},
+    {l:'Clics → Conv. WhatsApp',        r:pct(F.conv,F.clicks)},
+    {l:'Conv. WA → Contactos Meta',     r:pct(F.leads,F.conv)},
+    {l:'Contactos Meta → Cotizaciones', r:pct(F.quotes,F.leads)},
+    {l:'Cotizaciones → Ventas',         r:pct(F.sales,F.quotes)},
   ];
   document.getElementById('funnelStats').innerHTML = rates.map(r => {
     const pf = parseFloat(r.r);
-    const color = r.r==='—' ? 'var(--muted)' : pf>=20 ? 'var(--green)' : pf<10 ? 'var(--red)' : 'var(--yellow)';
+    const col = r.r==='—'?'var(--muted)':pf>=20?'var(--green)':pf<10?'var(--red)':'var(--yellow)';
     return `<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border)">
-      <span style="color:var(--muted)">${r.lbl}</span>
-      <strong style="color:${color}">${r.r}</strong>
+      <span style="color:var(--muted)">${r.l}</span>
+      <strong style="color:${col}">${r.r}</strong>
     </div>`;
   }).join('');
 }
 
-// ─── HIST TABLE ──────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// HIST TABLE
+// ═══════════════════════════════════════════
 function buildHistTable() {
-  document.getElementById('histTbody').innerHTML = HIST.map(d => `
+  document.getElementById('histTbody').innerHTML = HIST.map(d=>`
     <tr>
       <td><strong>${d.label}</strong></td>
       <td>$${n(d.spend)}</td><td>${n(d.reach)}</td><td>${n(d.imp)}</td><td>${n(d.clicks)}</td>
       <td>${d.ctr}%</td><td>${n(d.conv)}</td><td>$${n(d.cprConv)}</td>
-      <td><span class="badge b-yellow">${d.leads}</span></td>
+      <td><span class="badge by">${d.leads}</span></td>
       <td>${d.quotes||'—'}</td><td>${d.sales||'—'}</td>
       <td>${d.revenue?'$'+n(d.revenue):'—'}</td><td>${d.roas}</td>
     </tr>`).join('');
 }
 
-// ─── ANNUAL ──────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════
+// ANNUAL KPIs
+// ═══════════════════════════════════════════
 function buildAnnual() {
-  const totSpend = HIST.reduce((s,d) => s+d.spend, 0);
-  const totConv  = HIST.reduce((s,d) => s+d.conv,  0);
-  const totLeads = HIST.reduce((s,d) => s+d.leads, 0);
-  const totSales = HIST.reduce((s,d) => s+d.sales, 0);
-  const avgCTR   = (HIST.reduce((s,d) => s+d.ctr,  0) / HIST.length).toFixed(2);
-  const kpis = [
-    { lbl:'Total invertido',      val:'$'+n(totSpend),                         sub:'COP', color:'#E8462A', ico:'💰' },
-    { lbl:'Total conv. WA',       val:n(totConv),                              sub:'chats iniciados', color:'#3B82F6', ico:'💬' },
-    { lbl:'Contactos Meta',       val:totLeads,                                sub:'"lead" API · origen incierto', color:'#94A3B8', ico:'🤔' },
-    { lbl:'Total ventas',         val:totSales||'—',                           sub:'ingresar desde CRM', color:'#8B5CF6', ico:'🛒' },
-    { lbl:'CTR promedio',         val:avgCTR+'%',                              sub:'promedio del año', color:'#22C55E', ico:'📊' },
-    { lbl:'Costo/Conv. prom.',    val:'$'+n(Math.round(totSpend/totConv)),     sub:'COP por chat', color:'#F59E0B', ico:'📉' },
+  const ts=HIST.reduce((s,d)=>s+d.spend,0);
+  const tc=HIST.reduce((s,d)=>s+d.conv,0);
+  const tl=HIST.reduce((s,d)=>s+d.leads,0);
+  const tsa=HIST.reduce((s,d)=>s+d.sales,0);
+  const at=(HIST.reduce((s,d)=>s+d.ctr,0)/HIST.length).toFixed(2);
+  const kpis=[
+    {l:'Total invertido',     v:'$'+n(ts),                        s:'COP · Solo Bogotá', c:'#E8462A',ico:'💰'},
+    {l:'Total conv. WA',      v:n(tc),                            s:'chats de WhatsApp', c:'#3B82F6',ico:'💬'},
+    {l:'Contactos Meta',      v:tl,                               s:'"lead" API · validar', c:'#94A3B8',ico:'🤔'},
+    {l:'Total ventas',        v:tsa||'—',                         s:'Fase 3 activa desde ago', c:'#8B5CF6',ico:'🛒'},
+    {l:'CTR prom. Bogotá',    v:at+'%',                           s:'benchmark establecido', c:'#22C55E',ico:'📊'},
+    {l:'Costo/Conv. prom.',   v:'$'+n(Math.round(ts/tc)),         s:'COP por chat WA', c:'#F59E0B',ico:'📉'},
   ];
-  document.getElementById('annualKpis').innerHTML = kpis.map(k => `
-    <div class="kpi" style="--k-color:${k.color}">
-      <div class="kpi-head"><div class="kpi-label">${k.lbl}</div><div class="kpi-emoji">${k.ico}</div></div>
-      <div class="kpi-val">${k.val}</div>
-      <div class="kpi-sub">${k.sub}</div>
+  document.getElementById('annualKpis').innerHTML=kpis.map(k=>`
+    <div class="kpi" style="--kc:${k.c}">
+      <div class="kpi-hd"><div class="kpi-lbl">${k.l}</div><div class="kpi-ico">${k.ico}</div></div>
+      <div class="kpi-val">${k.v}</div>
+      <div class="kpi-sub">${k.s}</div>
     </div>`).join('');
 }
 
-// ─── CHARTS ──────────────────────────────────────────────────────────────────
-const CC = {};
-function mk(id, cfg) { if(CC[id]) CC[id].destroy(); CC[id] = new Chart(document.getElementById(id), cfg); }
-const PAL = ['#E8462A','#3B82F6','#22C55E','#F59E0B','#8B5CF6','#06B6D4'];
+// ═══════════════════════════════════════════
+// CHARTS
+// ═══════════════════════════════════════════
+const CC={};
+function mk(id,cfg){if(CC[id])CC[id].destroy();CC[id]=new Chart(document.getElementById(id),cfg);}
+const PAL=['#E8462A','#3B82F6','#22C55E','#F59E0B','#8B5CF6','#06B6D4'];
 
-function buildCharts() {
+function buildCharts(){
   // Tab 0
-  mk('cPie', { type:'doughnut', data:{
-    labels:['Max/ABO (80.3%)','Nueva campaña (19.7%)'],
-    datasets:[{data:[657929,161480],backgroundColor:['#E8462A','#F59E0B'],borderWidth:0,hoverOffset:8}]
-  }, options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}}}});
+  mk('cPie',{type:'doughnut',data:{
+    labels:['Max/ABO · Bogotá (80.3%)','Nueva campaña · Colombia (19.7%) ⚠️'],
+    datasets:[{data:[657929,161480],backgroundColor:['#E8462A','#94A3B8'],borderWidth:0,hoverOffset:8}]
+  },options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}}}});
 
-  mk('cBar0', { type:'bar', data:{
-    labels:['Max/ABO (Activa)','Nueva campaña (Pausada)'],
+  mk('cBar0',{type:'bar',data:{
+    labels:['Max/ABO\nBogotá (válido)','Nueva campaña\nColombia (no comparable)'],
     datasets:[
-      { label:'Inversión COP/1000', data:[657.9,161.5], backgroundColor:['#E8462A99','#94A3B899'], borderRadius:8, yAxisID:'y' },
-      { label:'Conv. WhatsApp', data:[223,89], type:'line', borderColor:'#3B82F6', backgroundColor:'#3B82F615', fill:true, tension:.3, pointRadius:7, pointBackgroundColor:'#3B82F6', borderWidth:3, yAxisID:'y2' }
+      {label:'Inversión COP/1000',data:[657.9,161.5],backgroundColor:['#E8462A99','#94A3B855'],borderRadius:8,yAxisID:'y'},
+      {label:'Conv. WA',data:[223,89],type:'line',borderColor:'#22C55E',backgroundColor:'#22C55E15',fill:true,tension:.3,pointRadius:7,pointBackgroundColor:['#22C55E','#94A3B8'],borderWidth:3,yAxisID:'y2'}
     ]
-  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'Inversión (k COP)'}},y2:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Conversaciones'}}}}});
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'Inversión k COP'}},y2:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Conversaciones WA'}}}}});
 
   // Tab 1
-  mk('cCampCTR', { type:'bar', data:{
-    labels:['Max/ABO\n(Activa)','Nueva campaña\n(Pausada)'],
-    datasets:[{label:'CTR (%)',data:[3.49,5.48],backgroundColor:['#F59E0B99','#22C55E99'],borderRadius:10,borderWidth:2,borderColor:['#F59E0B','#22C55E']}]
-  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:7,ticks:{callback:v=>v+'%'}}}}});
+  mk('cCampCTR',{type:'bar',data:{
+    labels:['Max/ABO\nBogotá ✓','Nueva campaña\nColombia ⚠️'],
+    datasets:[{label:'CTR (%)',data:[3.49,5.48],backgroundColor:['#22C55E99','#94A3B855'],borderRadius:10,borderWidth:2,borderColor:['#22C55E','#94A3B8']}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{max:7,ticks:{callback:v=>v+'%'}}}}});
 
-  mk('cCampCPR', { type:'bar', data:{
-    labels:['Max/ABO\n(Activa)','Nueva campaña\n(Pausada)'],
-    datasets:[{label:'Costo/Conv.',data:[2950,1814],backgroundColor:['#E8462A99','#22C55E99'],borderRadius:10,borderWidth:2,borderColor:['#E8462A','#22C55E']}]
-  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}},scales:{y:{ticks:{callback:v=>'$'+n(v)}}}}});
+  mk('cCampCPR',{type:'bar',data:{
+    labels:['Max/ABO\nBogotá ✓','Nueva campaña\nColombia ⚠️'],
+    datasets:[{label:'COP',data:[2950,1814],backgroundColor:['#3B82F699','#94A3B855'],borderRadius:10,borderWidth:2,borderColor:['#3B82F6','#94A3B8']}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}},scales:{y:{ticks:{callback:v=>'$'+n(v)}}}}});
 
   // Tab 2
-  const a5 = ADS.filter(a=>a.conv>0).slice(0,5);
-  mk('cAdCTR', { type:'bar', data:{
-    labels: a5.map(a=>a.name.length>18?a.name.substring(0,17)+'…':a.name),
-    datasets:[{label:'CTR (%)', data:a5.map(a=>a.ctr), backgroundColor:a5.map(a=>a.ctr>=6?'#22C55E99':a.ctr<3?'#EF444499':'#F59E0B99'), borderRadius:6}]
-  }, options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{max:8,ticks:{callback:v=>v+'%'}}}}});
+  const a5=ADS.filter(a=>a.conv>0).slice(0,5);
+  mk('cAdCTR',{type:'bar',data:{
+    labels:a5.map(a=>a.name.length>18?a.name.substring(0,17)+'…':a.name),
+    datasets:[{label:'CTR (%)',data:a5.map(a=>a.ctr),backgroundColor:a5.map(a=>a.ctr>=6?'#22C55E99':a.ctr<3?'#EF444499':'#F59E0B99'),borderRadius:6}]
+  },options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{max:8,ticks:{callback:v=>v+'%'}}}}});
 
-  mk('cAdCPR', { type:'bar', data:{
-    labels: a5.map(a=>a.name.length>18?a.name.substring(0,17)+'…':a.name),
-    datasets:[{label:'Costo/Conv.', data:a5.map(a=>a.cpr), backgroundColor:a5.map(a=>a.cpr<=2000?'#22C55E99':a.cpr>=3800?'#EF444499':'#F59E0B99'), borderRadius:6}]
-  }, options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}},scales:{x:{ticks:{callback:v=>'$'+n(v)}}}}});
+  mk('cAdCPR',{type:'bar',data:{
+    labels:a5.map(a=>a.name.length>18?a.name.substring(0,17)+'…':a.name),
+    datasets:[{label:'Costo/Conv.',data:a5.map(a=>a.cpr),backgroundColor:a5.map(a=>a.cpr<=2000?'#22C55E99':a.cpr>=3800?'#EF444499':'#F59E0B99'),borderRadius:6}]
+  },options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}},scales:{x:{ticks:{callback:v=>'$'+n(v)}}}}});
 
-  // Tab 3 funnel bar
-  mk('cFunnel', { type:'bar', data:{
+  // Tab 3
+  mk('cFunnel',{type:'bar',data:{
     labels:['Impresiones','Clics','Conv. WA','Cont. Meta','Cotizaciones','Ventas'],
     datasets:[{label:'Cantidad',data:[FUNNEL.imp,FUNNEL.clicks,FUNNEL.conv,FUNNEL.leads,FUNNEL.quotes||0,FUNNEL.sales||0],
-      backgroundColor:['#8B5CF699','#3B82F699','#F59E0B99','#E8462A99','#EF444499','#22C55E99'],borderRadius:6}]
-  }, options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{type:'logarithmic'}}}});
+    backgroundColor:['#8B5CF699','#3B82F699','#22C55E99','#F59E0B99','#E8462A99','#22C55E99'],borderRadius:6}]
+  },options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{type:'logarithmic'}}}});
 
-  // Tab 4 monthly
-  const labels = HIST.map(d=>d.label);
-  const line = (data, color) => ({
-    type:'line', data:{labels, datasets:[{data, borderColor:color, backgroundColor:color+'18', fill:true, tension:.4, pointRadius:7, pointBackgroundColor:color, borderWidth:3}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
+  // Tab 4
+  const labels=HIST.map(d=>d.label);
+  const line=(data,color,yCb)=>({
+    type:'line',data:{labels,datasets:[{data,borderColor:color,backgroundColor:color+'18',fill:true,tension:.4,pointRadius:7,pointBackgroundColor:color,borderWidth:3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:yCb?{y:{ticks:{callback:yCb}}}:{}}
   });
-  mk('cMSpend',  {...line(HIST.map(d=>d.spend),'#E8462A'), options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+n(v)}}}}});
-  mk('cMConv',   line(HIST.map(d=>d.conv),'#3B82F6'));
-  mk('cMLeads',  line(HIST.map(d=>d.leads),'#94A3B8'));
-  mk('cMCTR',    {...line(HIST.map(d=>d.ctr),'#22C55E'), options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'}}}}});
+  mk('cMSpend',line(HIST.map(d=>d.spend),'#E8462A',v=>'$'+n(v)));
+  mk('cMConv', line(HIST.map(d=>d.conv),'#22C55E'));
+  mk('cMLeads',line(HIST.map(d=>d.leads),'#94A3B8'));
+  mk('cMCTR',  line(HIST.map(d=>d.ctr),'#3B82F6',v=>v+'%'));
 
-  // Tab 5 annual
-  const ts=HIST.reduce((s,d)=>s+d.spend,0), tc=HIST.reduce((s,d)=>s+d.conv,0);
-  mk('cAnnBar', { type:'bar', data:{
+  // Tab 5
+  const ts=HIST.reduce((s,d)=>s+d.spend,0);
+  mk('cAnnBar',{type:'bar',data:{
     labels:['Inversión\n(/1000)','Impresiones','Clics','Conv. WA','Cont. Meta'],
-    datasets:[{label:'Acumulado',data:[Math.round(ts/1000),HIST.reduce((s,d)=>s+d.imp,0),HIST.reduce((s,d)=>s+d.clicks,0),tc,HIST.reduce((s,d)=>s+d.leads,0)],backgroundColor:PAL,borderRadius:8}]
-  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+    datasets:[{label:'Acumulado',data:[Math.round(ts/1000),HIST.reduce((s,d)=>s+d.imp,0),HIST.reduce((s,d)=>s+d.clicks,0),HIST.reduce((s,d)=>s+d.conv,0),HIST.reduce((s,d)=>s+d.leads,0)],backgroundColor:PAL,borderRadius:8}]
+  },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
 
-  mk('cAnnPie', { type:'doughnut', data:{
-    labels:['Inversión Meta Ads (COP/1000)','Conv. WA ×1000','Contactos Meta ×100'],
-    datasets:[{data:[Math.round(ts/1000),tc,HIST.reduce((s,d)=>s+d.leads,0)*100],backgroundColor:['#E8462A','#3B82F6','#94A3B8'],borderWidth:0}]
-  }, options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'}}}});
+  mk('cAnnPie',{type:'doughnut',data:{
+    labels:['Inversión Meta Ads','Conversaciones WA','Contactos Meta'],
+    datasets:[{data:[Math.round(ts/1000),HIST.reduce((s,d)=>s+d.conv,0),HIST.reduce((s,d)=>s+d.leads,0)],backgroundColor:['#E8462A','#22C55E','#94A3B8'],borderWidth:0}]
+  },options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'}}}});
 }
 
-// ─── ADD MONTH ───────────────────────────────────────────────────────────────
-const MES = {ene:'Ene',feb:'Feb',mar:'Mar',abr:'Abr',may:'May',jun:'Jun',jul:'Jul',ago:'Ago',sep:'Sep',oct:'Oct',nov:'Nov',dic:'Dic'};
-function addMonth() {
-  const m = document.getElementById('nMes').value;
-  const y = document.getElementById('nAno').value;
-  const key = m+y, label = MES[m]+' '+y;
-  if (HIST.find(d=>d.key===key)) { alert('Ya existe '+label); return; }
-  const sp = parseFloat(document.getElementById('nSpend').value)||0;
-  if (!sp) { alert('La inversión es requerida.'); return; }
-  const obj = {
-    key, label,
-    spend: sp,
-    reach: parseInt(document.getElementById('nReach').value)||0,
-    imp:   parseInt(document.getElementById('nImp').value)||0,
+// ═══════════════════════════════════════════
+// ADD MONTH
+// ═══════════════════════════════════════════
+const MES={ene:'Ene',feb:'Feb',mar:'Mar',abr:'Abr',may:'May',jun:'Jun',jul:'Jul',ago:'Ago',sep:'Sep',oct:'Oct',nov:'Nov',dic:'Dic'};
+function addMonth(){
+  const m=document.getElementById('nMes').value, y=document.getElementById('nAno').value;
+  const key=m+y, label=MES[m]+' '+y;
+  if(HIST.find(d=>d.key===key)){alert('Ya existe '+label);return;}
+  const sp=parseFloat(document.getElementById('nSpend').value)||0;
+  if(!sp){alert('La inversión es requerida.');return;}
+  const obj={
+    key,label,
+    spend:sp,
+    reach:parseInt(document.getElementById('nReach').value)||0,
+    imp:parseInt(document.getElementById('nImp').value)||0,
     clicks:parseInt(document.getElementById('nClics').value)||0,
-    ctr:   parseFloat(document.getElementById('nCTR').value)||0,
-    cpc:   parseFloat(document.getElementById('nCPC').value)||0,
-    cpm:   parseFloat(document.getElementById('nCPM').value)||0,
-    conv:  parseInt(document.getElementById('nConv').value)||0,
-    leads: parseInt(document.getElementById('nLeads').value)||0,
+    ctr:parseFloat(document.getElementById('nCTR').value)||0,
+    cpc:parseFloat(document.getElementById('nCPC').value)||0,
+    cpm:parseFloat(document.getElementById('nCPM').value)||0,
+    conv:parseInt(document.getElementById('nConv').value)||0,
+    leads:parseInt(document.getElementById('nLeads').value)||0,
     quotes:parseInt(document.getElementById('nQuotes').value)||0,
-    sales: parseInt(document.getElementById('nSales').value)||0,
+    sales:parseInt(document.getElementById('nSales').value)||0,
     revenue:parseFloat(document.getElementById('nRevenue').value)||0,
     ticket:parseFloat(document.getElementById('nTicket').value)||0,
-    get cprConv(){ return this.conv>0?Math.round(this.spend/this.conv):0; },
-    get roas(){ return this.spend>0&&this.revenue>0?(this.revenue/this.spend).toFixed(2):'N/A'; }
+    get cprConv(){return this.conv>0?Math.round(this.spend/this.conv):0;},
+    get roas(){return this.revenue>0?(this.revenue/this.spend).toFixed(2):'N/A';}
   };
   HIST.push(obj);
-  FUNNEL.quotes = HIST.reduce((s,d)=>s+(d.quotes||0),0);
-  FUNNEL.sales  = HIST.reduce((s,d)=>s+(d.sales||0),0);
-  const sel = document.getElementById('monthSel');
-  const opt = document.createElement('option'); opt.value=key; opt.text=label; sel.add(opt); sel.value=key;
-  renderAll();
-  clearForm();
-  alert('✅ '+label+' agregado correctamente. Los gráficos ya están actualizados.');
+  FUNNEL.quotes=HIST.reduce((s,d)=>s+(d.quotes||0),0);
+  FUNNEL.sales=HIST.reduce((s,d)=>s+(d.sales||0),0);
+  const sel=document.getElementById('monthSel');
+  const opt=document.createElement('option');opt.value=key;opt.text=label;sel.add(opt);sel.value=key;
+  renderAll();clearForm();
+  alert('✅ '+label+' agregado. Los gráficos ya están actualizados.');
 }
-
-function clearForm() {
+function clearForm(){
   ['nSpend','nReach','nImp','nClics','nCTR','nCPC','nCPM','nConv','nLeads','nQuotes','nSales','nRevenue','nTicket'].forEach(id=>document.getElementById(id).value='');
 }
 
-// ─── RENDER ALL ──────────────────────────────────────────────────────────────
-function renderAll() {
-  buildKpis();
-  buildCreatives();
-  buildFunnel();
-  buildHistTable();
-  buildAnnual();
-  buildCharts();
+// ═══════════════════════════════════════════
+// RENDER ALL
+// ═══════════════════════════════════════════
+function renderAll(){
+  buildKpis();buildCreatives();buildFunnel();
+  buildHistTable();buildAnnual();buildCharts();
 }
-
-document.addEventListener('DOMContentLoaded', renderAll);
+document.addEventListener('DOMContentLoaded',renderAll);
 </script>
 </body>
 </html>
