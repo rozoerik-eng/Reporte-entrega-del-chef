@@ -3,1692 +3,849 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Ejecutivo — Entrega del Chef</title>
+<title>Dashboard · Entrega del Chef</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  :root {
-    --brand: #E8462A;
-    --brand-dark: #C2381F;
-    --brand-light: #FDECEA;
-    --accent: #F7A732;
-    --green: #27AE60;
-    --red: #E74C3C;
-    --blue: #2980B9;
-    --purple: #8E44AD;
-    --dark: #1A1A2E;
-    --dark2: #16213E;
-    --card: #FFFFFF;
-    --bg: #F4F6FA;
-    --text: #2C3E50;
-    --muted: #7F8C8D;
-    --border: #E8ECF0;
-    --shadow: 0 2px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.5;
-  }
-
-  /* HEADER */
-  .header {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
-    color: white;
-    padding: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 32px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .logo-area { display: flex; align-items: center; gap: 14px; }
-
-  .logo-icon {
-    width: 44px; height: 44px;
-    background: var(--brand);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-  }
-
-  .logo-text h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
-  .logo-text p { font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
-
-  .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
-  .month-selector {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 8px;
-    padding: 6px 12px;
-    color: white;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  select.month-pick {
-    background: transparent; border: none; color: white; font-size: 13px; cursor: pointer; outline: none;
-    font-weight: 600;
-  }
-
-  select.month-pick option { background: var(--dark); }
-
-  .btn {
-    padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;
-    font-size: 12px; font-weight: 600; transition: all 0.2s; text-transform: uppercase;
-    letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;
-  }
-
-  .btn-primary { background: var(--brand); color: white; }
-  .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
-  .btn-secondary { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25); }
-  .btn-secondary:hover { background: rgba(255,255,255,0.25); }
-  .btn-green { background: var(--green); color: white; }
-  .btn-green:hover { background: #219A52; }
-
-  /* LIVE BADGE */
-  .live-badge {
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(39,174,96,0.2);
-    border: 1px solid rgba(39,174,96,0.4);
-    border-radius: 20px;
-    padding: 4px 10px;
-    font-size: 11px; font-weight: 600; color: #2ECC71;
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-
-  .live-dot {
-    width: 6px; height: 6px;
-    background: #2ECC71; border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-  /* NAV TABS */
-  .nav-tabs {
-    display: flex; gap: 0;
-    background: rgba(0,0,0,0.2);
-    padding: 0 32px;
-    overflow-x: auto;
-  }
-
-  .nav-tab {
-    padding: 10px 18px;
-    color: rgba(255,255,255,0.6);
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-    border-bottom: 3px solid transparent;
-    white-space: nowrap;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .nav-tab:hover { color: rgba(255,255,255,0.9); }
-  .nav-tab.active { color: white; border-bottom-color: var(--brand); }
-
-  /* MAIN LAYOUT */
-  .main { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
-
-  /* SECTION */
-  .section { margin-bottom: 32px; display: none; }
-  .section.active { display: block; }
-
-  .section-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
-  }
-
-  .section-title {
-    display: flex; align-items: center; gap: 10px;
-    font-size: 18px; font-weight: 700; color: var(--text);
-  }
-
-  .section-title .icon {
-    width: 36px; height: 36px;
-    background: var(--brand-light);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-
-  .section-date {
-    font-size: 12px; color: var(--muted); font-weight: 500;
-    background: var(--border); padding: 4px 10px; border-radius: 20px;
-  }
-
-  /* KPI GRID */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .kpi-card {
-    background: var(--card);
-    border-radius: 14px;
-    padding: 18px 20px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-    transition: transform 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: var(--kpi-color, var(--brand));
-  }
-
-  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 8px; }
-  .kpi-value { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 6px; }
-  .kpi-sub { font-size: 11px; color: var(--muted); }
-  .kpi-delta {
-    display: inline-flex; align-items: center; gap: 3px;
-    font-size: 11px; font-weight: 700;
-    padding: 2px 6px; border-radius: 4px;
-    margin-top: 4px;
-  }
-  .delta-up { background: #D5F5E3; color: #27AE60; }
-  .delta-down { background: #FDEDEC; color: #E74C3C; }
-  .delta-neutral { background: #EBF5FB; color: #2980B9; }
-
-  .kpi-icon {
-    position: absolute;
-    top: 16px; right: 16px;
-    font-size: 24px; opacity: 0.15;
-  }
-
-  /* CARDS */
-  .card {
-    background: var(--card);
-    border-radius: 14px;
-    padding: 24px;
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border);
-  }
-
-  .card-title {
-    font-size: 14px; font-weight: 700; color: var(--text);
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  .card-title .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--brand);
-  }
-
-  /* GRID LAYOUTS */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-  .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-
-  /* TABLE */
-  .table-wrap { overflow-x: auto; }
-
-  table { width: 100%; border-collapse: collapse; }
-  th {
-    text-align: left; padding: 10px 14px;
-    background: #F8FAFC; color: var(--muted);
-    font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
-    font-weight: 700; border-bottom: 2px solid var(--border);
-    white-space: nowrap;
-  }
-  td {
-    padding: 12px 14px; border-bottom: 1px solid var(--border);
-    font-size: 13px; vertical-align: middle;
-  }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #FAFBFC; }
-
-  .badge {
-    display: inline-block; padding: 3px 8px; border-radius: 20px;
-    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
-  }
-  .badge-green { background: #D5F5E3; color: #1E8449; }
-  .badge-red { background: #FDEDEC; color: #C0392B; }
-  .badge-yellow { background: #FEF9E7; color: #B7950B; }
-  .badge-blue { background: #EBF5FB; color: #1A5276; }
-  .badge-gray { background: #F2F3F4; color: #566573; }
-
-  /* RANKING BAR */
-  .rank-bar-wrap { display: flex; align-items: center; gap: 10px; }
-  .rank-bar-bg { flex: 1; background: #F2F3F4; border-radius: 4px; height: 6px; }
-  .rank-bar-fill { height: 6px; border-radius: 4px; background: var(--brand); transition: width 0.8s ease; }
-
-  /* FUNNEL */
-  .funnel { display: flex; flex-direction: column; align-items: center; gap: 0; }
-
-  .funnel-step {
-    width: 100%; max-width: 600px;
-    position: relative;
-    margin-bottom: 4px;
-  }
-
-  .funnel-box {
-    background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: all 0.2s;
-    position: relative;
-  }
-
-  .funnel-box:hover { border-color: var(--brand); box-shadow: var(--shadow); }
-
-  .funnel-step-num {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 800; font-size: 12px; color: white;
-    flex-shrink: 0;
-  }
-
-  .funnel-arrow {
-    text-align: center; color: var(--muted); font-size: 18px;
-    padding: 4px 0;
-    display: flex; flex-direction: column; align-items: center;
-  }
-
-  .conversion-rate {
-    font-size: 11px; font-weight: 700;
-    color: var(--green);
-    background: #D5F5E3;
-    padding: 2px 8px; border-radius: 10px;
-  }
-
-  .funnel-label { font-weight: 700; font-size: 15px; }
-  .funnel-value { font-size: 26px; font-weight: 800; }
-  .funnel-sub { font-size: 11px; color: var(--muted); }
-
-  /* INSIGHTS */
-  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-  .insight-card {
-    border-radius: 12px;
-    padding: 18px;
-    display: flex; gap: 14px; align-items: flex-start;
-    border: 1px solid transparent;
-  }
-
-  .insight-card.positive { background: #F0FBF4; border-color: #A9DFBF; }
-  .insight-card.negative { background: #FDF2F2; border-color: #F1948A; }
-  .insight-card.warning { background: #FEFAF0; border-color: #FAD7A0; }
-  .insight-card.info { background: #EBF5FB; border-color: #A9CCE3; }
-
-  .insight-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
-  .insight-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
-  .insight-text { font-size: 12px; color: var(--text); line-height: 1.6; }
-
-  /* RECOMMENDATIONS */
-  .rec-list { display: flex; flex-direction: column; gap: 12px; }
-
-  .rec-item {
-    display: flex; gap: 14px; align-items: flex-start;
-    padding: 16px; background: white;
-    border-radius: 12px; border: 1px solid var(--border);
-    transition: all 0.2s;
-  }
-  .rec-item:hover { box-shadow: var(--shadow); border-color: var(--brand); }
-
-  .rec-num {
-    width: 32px; height: 32px; flex-shrink: 0;
-    background: var(--brand);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 800; font-size: 14px;
-  }
-
-  .rec-priority {
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.5px; padding: 2px 8px; border-radius: 10px;
-  }
-  .priority-alta { background: #FDEDEC; color: #C0392B; }
-  .priority-media { background: #FEF9E7; color: #B7950B; }
-  .priority-baja { background: #EBF5FB; color: #1A5276; }
-
-  /* UPDATE FORM */
-  .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-  .form-input {
-    padding: 10px 14px; border: 1.5px solid var(--border);
-    border-radius: 8px; font-size: 14px; color: var(--text);
-    transition: border-color 0.2s; background: white;
-    outline: none;
-  }
-  .form-input:focus { border-color: var(--brand); }
-
-  .form-section { margin-bottom: 24px; }
-  .form-section-title {
-    font-size: 13px; font-weight: 700; color: var(--text);
-    margin-bottom: 12px; padding-bottom: 8px;
-    border-bottom: 2px solid var(--brand-light);
-    text-transform: uppercase; letter-spacing: 0.5px;
-  }
-
-  /* CHART CONTAINERS */
-  .chart-container { position: relative; }
-
-  /* PROGRESS CIRCLES */
-  .metric-circle {
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    padding: 16px;
-  }
-  .metric-circle-label { font-size: 11px; color: var(--muted); text-align: center; font-weight: 600; }
-  .metric-circle-value { font-size: 18px; font-weight: 800; color: var(--text); }
-
-  /* ALERT BANNER */
-  .alert {
-    padding: 12px 16px; border-radius: 10px; margin-bottom: 16px;
-    display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
-  }
-  .alert-info { background: #EBF5FB; border-left: 4px solid #2980B9; color: #1A5276; }
-  .alert-warning { background: #FEF9E7; border-left: 4px solid #F39C12; color: #7D6608; }
-  .alert-success { background: #EAFAF1; border-left: 4px solid #27AE60; color: #1E8449; }
-
-  /* PRINT */
-  @media print {
-    .header-actions, .nav-tabs, .btn, .update-section { display: none !important; }
-    .section { display: block !important; page-break-before: always; }
-    .section:first-child { page-break-before: auto; }
-    body { background: white; font-size: 12px; }
-    .kpi-card, .card { box-shadow: none; border: 1px solid #ddd; }
-    .main { padding: 16px; }
-    .grid-2, .grid-3 { display: grid; }
-  }
-
-  @media (max-width: 768px) {
-    .main { padding: 16px; }
-    .header-inner { padding: 12px 16px; }
-    .nav-tabs { padding: 0 16px; }
-    .grid-2, .grid-3, .grid-2-1 { grid-template-columns: 1fr; }
-    .insight-grid { grid-template-columns: 1fr; }
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  /* SCORE CARD */
-  .score-ring {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 20px;
-  }
-
-  .score-number { font-size: 48px; font-weight: 900; color: var(--brand); line-height: 1; }
-  .score-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
-  .score-desc { font-size: 11px; color: var(--text); margin-top: 8px; text-align: center; }
-
-  /* BEST/WORST PILLS */
-  .best-tag { background: #D5F5E3; color: #1E8449; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
-  .worst-tag { background: #FDEDEC; color: #C0392B; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
-
-  /* COMPARE ARROW */
-  .vs-arrow { font-size: 11px; color: var(--muted); }
-
-  /* FOOTER */
-  .footer {
-    text-align: center; padding: 24px 32px;
-    border-top: 1px solid var(--border);
-    color: var(--muted); font-size: 11px;
-    margin-top: 16px;
-  }
+:root {
+  --brand:#E8462A; --brand-dark:#C2381F; --brand-light:#FEF0EE;
+  --green:#22C55E; --green-bg:#F0FDF4; --green-border:#86EFAC;
+  --yellow:#F59E0B; --yellow-bg:#FFFBEB; --yellow-border:#FCD34D;
+  --red:#EF4444; --red-bg:#FEF2F2; --red-border:#FCA5A5;
+  --blue:#3B82F6; --blue-bg:#EFF6FF; --blue-border:#93C5FD;
+  --purple:#8B5CF6;
+  --bg:#F1F5F9; --card:#FFFFFF; --text:#0F172A; --muted:#64748B;
+  --border:#E2E8F0;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+  --radius:14px; --radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:10px;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#0F172A 0%,#1E293B 60%,#1a2744 100%);position:sticky;top:0;z-index:200;box-shadow:0 4px 24px rgba(0,0,0,.4);}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;flex-wrap:wrap;gap:10px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-logo{width:42px;height:42px;background:var(--brand);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 0 3px rgba(232,70,42,.25);}
+.brand h1{font-size:17px;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.brand p{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1.2px;}
+.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pill-live{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:#4ADE80;}
+.dot-live{width:6px;height:6px;background:#4ADE80;border-radius:50%;animation:blink 1.5s ease infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.btn{padding:7px 14px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+.btn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.18);}
+.btn-ghost:hover{background:rgba(255,255,255,.2);}
+.btn-green{background:#22C55E;color:#fff;}
+.btn-green:hover{background:#16A34A;}
+.month-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;color:#fff;font-size:12px;font-weight:700;}
+select.msv{background:transparent;border:none;color:#fff;font-size:12px;cursor:pointer;font-weight:700;outline:none;}
+select.msv option{background:#1E293B;}
+
+/* NAV */
+.nav{display:flex;padding:0 28px;overflow-x:auto;}
+.nav-item{padding:10px 16px;color:rgba(255,255,255,.5);font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;}
+.nav-item:hover{color:rgba(255,255,255,.85);}
+.nav-item.active{color:#fff;border-bottom-color:var(--brand);}
+
+/* MAIN */
+.main{padding:24px 28px;max-width:1380px;margin:0 auto;}
+.section{display:none;}
+.section.active{display:block;}
+
+/* SEC HEADER */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.sec-title{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;}
+.sec-icon{width:38px;height:38px;border-radius:10px;background:var(--brand-light);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.sec-badge{font-size:11px;background:var(--border);color:var(--muted);padding:4px 10px;border-radius:20px;font-weight:600;}
+
+/* ALERT */
+.alert{display:flex;gap:12px;padding:13px 16px;border-radius:var(--radius-sm);margin-bottom:20px;font-size:13px;line-height:1.6;}
+.alert-info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1E40AF;}
+.alert-warn{background:var(--yellow-bg);border:1px solid var(--yellow-border);color:#92400E;}
+.alert-success{background:var(--green-bg);border:1px solid var(--green-border);color:#166534;}
+.alert-icon{font-size:18px;flex-shrink:0;}
+
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:14px;margin-bottom:22px;}
+.kpi{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--border);box-shadow:var(--shadow);position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s;cursor:default;}
+.kpi:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--k-color,var(--brand));}
+.kpi-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.kpi-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;line-height:1.3;}
+.kpi-emoji{font-size:20px;}
+.kpi-val{font-size:24px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:5px;}
+.kpi-tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;margin-top:6px;}
+.t-great{background:#DCFCE7;color:#15803D;}
+.t-good{background:#DBEAFE;color:#1D4ED8;}
+.t-warn{background:#FEF3C7;color:#92400E;}
+.t-bad{background:#FEE2E2;color:#B91C1C;}
+.t-na{background:#F1F5F9;color:#64748B;}
+
+/* TOOLTIP */
+.tip{position:relative;display:inline-flex;align-items:center;}
+.tip-i{width:14px;height:14px;background:#94A3B8;color:#fff;border-radius:50%;font-size:9px;display:inline-flex;align-items:center;justify-content:center;cursor:help;margin-left:4px;font-weight:800;}
+.tip-box{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#0F172A;color:#E2E8F0;font-size:11px;padding:8px 12px;border-radius:8px;width:220px;line-height:1.5;z-index:999;box-shadow:var(--shadow-lg);pointer-events:none;}
+.tip-box::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#0F172A;}
+.tip:hover .tip-box{display:block;}
+
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:18px;}
+
+/* CARD */
+.card{background:var(--card);border-radius:var(--radius);padding:22px;border:1px solid var(--border);box-shadow:var(--shadow);}
+.card-title{font-size:12px;font-weight:800;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;}
+.card-title .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);}
+
+/* TABLE */
+.tscroll{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;padding:9px 12px;background:#F8FAFC;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:800;border-bottom:2px solid var(--border);white-space:nowrap;}
+td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:#FAFBFF;}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:800;text-transform:uppercase;}
+.b-green{background:#DCFCE7;color:#15803D;}
+.b-gray{background:#F1F5F9;color:#475569;}
+.b-yellow{background:#FEF3C7;color:#92400E;}
+
+/* CREATIVE CARDS */
+.creative-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;margin-bottom:22px;}
+.cc{background:var(--card);border-radius:var(--radius);border:2px solid var(--border);padding:18px;transition:all .2s;position:relative;overflow:hidden;}
+.cc:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
+.cc.S{border-color:#22C55E;background:linear-gradient(135deg,#F0FDF4 0%,#fff 60%);}
+.cc.A{border-color:#3B82F6;background:linear-gradient(135deg,#EFF6FF 0%,#fff 60%);}
+.cc.B{border-color:#F59E0B;background:linear-gradient(135deg,#FFFBEB 0%,#fff 60%);}
+.cc.C{border-color:#EF4444;background:linear-gradient(135deg,#FEF2F2 0%,#fff 60%);}
+.cc.P{border-color:#CBD5E1;background:#F8FAFC;opacity:.78;}
+.cc-tier{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;}
+.tS{background:#22C55E;} .tA{background:#3B82F6;} .tB{background:#F59E0B;} .tC{background:#EF4444;} .tP{background:#94A3B8;}
+.cc-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:13px;padding-right:36px;line-height:1.3;}
+.cc-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cs{display:flex;flex-direction:column;gap:2px;}
+.cs-lbl{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.cs-val{font-size:17px;font-weight:900;}
+.cs-val.gd{color:var(--green);} .cs-val.bd{color:var(--red);}
+.cc-foot{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);}
+.cc-verdict{font-size:11px;color:var(--muted);line-height:1.5;margin-top:5px;}
+
+/* FUNNEL */
+.funnel{display:flex;flex-direction:column;align-items:center;}
+.f-row{width:100%;display:flex;justify-content:center;}
+.f-block{border-radius:10px;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;border:2px solid;transition:all .2s;}
+.f-block:hover{box-shadow:var(--shadow-md);}
+.f-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0;}
+.f-name{font-weight:700;font-size:13px;}
+.f-sub{font-size:10px;color:var(--muted);}
+.f-val{font-size:22px;font-weight:900;text-align:right;}
+.f-connector{display:flex;flex-direction:column;align-items:center;padding:3px 0;gap:2px;}
+.f-line{width:2px;height:14px;background:var(--border);}
+.conv-pill{background:#fff;border:1px solid var(--border);border-radius:20px;padding:2px 10px;font-size:11px;font-weight:800;color:var(--muted);}
+.cp-hi{color:var(--green);border-color:var(--green-border);background:var(--green-bg);}
+.cp-lo{color:var(--red);border-color:var(--red-border);background:var(--red-bg);}
+
+/* INSIGHTS */
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ii{border-radius:var(--radius);padding:16px;border:1px solid;display:flex;gap:12px;}
+.ii.pos{background:var(--green-bg);border-color:var(--green-border);}
+.ii.neg{background:var(--red-bg);border-color:var(--red-border);}
+.ii.warn{background:var(--yellow-bg);border-color:var(--yellow-border);}
+.ii.info{background:var(--blue-bg);border-color:var(--blue-border);}
+.ii-icon{font-size:22px;flex-shrink:0;}
+.ii-title{font-size:13px;font-weight:800;margin-bottom:4px;}
+.ii-text{font-size:12px;line-height:1.6;}
+
+/* RECS */
+.rec-list{display:flex;flex-direction:column;gap:12px;}
+.ri{display:flex;gap:14px;padding:16px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);transition:all .2s;}
+.ri:hover{box-shadow:var(--shadow-md);border-color:var(--brand);}
+.ri-num{width:34px;height:34px;border-radius:10px;background:var(--brand);color:#fff;font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ri-body{flex:1;}
+.ri-head{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.ri-title{font-weight:800;font-size:14px;}
+.pr{font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;text-transform:uppercase;white-space:nowrap;}
+.pr-u{background:#FEE2E2;color:#B91C1C;}
+.pr-h{background:#FEF3C7;color:#92400E;}
+.pr-m{background:#DBEAFE;color:#1D4ED8;}
+.ri-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* FORM */
+.fs-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--brand-light);}
+.fg{display:flex;flex-direction:column;gap:5px;}
+.fl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+.fi{padding:10px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;color:var(--text);background:var(--card);outline:none;transition:border-color .2s;width:100%;}
+.fi:focus{border-color:var(--brand);}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:14px;margin-bottom:20px;}
+.divider{height:1px;background:var(--border);margin:18px 0;}
+.src-note{font-size:10px;color:var(--muted);margin-top:8px;}
+
+/* CHART */
+.chart-wrap{position:relative;}
+
+/* PRINT */
+@media print{
+  .header-actions,.nav,.btn{display:none!important;}
+  .section{display:block!important;page-break-before:always;}
+  .section:first-of-type{page-break-before:auto;}
+  body{background:#fff;}
+  .main{padding:12px;}
+}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .g2,.g3,.g21{grid-template-columns:1fr;}
+  .insight-grid{grid-template-columns:1fr;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .main,.header-top,.nav{padding-left:14px;padding-right:14px;}
+}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<!-- HEADER -->
 <header class="header">
-  <div class="header-inner">
-    <div class="logo-area">
-      <div class="logo-icon">🍽️</div>
-      <div class="logo-text">
+  <div class="header-top">
+    <div class="brand">
+      <div class="brand-logo">🍽️</div>
+      <div>
         <h1>Entrega del Chef</h1>
         <p>Dashboard Ejecutivo · Meta Ads</p>
       </div>
     </div>
-
     <div class="header-actions">
-      <div class="live-badge">
-        <div class="live-dot"></div>
-        Datos en vivo · Meta Ads
-      </div>
-
-      <div class="month-selector">
-        📅&nbsp;
-        <select class="month-pick" id="monthSelector" onchange="switchMonth(this.value)">
-          <option value="jun2026">Junio 2026</option>
-        </select>
-      </div>
-
-      <button class="btn btn-secondary" onclick="document.getElementById('updatePanel').scrollIntoView({behavior:'smooth'})">
-        ➕ Nuevo Mes
-      </button>
-      <button class="btn btn-secondary" onclick="window.print()">
-        🖨️ PDF
-      </button>
+      <div class="pill-live"><div class="dot-live"></div>Meta Ads · Datos reales</div>
+      <div class="month-pill">📅&nbsp;<select class="msv" id="monthSel"><option value="jun2026">Junio 2026</option></select></div>
+      <button class="btn btn-ghost" onclick="goTab(8)">➕ Nuevo mes</button>
+      <button class="btn btn-ghost" onclick="window.print()">🖨️ PDF</button>
     </div>
   </div>
-
-  <nav class="nav-tabs" id="navTabs">
-    <div class="nav-tab active" onclick="showSection(0, this)">📊 Resumen</div>
-    <div class="nav-tab" onclick="showSection(1, this)">🎯 Campañas</div>
-    <div class="nav-tab" onclick="showSection(2, this)">🎨 Creativos</div>
-    <div class="nav-tab" onclick="showSection(3, this)">🔻 Embudo</div>
-    <div class="nav-tab" onclick="showSection(4, this)">📈 Crecimiento</div>
-    <div class="nav-tab" onclick="showSection(5, this)">🏆 KPIs Anuales</div>
-    <div class="nav-tab" onclick="showSection(6, this)">💡 Insights</div>
-    <div class="nav-tab" onclick="showSection(7, this)">🚀 Recomendaciones</div>
-    <div class="nav-tab" onclick="showSection(8, this)">🔄 Actualizar</div>
+  <nav class="nav" id="navBar">
+    <div class="nav-item active" onclick="goTab(0,this)">📊 Resumen</div>
+    <div class="nav-item" onclick="goTab(1,this)">🎯 Campañas</div>
+    <div class="nav-item" onclick="goTab(2,this)">🎨 Creativos</div>
+    <div class="nav-item" onclick="goTab(3,this)">🔻 Embudo</div>
+    <div class="nav-item" onclick="goTab(4,this)">📈 Crecimiento</div>
+    <div class="nav-item" onclick="goTab(5,this)">🏆 KPIs Anuales</div>
+    <div class="nav-item" onclick="goTab(6,this)">💡 Insights</div>
+    <div class="nav-item" onclick="goTab(7,this)">🚀 Recomendaciones</div>
+    <div class="nav-item" onclick="goTab(8,this)">🔄 Actualizar</div>
   </nav>
 </header>
 
 <main class="main">
 
-<!-- ═══════════════════════ SECCIÓN 1: RESUMEN EJECUTIVO ═══════════════════════ -->
-<section class="section active" id="sec0">
-  <div class="section-header">
-    <div class="section-title">
-      <div class="icon">📊</div>
-      Resumen Ejecutivo
-    </div>
-    <div class="section-date">Junio 2026 · 1 – 29 jun · Datos reales Meta Ads</div>
+<!-- ═══ TAB 0 · RESUMEN ═══ -->
+<section class="section active" id="tab0">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">📊</div>Resumen Ejecutivo</div>
+    <div class="sec-badge">Junio 2026 · Meta Ads API</div>
   </div>
 
+  <div class="alert alert-warn">
+    <span class="alert-icon">⚠️</span>
+    <div><strong>Aclaración — "Contactos Meta (34)":</strong> El campo <code>lead</code> de la API de Meta registró 34. Para campañas de mensajería, este dato puede venir de <strong>etiquetas de WhatsApp Business</strong> (ej. "Lead"), de formularios adjuntos, o de la clasificación interna de Meta. <strong>No son leads calificados validados.</strong> Tu KPI real son las <strong>312 conversaciones de WhatsApp iniciadas</strong> a $2.626 COP cada una.</div>
+  </div>
+
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Distribución de inversión por campaña</div>
+      <div class="chart-wrap" style="height:230px"><canvas id="cPie"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Inversión vs Conversaciones WA por campaña</div>
+      <div class="chart-wrap" style="height:230px"><canvas id="cBar0"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 1 · CAMPAÑAS ═══ -->
+<section class="section" id="tab1">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">🎯</div>Rendimiento por Campaña</div>
+    <div class="sec-badge">2 campañas · Junio 2026</div>
+  </div>
+
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card" style="border-top:4px solid #22C55E">
+      <div style="display:flex;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div><span class="badge b-green" style="margin-bottom:6px">● ACTIVA</span><div style="font-size:14px;font-weight:800;line-height:1.3;margin-top:4px">Max/Presentación/<br>Interacción/ABO/Whatsapp</div></div>
+        <div style="text-align:right"><div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">Invertido</div><div style="font-size:24px;font-weight:900">$657.929</div><div style="font-size:10px;color:var(--muted)">COP · 80.3% del total</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Alcance</div><div style="font-size:18px;font-weight:900">24.288</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Clics</div><div style="font-size:18px;font-weight:900">1.410</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">CTR</div><div style="font-size:18px;font-weight:900;color:#F59E0B">3.49%</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Conv. WA</div><div style="font-size:18px;font-weight:900;color:#3B82F6">223</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Costo/Conv.</div><div style="font-size:18px;font-weight:900">$2.950</div></div>
+        <div>
+          <div class="tip" style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Contactos Meta<span class="tip-i">i</span><div class="tip-box">Campo "lead" de la API de Meta. Para campañas de mensajería puede corresponder a etiquetas de WhatsApp Business o clasificación interna de Meta.</div></div>
+          <div style="font-size:18px;font-weight:900;color:#94A3B8">21</div>
+        </div>
+      </div>
+      <div style="padding:10px;background:#F0FDF4;border-radius:8px;font-size:11px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <span>✅ Mejor: <strong>HOMBRE EN LA COCINA</strong></span>
+        <span>❌ Peor: <strong>LA MAMÁ CON EL BEBÉ</strong></span>
+      </div>
+    </div>
+
+    <div class="card" style="border-top:4px solid #94A3B8">
+      <div style="display:flex;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div><span class="badge b-gray" style="margin-bottom:6px">⏸ PAUSADA</span><div style="font-size:14px;font-weight:800;line-height:1.3;margin-top:4px">Nueva campaña de<br>Interacción</div></div>
+        <div style="text-align:right"><div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase">Invertido</div><div style="font-size:24px;font-weight:900">$161.480</div><div style="font-size:10px;color:var(--muted)">COP · 19.7% del total</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Alcance</div><div style="font-size:18px;font-weight:900">4.060</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Clics</div><div style="font-size:18px;font-weight:900">338</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">CTR</div><div style="font-size:18px;font-weight:900;color:#22C55E">5.48%</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Conv. WA</div><div style="font-size:18px;font-weight:900;color:#3B82F6">89</div></div>
+        <div><div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Costo/Conv.</div><div style="font-size:18px;font-weight:900;color:#22C55E">$1.814</div></div>
+        <div>
+          <div class="tip" style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase">Contactos Meta<span class="tip-i">i</span><div class="tip-box">Campo "lead" de la API de Meta. Para campañas de mensajería puede corresponder a etiquetas de WhatsApp Business o clasificación interna de Meta.</div></div>
+          <div style="font-size:18px;font-weight:900;color:#94A3B8">13</div>
+        </div>
+      </div>
+      <div style="padding:10px;background:#FFFBEB;border-radius:8px;font-size:11px;color:#92400E">
+        ⚠️ Esta campaña tenía <strong>mejor CTR (5.48%)</strong> y <strong>menor costo/conv. ($1.814)</strong> que la activa. Fue pausada. Se recomienda migrar sus creativos ganadores a la campaña activa.
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>CTR por campaña — mayor es mejor (%)</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="cCampCTR"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Costo por conversación WA — menor es mejor (COP)</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="cCampCPR"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 2 · CREATIVOS ═══ -->
+<section class="section" id="tab2">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">🎨</div>Rendimiento por Creativo</div>
+    <div class="sec-badge">6 anuncios · Por eficiencia</div>
+  </div>
   <div class="alert alert-info">
-    <span>ℹ️</span>
-    <div>Datos extraídos directamente de Meta Ads el 30 de junio de 2026. El seguimiento de ROAS no está activo (sin píxel de compra). Se recomienda instalar el píxel y configurar eventos de conversión para rastrear ventas.</div>
+    <span class="alert-icon">ℹ️</span>
+    <div><strong>Tier de rendimiento:</strong>&nbsp; <span style="background:#DCFCE7;color:#15803D;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">S · Escalar 🚀</span> &nbsp;<span style="background:#DBEAFE;color:#1D4ED8;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">A · Mantener ✅</span> &nbsp;<span style="background:#FEF3C7;color:#92400E;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">B · Optimizar 🔧</span> &nbsp;<span style="background:#FEE2E2;color:#B91C1C;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">C · Revisar ⚠️</span> &nbsp;<span style="background:#F1F5F9;color:#475569;padding:1px 7px;border-radius:10px;font-weight:800;font-size:11px">P · Pausado 🔒</span></div>
   </div>
-
-  <!-- KPIs principales -->
-  <div class="kpi-grid" id="kpiGrid">
-    <!-- Los KPIs se renderizan por JS -->
-  </div>
-
-  <!-- Gráficos resumen -->
-  <div class="grid-2">
+  <div class="creative-grid" id="creativeGrid"></div>
+  <div class="g2">
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Inversión vs Resultados por Campaña</div>
-      <div class="chart-container" style="height:240px">
-        <canvas id="chartCampResumen"></canvas>
-      </div>
+      <div class="card-title"><div class="dot"></div>CTR por creativo — mayor es mejor (%)</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="cAdCTR"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Distribución de la Inversión</div>
-      <div class="chart-container" style="height:240px">
-        <canvas id="chartInversionPie"></canvas>
+      <div class="card-title"><div class="dot"></div>Costo por conversación WA — menor es mejor (COP)</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="cAdCPR"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TAB 3 · EMBUDO ═══ -->
+<section class="section" id="tab3">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">🔻</div>Embudo de Conversión</div>
+    <div class="sec-badge">Junio 2026</div>
+  </div>
+  <div class="alert alert-warn">
+    <span class="alert-icon">📋</span>
+    <div><strong>Cotizaciones y Ventas</strong> se completan desde tu CRM. Las 3 primeras etapas vienen de Meta Ads automáticamente. Agrégalos en la pestaña <em>"Actualizar"</em>.</div>
+  </div>
+  <div class="g21">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Embudo de conversión paso a paso</div>
+      <div id="funnelViz" class="funnel" style="padding:8px 0;gap:0"></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:18px">
+        <div class="card-title"><div class="dot"></div>Tasas de conversión entre etapas</div>
+        <div class="chart-wrap" style="height:210px"><canvas id="cFunnel"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="dot"></div>Detalle por etapa</div>
+        <div id="funnelStats" style="display:flex;flex-direction:column;gap:0"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════ SECCIÓN 2: CAMPAÑAS ═══════════════════════ -->
-<section class="section" id="sec1">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">🎯</div>Rendimiento por Campaña</div>
-    <div class="section-date">Junio 2026</div>
+<!-- ═══ TAB 4 · CRECIMIENTO ═══ -->
+<section class="section" id="tab4">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">📈</div>Crecimiento Mensual</div>
+    <div class="sec-badge">Histórico · Actualizable</div>
   </div>
-
-  <div class="card" style="margin-bottom:20px">
-    <div class="card-title"><div class="dot"></div>Tabla Comparativa de Campañas</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Campaña</th>
-            <th>Estado</th>
-            <th>Objetivo</th>
-            <th>Inversión</th>
-            <th>Alcance</th>
-            <th>Impresiones</th>
-            <th>Clics</th>
-            <th>CTR</th>
-            <th>CPC</th>
-            <th>Conv.</th>
-            <th>CPR</th>
-            <th>Leads</th>
-            <th>CPL</th>
-            <th>Mejor Creativo</th>
-            <th>Peor Creativo</th>
-          </tr>
-        </thead>
-        <tbody id="campTable"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Inversión por Campaña</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartCampInversion"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>CTR y Costo por Resultado</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartCampCTR"></canvas>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════ SECCIÓN 3: CREATIVOS ═══════════════════════ -->
-<section class="section" id="sec2">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">🎨</div>Rendimiento por Creativo</div>
-    <div class="section-date">Junio 2026 · Todos los anuncios activos</div>
-  </div>
-
-  <div class="grid-2-1" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Ranking de Anuncios (por Eficiencia CPL)</div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Anuncio</th>
-              <th>Inversión</th>
-              <th>Clics</th>
-              <th>CTR</th>
-              <th>CPC</th>
-              <th>Conv.</th>
-              <th>CPR</th>
-              <th>Leads</th>
-              <th>CPL</th>
-              <th>Frec.</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody id="adTable"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Mejor vs Peor Anuncio</div>
-      <div style="display:flex;flex-direction:column;gap:16px">
-        <div style="background:#F0FBF4;border-radius:10px;padding:16px;border:1.5px solid #A9DFBF">
-          <div style="font-size:10px;font-weight:700;color:#1E8449;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">🏆 Mejor Anuncio</div>
-          <div style="font-weight:700;font-size:14px;margin-bottom:10px">HOMBRE EN LA COCINA</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div><div style="font-size:10px;color:#666">CTR</div><div style="font-weight:800;color:#27AE60">6.31%</div></div>
-            <div><div style="font-size:10px;color:#666">CPC</div><div style="font-weight:800;color:#27AE60">$353</div></div>
-            <div><div style="font-size:10px;color:#666">Leads</div><div style="font-weight:800;color:#27AE60">11</div></div>
-            <div><div style="font-size:10px;color:#666">CPL</div><div style="font-weight:800;color:#27AE60">$12.014</div></div>
-          </div>
-          <div style="margin-top:10px;font-size:11px;color:#1E8449">✓ Mejor CTR, menor CPC, mayor número de leads y mejor CPL de todos los creativos activos.</div>
-        </div>
-
-        <div style="background:#FDF2F2;border-radius:10px;padding:16px;border:1.5px solid #F1948A">
-          <div style="font-size:10px;font-weight:700;color:#C0392B;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">⚠️ Peor Anuncio</div>
-          <div style="font-weight:700;font-size:14px;margin-bottom:10px">LA MAMÁ CON EL BEBÉ</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div><div style="font-size:10px;color:#666">CTR</div><div style="font-weight:800;color:#E74C3C">2.70%</div></div>
-            <div><div style="font-size:10px;color:#666">CPC</div><div style="font-weight:800;color:#E74C3C">$444</div></div>
-            <div><div style="font-size:10px;color:#666">Leads</div><div style="font-weight:800;color:#E74C3C">2</div></div>
-            <div><div style="font-size:10px;color:#666">CPL</div><div style="font-weight:800;color:#E74C3C">$128.972</div></div>
-          </div>
-          <div style="margin-top:10px;font-size:11px;color:#C0392B">✗ Gasta el 31.5% del presupuesto total pero genera solo 2 leads. CTR más bajo. Revisar creatividad.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>CTR por Creativo</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartAdCTR"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Costo por Lead por Creativo</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartAdCPL"></canvas>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════ SECCIÓN 4: EMBUDO ═══════════════════════ -->
-<section class="section" id="sec3">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">🔻</div>Embudo de Ventas</div>
-    <div class="section-date">Junio 2026</div>
-  </div>
-
-  <div class="alert alert-warning">
-    <span>⚠️</span>
-    <div>Las etapas de Cotizaciones y Ventas requieren datos manuales del CRM. Ingresa estos valores en la sección "Actualizar" para completar el embudo.</div>
-  </div>
-
-  <div class="grid-2-1">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Embudo de Conversión Completo</div>
-      <div class="funnel" id="funnelContainer"></div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Tasas de Conversión por Etapa</div>
-      <div class="chart-container" style="height:280px">
-        <canvas id="chartFunnel"></canvas>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════ SECCIÓN 5: CRECIMIENTO MENSUAL ═══════════════════════ -->
-<section class="section" id="sec4">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">📈</div>Crecimiento Mensual</div>
-    <div class="section-date">Evolución histórica</div>
-  </div>
-
   <div class="alert alert-success">
-    <span>✅</span>
-    <div>Junio 2026 es el primer mes con datos registrados. Los gráficos de tendencia se actualizarán automáticamente al agregar nuevos meses desde la sección "Actualizar".</div>
+    <span class="alert-icon">✅</span>
+    <div>Junio 2026 es el primer mes. Los gráficos crecen automáticamente al agregar nuevos meses desde <em>"Actualizar"</em>.</div>
   </div>
-
-  <div class="grid-2" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Inversión Mensual (COP)</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartMonthSpend"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Leads Mensuales</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartMonthLeads"></canvas>
-      </div>
-    </div>
+  <div class="g2" style="margin-bottom:18px">
+    <div class="card"><div class="card-title"><div class="dot"></div>Inversión mensual (COP)</div><div class="chart-wrap" style="height:200px"><canvas id="cMSpend"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="dot"></div>Conversaciones WA iniciadas por mes</div><div class="chart-wrap" style="height:200px"><canvas id="cMConv"></canvas></div></div>
   </div>
-  <div class="grid-2">
+  <div class="g2">
     <div class="card">
-      <div class="card-title"><div class="dot"></div>Costo por Lead Mensual (COP)</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartMonthCPL"></canvas>
+      <div class="card-title"><div class="dot"></div>
+        <div class="tip">Contactos Meta por mes<span class="tip-i">i</span><div class="tip-box">Campo "lead" de la API de Meta. Puede venir de etiquetas de WhatsApp Business. No son leads calificados validados.</div></div>
       </div>
+      <div class="chart-wrap" style="height:200px"><canvas id="cMLeads"></canvas></div>
     </div>
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Conversaciones Iniciadas Mensual</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartMonthConv"></canvas>
-      </div>
-    </div>
+    <div class="card"><div class="card-title"><div class="dot"></div>CTR mensual (%)</div><div class="chart-wrap" style="height:200px"><canvas id="cMCTR"></canvas></div></div>
   </div>
 </section>
 
-<!-- ═══════════════════════ SECCIÓN 6: KPIs ANUALES ═══════════════════════ -->
-<section class="section" id="sec5">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">🏆</div>KPIs Acumulados del Año</div>
-    <div class="section-date">2026 · Acumulado desde inicio de actividad</div>
+<!-- ═══ TAB 5 · KPIs ANUALES ═══ -->
+<section class="section" id="tab5">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">🏆</div>KPIs Acumulados 2026</div>
+    <div class="sec-badge">Desde inicio de actividad</div>
   </div>
-
-  <div class="kpi-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
-    <div class="kpi-card" style="--kpi-color:#E8462A">
-      <div class="kpi-icon">💰</div>
-      <div class="kpi-label">Total Invertido</div>
-      <div class="kpi-value" id="yrSpend">$819.409</div>
-      <div class="kpi-sub">COP · Junio 2026</div>
-    </div>
-    <div class="kpi-card" style="--kpi-color:#2980B9">
-      <div class="kpi-icon">👥</div>
-      <div class="kpi-label">Total Alcance</div>
-      <div class="kpi-value" id="yrReach">26.657</div>
-      <div class="kpi-sub">personas únicas</div>
-    </div>
-    <div class="kpi-card" style="--kpi-color:#8E44AD">
-      <div class="kpi-icon">👁️</div>
-      <div class="kpi-label">Total Impresiones</div>
-      <div class="kpi-value" id="yrImpressions">46.564</div>
-      <div class="kpi-sub">veces mostrado</div>
-    </div>
-    <div class="kpi-card" style="--kpi-color:#27AE60">
-      <div class="kpi-icon">🖱️</div>
-      <div class="kpi-label">Total Leads</div>
-      <div class="kpi-value" id="yrLeads">34</div>
-      <div class="kpi-sub">prospectos captados</div>
-    </div>
-    <div class="kpi-card" style="--kpi-color:#F7A732">
-      <div class="kpi-icon">💬</div>
-      <div class="kpi-label">Conv. Iniciadas</div>
-      <div class="kpi-value" id="yrConv">312</div>
-      <div class="kpi-sub">chats de WhatsApp</div>
-    </div>
-    <div class="kpi-card" style="--kpi-color:#E8462A">
-      <div class="kpi-icon">📉</div>
-      <div class="kpi-label">CPL Promedio</div>
-      <div class="kpi-value" id="yrCPL">$24.100</div>
-      <div class="kpi-sub">COP por lead</div>
-    </div>
-    <div class="kpi-card" style="--kpi-color:#2980B9">
-      <div class="kpi-icon">📊</div>
-      <div class="kpi-label">CTR Promedio</div>
-      <div class="kpi-value" id="yrCTR">3.75%</div>
-      <div class="kpi-sub">tasa de clics</div>
-    </div>
-    <div class="kpi-card" style="--kpi-color:#27AE60">
-      <div class="kpi-icon">🛒</div>
-      <div class="kpi-label">Total Ventas</div>
-      <div class="kpi-value" id="yrSales">—</div>
-      <div class="kpi-sub">ingresar desde CRM</div>
-    </div>
-  </div>
-
-  <div class="grid-2" style="margin-top:20px">
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Acumulado Anual por Métrica</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartYrBar"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title"><div class="dot"></div>Distribución Inversión por Tipo Resultado</div>
-      <div class="chart-container" style="height:220px">
-        <canvas id="chartYrDist"></canvas>
-      </div>
-    </div>
+  <div class="kpi-grid" id="annualKpis"></div>
+  <div class="g2">
+    <div class="card"><div class="card-title"><div class="dot"></div>Acumulado por métrica clave</div><div class="chart-wrap" style="height:220px"><canvas id="cAnnBar"></canvas></div></div>
+    <div class="card"><div class="card-title"><div class="dot"></div>Distribución de resultados</div><div class="chart-wrap" style="height:220px"><canvas id="cAnnPie"></canvas></div></div>
   </div>
 </section>
 
-<!-- ═══════════════════════ SECCIÓN 7: INSIGHTS ═══════════════════════ -->
-<section class="section" id="sec6">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">💡</div>Análisis e Insights Automáticos</div>
-    <div class="section-date">Generado · 30 jun 2026</div>
+<!-- ═══ TAB 6 · INSIGHTS ═══ -->
+<section class="section" id="tab6">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">💡</div>Análisis e Insights Automáticos</div>
+    <div class="sec-badge">Generado: 30 jun 2026</div>
   </div>
-
   <div class="insight-grid">
-    <div class="insight-card positive">
-      <div class="insight-icon">✅</div>
-      <div>
-        <div class="insight-title">Qué funcionó — El creativo "HOMBRE EN LA COCINA"</div>
-        <div class="insight-text">Con un CTR del 6.31%, CPC de $353 COP y CPL de $12.014 COP, este anuncio supera ampliamente el promedio de la cuenta (CTR 3.75%, CPC $469). Genera el mayor número de leads activos (11) con la tercera inversión más baja. <strong>Escalar este creativo es la acción más rentable disponible ahora mismo.</strong></div>
-      </div>
-    </div>
-
-    <div class="insight-card positive">
-      <div class="insight-icon">✅</div>
-      <div>
-        <div class="insight-title">Qué funcionó — "Nuevo anuncio · Copia 2" (campaña pausada)</div>
-        <div class="insight-text">Aunque pertenece a una campaña pausada, este anuncio logró el CTR más alto de toda la cuenta (6.61%), el CPC más bajo ($347) y el costo por conversación más bajo ($1.256). <strong>Reactivar este anuncio en la campaña activa podría reducir el CPR en un ~57%.</strong></div>
-      </div>
-    </div>
-
-    <div class="insight-card negative">
-      <div class="insight-icon">❌</div>
-      <div>
-        <div class="insight-title">Qué no funcionó — "LA MAMÁ CON EL BEBÉ"</div>
-        <div class="insight-text">Consume el <strong>31.5% del presupuesto total ($257.944 COP)</strong> pero genera solo 2 leads con un CPL de $128.972 COP (10.7x más caro que el mejor anuncio). El CTR del 2.70% indica que el creativo no resuena con la audiencia. <strong>Pausar inmediatamente y reasignar presupuesto.</strong></div>
-      </div>
-    </div>
-
-    <div class="insight-card negative">
-      <div class="insight-icon">❌</div>
-      <div>
-        <div class="insight-title">Qué no funcionó — Campaña "Nueva campaña de Interacción" fue pausada</div>
-        <div class="insight-text">Esta campaña tenía un CPL de $12.422 COP (el mejor de todas las campañas) y un CTR del 5.48%. Al pausarla se perdió la fuente de leads más eficiente. <strong>Los datos sugieren que debería estar activa en lugar de la campaña actual.</strong></div>
-      </div>
-    </div>
-
-    <div class="insight-card warning">
-      <div class="insight-icon">⚠️</div>
-      <div>
-        <div class="insight-title">Alerta — Tendencia de CTR en descenso</div>
-        <div class="insight-text">Meta Ads reporta que los creativos "HOMBRE EN LA COCINA" (-32.15%) y "LA MAMÁ CON EL BEBÉ" (-15.20%) muestran tendencia negativa de CTR. Esto indica <strong>fatiga creativa</strong>: la audiencia ya ha visto estos anuncios suficientes veces. Se necesitan nuevas variaciones de creativos en julio.</div>
-      </div>
-    </div>
-
-    <div class="insight-card warning">
-      <div class="insight-icon">⚠️</div>
-      <div>
-        <div class="insight-title">Alerta — Sin seguimiento de ventas activo</div>
-        <div class="insight-text">Actualmente <strong>no hay píxel de conversiones de compra</strong> configurado en Meta (purchase_roas = N/A). Esto significa que Meta no puede optimizar para ventas reales, solo para conversaciones. <strong>Instalar el píxel y configurar eventos de compra es crítico para mejorar el ROAS.</strong></div>
-      </div>
-    </div>
-
-    <div class="insight-card info">
-      <div class="insight-icon">💡</div>
-      <div>
-        <div class="insight-title">Oportunidad — Embudo de conversación a venta</div>
-        <div class="insight-text">Se iniciaron 312 conversaciones de WhatsApp con un costo de solo $2.626 COP cada una. Sin embargo, solo 34 se convirtieron en leads registrados. <strong>Optimizar el proceso de cierre en WhatsApp (guión de ventas, respuesta rápida, seguimiento) podría multiplicar las ventas sin aumentar la inversión publicitaria.</strong></div>
-      </div>
-    </div>
-
-    <div class="insight-card info">
-      <div class="insight-icon">💡</div>
-      <div>
-        <div class="insight-title">Oportunidad — Campaña de Engagement con objetivo de leads</div>
-        <div class="insight-text">Ambas campañas activas usan objetivo ENGAGEMENT (conversaciones), no generación de leads directa. <strong>Probar una campaña con objetivo "Clientes potenciales" (Lead Ads) o "Ventas" puede mejorar la calidad de los leads y reducir el CPL.</strong> El costo por conversación de $2.626 es bueno pero las conversaciones no siempre cierran.</div>
-      </div>
-    </div>
+    <div class="ii pos"><div class="ii-icon">🚀</div><div><div class="ii-title">ESCALAR · HOMBRE EN LA COCINA</div><div class="ii-text">CTR 6.31% (mayor activo), CPC $353 (menor), costo/conv. $2.166. El creativo ganador del mes. Mover presupuesto aquí es la acción con mayor retorno disponible.</div></div></div>
+    <div class="ii pos"><div class="ii-icon">♻️</div><div><div class="ii-title">RESCATAR · Nuevo anuncio Copia 2</div><div class="ii-text">CTR 6.61% (el más alto de toda la cuenta), CPC $347, costo/conv. $1.256. Está en la campaña pausada. Migrar a la campaña activa puede reducir el costo/conv. a la mitad.</div></div></div>
+    <div class="ii neg"><div class="ii-icon">⛔</div><div><div class="ii-title">PAUSAR HOY · LA MAMÁ CON EL BEBÉ</div><div class="ii-text">Gasta $257.944 COP (31.5% del presupuesto). CTR 2.70% (el más bajo activo), costo/conv. $3.908 (el más alto). Cada día activo pierde dinero frente a los otros creativos.</div></div></div>
+    <div class="ii neg"><div class="ii-icon">📉</div><div><div class="ii-title">ALERTA · CTR en caída</div><div class="ii-text">Meta reporta tendencia negativa de CTR en los creativos principales: "HOMBRE EN LA COCINA" −32.15%, "LA MAMÁ CON EL BEBÉ" −15.20%. Es fatiga de audiencia. Se necesitan creativos nuevos para julio.</div></div></div>
+    <div class="ii warn"><div class="ii-icon">🤔</div><div><div class="ii-title">DATO INCIERTO · Los 34 "Contactos Meta"</div><div class="ii-text">El campo <em>lead</em> de la API marcó 34. Para campañas de mensajería puede ser etiquetas de WhatsApp Business ("Lead"), formularios adjuntos, o clasificación interna. Tu KPI real son las <strong>312 conversaciones de WhatsApp</strong>.</div></div></div>
+    <div class="ii warn"><div class="ii-icon">⚠️</div><div><div class="ii-title">CRÍTICO · Sin píxel de compras</div><div class="ii-text">ROAS = N/A en toda la cuenta. Sin el píxel con evento "Purchase" Meta no puede optimizar para ventas reales, solo para conversaciones. Instalarlo es la mejora de infraestructura más importante.</div></div></div>
+    <div class="ii info"><div class="ii-icon">💬</div><div><div class="ii-title">OPORTUNIDAD · 312 chats sin seguimiento medible</div><div class="ii-text">Cada conversación costó $2.626 COP. ¿Cuántas recibieron respuesta en menos de 5 min? Mejorar el proceso de cierre en WhatsApp puede duplicar ventas sin aumentar inversión en ads.</div></div></div>
+    <div class="ii info"><div class="ii-icon">🎯</div><div><div class="ii-title">OPORTUNIDAD · La campaña pausada era más eficiente</div><div class="ii-text">CTR 5.48% vs 3.49% activa, costo/conv. $1.814 vs $2.950. Los datos sugieren que fue pausada prematuramente. Migrar sus creativos puede mejorar significativamente los resultados de julio.</div></div></div>
   </div>
 </section>
 
-<!-- ═══════════════════════ SECCIÓN 8: RECOMENDACIONES ═══════════════════════ -->
-<section class="section" id="sec7">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">🚀</div>Recomendaciones Estratégicas</div>
-    <div class="section-date">Plan de acción · Julio 2026</div>
+<!-- ═══ TAB 7 · RECOMENDACIONES ═══ -->
+<section class="section" id="tab7">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">🚀</div>Recomendaciones Estratégicas</div>
+    <div class="sec-badge">Plan de acción · Julio 2026</div>
   </div>
-
-  <div class="alert alert-info">
-    <span>📋</span>
-    <div>Recomendaciones basadas en datos reales de Meta Ads de junio 2026. Ordenadas por prioridad e impacto esperado.</div>
-  </div>
-
   <div class="rec-list">
-    <div class="rec-item">
-      <div class="rec-num">1</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <strong>Pausar "LA MAMÁ CON EL BEBÉ" y reasignar $257.944 COP</strong>
-          <span class="rec-priority priority-alta">🔴 URGENTE</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted)">Este anuncio tiene un CPL de $128.972 (10.7x peor que el mejor). Mover su presupuesto al creativo "HOMBRE EN LA COCINA" podría generar ~21 leads adicionales con el mismo presupuesto. <strong>Acción: pausar hoy, reasignar mañana.</strong></div>
-      </div>
-    </div>
-
-    <div class="rec-item">
-      <div class="rec-num">2</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <strong>Reactivar "Nuevo anuncio · Copia 2" en la campaña principal</strong>
-          <span class="rec-priority priority-alta">🔴 URGENTE</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted)">CTR 6.61%, CPC $347, CPR $1.256. Es el anuncio más eficiente de toda la cuenta y está en una campaña pausada. Duplicarlo a la campaña activa puede reducir el costo por conversación a la mitad. <strong>Acción: duplicar anuncio a campaña "Max/ABO".</strong></div>
-      </div>
-    </div>
-
-    <div class="rec-item">
-      <div class="rec-num">3</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <strong>Crear 3 nuevas variaciones del creativo "HOMBRE EN LA COCINA"</strong>
-          <span class="rec-priority priority-alta">🔴 ALTA</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted)">El CTR de este anuncio cayó 32.15% (fatiga creativa). Para mantener su rendimiento en julio necesita nuevas versiones: cambiar el copy, el color de fondo, el CTA o el encuadre del video. Probar al menos 3 variaciones con A/B test. <strong>Acción: briefing de creativos esta semana.</strong></div>
-      </div>
-    </div>
-
-    <div class="rec-item">
-      <div class="rec-num">4</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <strong>Instalar Píxel de Meta con evento de Compra</strong>
-          <span class="rec-priority priority-alta">🔴 ALTA</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted)">Sin el píxel de compra no hay ROAS real, no se puede optimizar para ventas y Meta no puede encontrar audiencias de compradores potenciales. Configurar: píxel en la landing, evento "Purchase" con valor de conversión, evento "Lead" en el formulario. <strong>Acción: implementar en la primera semana de julio.</strong></div>
-      </div>
-    </div>
-
-    <div class="rec-item">
-      <div class="rec-num">5</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <strong>Crear protocolo de cierre en WhatsApp para las 312 conversaciones</strong>
-          <span class="rec-priority priority-media">🟡 MEDIA</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted)">De 312 conversaciones iniciadas solo 34 se convirtieron en leads (10.9%). Mejorar la tasa de respuesta, crear plantillas de mensaje, establecer tiempo máximo de respuesta de 5 minutos y un guión de ventas puede duplicar las conversiones sin gastar más en ads. <strong>Acción: crear guión y plantillas de WhatsApp.</strong></div>
-      </div>
-    </div>
-
-    <div class="rec-item">
-      <div class="rec-num">6</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <strong>Lanzar campaña de Retargeting para conversaciones no convertidas</strong>
-          <span class="rec-priority priority-media">🟡 MEDIA</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted)">Las 278 personas que iniciaron conversaciones pero no convirtieron son el público más caliente disponible. Crear audiencia personalizada con "personas que enviaron mensaje en los últimos 30 días" y mostrarles un anuncio de oferta o prueba gratis puede capturar ventas sin costo adicional de prospección. <strong>Acción: crear audiencia custom + campaña retargeting.</strong></div>
-      </div>
-    </div>
-
-    <div class="rec-item">
-      <div class="rec-num">7</div>
-      <div style="flex:1">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <strong>Aumentar el presupuesto mensual en un 20-30% en julio</strong>
-          <span class="rec-priority priority-baja">🔵 MEDIA-BAJA</span>
-        </div>
-        <div style="font-size:12px;color:var(--muted)">La frecuencia actual es de 1.75 (saludable, sin fatiga de audiencia aún). El CTR general de 3.75% supera el promedio de la industria (1.5-2%). Con los cambios de creativos recomendados, el sistema está listo para escalar. Un incremento de $200.000 COP/mes dirigido al creativo ganador puede generar 15-20 leads adicionales. <strong>Acción: aprobar aumento de presupuesto para semana 2 de julio.</strong></div>
-      </div>
-    </div>
+    <div class="ri"><div class="ri-num">1</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Pausar "LA MAMÁ CON EL BEBÉ" y reasignar su presupuesto</div><span class="pr pr-u">🔴 Urgente</span></div><div class="ri-desc">Consume $257.944 COP (31.5%) con el CTR más bajo (2.70%) y el costo por conversación más alto de todos los creativos activos ($3.908). Mover ese dinero a "HOMBRE EN LA COCINA" puede generar 60–70 conversaciones adicionales con el mismo presupuesto. <strong>Acción: pausar hoy.</strong></div></div></div>
+    <div class="ri"><div class="ri-num">2</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Migrar "Nuevo anuncio · Copia 2" a la campaña activa</div><span class="pr pr-u">🔴 Urgente</span></div><div class="ri-desc">Tiene el CTR más alto (6.61%), CPC más bajo ($347) y costo/conv. de solo $1.256. Está en la campaña pausada. Duplicar este anuncio a "Max/ABO" puede bajar el costo promedio por conversación de $2.950 a ~$2.000. <strong>Acción: duplicar el anuncio esta semana.</strong></div></div></div>
+    <div class="ri"><div class="ri-num">3</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Crear 3–4 variaciones nuevas de "HOMBRE EN LA COCINA"</div><span class="pr pr-h">🟡 Alta</span></div><div class="ri-desc">Su CTR bajó 32.15% — señal clara de fatiga creativa. Producir variaciones: diferente copy, fondo, ángulo de cámara, CTA. Testear con presupuesto pequeño antes de escalar la ganadora. <strong>Acción: briefing de creativos esta semana.</strong></div></div></div>
+    <div class="ri"><div class="ri-num">4</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Validar el origen de los 34 "Contactos Meta"</div><span class="pr pr-h">🟡 Alta</span></div><div class="ri-desc">Revisar en WhatsApp Business Manager si hay contactos etiquetados como "Lead". También verificar si alguna campaña tiene formulario adjunto (Lead Ad). Entender este número es importante para saber si hay un pipeline real detrás o es solo una métrica de Meta.</div></div></div>
+    <div class="ri"><div class="ri-num">5</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Instalar píxel de Meta con evento de compra</div><span class="pr pr-h">🟡 Alta</span></div><div class="ri-desc">Sin el píxel no hay ROAS real ni optimización hacia ventas. Pasos: instalar píxel en la landing o WhatsApp flow → evento "Purchase" con valor → evento "Lead" en formularios. Permite crear audiencias lookalike de compradores. <strong>Acción: implementar semana 1 de julio.</strong></div></div></div>
+    <div class="ri"><div class="ri-num">6</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Protocolo de respuesta y seguimiento en WhatsApp</div><span class="pr pr-m">🔵 Media</span></div><div class="ri-desc">Tienes 312 conversaciones iniciadas a $2.626 COP c/u. Crear guión de ventas, plantillas de respuesta rápida y flujo de seguimiento (día 1 → 3 → 7) puede duplicar el cierre sin aumentar inversión en ads.</div></div></div>
+    <div class="ri"><div class="ri-num">7</div><div class="ri-body"><div class="ri-head"><div class="ri-title">Campaña de retargeting para conversaciones no convertidas</div><span class="pr pr-m">🔵 Media</span></div><div class="ri-desc">Crear audiencia personalizada con "personas que enviaron mensaje en los últimos 30 días" y mostrarles un anuncio de oferta o prueba. Es la audiencia más caliente disponible y actualmente no recibe un segundo impacto.</div></div></div>
   </div>
 </section>
 
-<!-- ═══════════════════════ SECCIÓN 9: ACTUALIZAR ═══════════════════════ -->
-<section class="section update-section" id="sec8" id="updatePanel">
-  <div class="section-header">
-    <div class="section-title"><div class="icon">🔄</div>Sistema de Actualización Mensual</div>
+<!-- ═══ TAB 8 · ACTUALIZAR ═══ -->
+<section class="section" id="tab8">
+  <div class="sec-header">
+    <div class="sec-title"><div class="sec-icon">🔄</div>Agregar Nuevo Mes</div>
+  </div>
+  <div class="alert alert-info">
+    <span class="alert-icon">📌</span>
+    <div>Encuentra los datos de Meta Ads en: <strong>Administrador de anuncios → Columnas personalizadas</strong>. Los datos de ventas los ingresas desde tu CRM o registro manual.</div>
   </div>
 
-  <div class="alert alert-info">
-    <span>ℹ️</span>
-    <div>Ingresa los datos del nuevo mes para agregar al dashboard. Los gráficos de crecimiento se actualizarán automáticamente. Los datos de Meta Ads (inversión, alcance, impresiones, clics, CTR, CPM, CPC) se obtienen directamente de la API. Aquí ingresas los datos complementarios del CRM y ventas.</div>
+  <div class="card" style="margin-bottom:18px">
+    <div class="fs-title">📅 Período</div>
+    <div class="fgrid" style="margin-bottom:0">
+      <div class="fg"><label class="fl">Mes</label>
+        <select class="fi" id="nMes">
+          <option value="ene">Enero</option><option value="feb">Febrero</option><option value="mar">Marzo</option><option value="abr">Abril</option><option value="may">Mayo</option><option value="jun">Junio</option><option value="jul" selected>Julio</option><option value="ago">Agosto</option><option value="sep">Septiembre</option><option value="oct">Octubre</option><option value="nov">Noviembre</option><option value="dic">Diciembre</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Año</label><input type="number" class="fi" id="nAno" value="2026"></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="fs-title">📊 Datos de Meta Ads</div>
+    <div class="fgrid">
+      <div class="fg"><label class="fl">Inversión total (COP)</label><input type="number" class="fi" id="nSpend" placeholder="Ej: 1200000"></div>
+      <div class="fg"><label class="fl">Alcance</label><input type="number" class="fi" id="nReach" placeholder="Ej: 38000"></div>
+      <div class="fg"><label class="fl">Impresiones</label><input type="number" class="fi" id="nImp" placeholder="Ej: 65000"></div>
+      <div class="fg"><label class="fl">Clics</label><input type="number" class="fi" id="nClics" placeholder="Ej: 2800"></div>
+      <div class="fg"><label class="fl">CTR (%)</label><input type="number" class="fi" id="nCTR" step="0.01" placeholder="Ej: 4.30"></div>
+      <div class="fg"><label class="fl">CPC (COP)</label><input type="number" class="fi" id="nCPC" placeholder="Ej: 430"></div>
+      <div class="fg"><label class="fl">CPM (COP)</label><input type="number" class="fi" id="nCPM" placeholder="Ej: 18500"></div>
+      <div class="fg"><label class="fl">Conversaciones WA iniciadas</label><input type="number" class="fi" id="nConv" placeholder="Ej: 430"></div>
+      <div class="fg">
+        <label class="fl">
+          <div class="tip">Contactos Meta (campo "lead")<span class="tip-i">i</span><div class="tip-box" style="left:0;transform:none">El campo "lead" de la API de Meta para campañas de mensajería. Puede venir de etiquetas de WhatsApp Business o clasificación interna de Meta. No son leads calificados validados.</div></div>
+        </label>
+        <input type="number" class="fi" id="nLeads" placeholder="Ej: 45">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="fs-title">🛒 Datos del CRM / Ventas manuales</div>
+    <div class="fgrid">
+      <div class="fg"><label class="fl">Cotizaciones enviadas</label><input type="number" class="fi" id="nQuotes" placeholder="Ej: 35"></div>
+      <div class="fg"><label class="fl">Ventas cerradas</label><input type="number" class="fi" id="nSales" placeholder="Ej: 15"></div>
+      <div class="fg"><label class="fl">Ingresos totales (COP)</label><input type="number" class="fi" id="nRevenue" placeholder="Ej: 6000000"></div>
+      <div class="fg"><label class="fl">Ticket promedio (COP)</label><input type="number" class="fi" id="nTicket" placeholder="Ej: 400000"></div>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-ghost" style="background:var(--border);color:var(--text)" onclick="clearForm()">Limpiar</button>
+      <button class="btn btn-green" onclick="addMonth()">✅ Agregar mes al dashboard</button>
+    </div>
   </div>
 
   <div class="card">
-    <div class="form-section">
-      <div class="form-section-title">Período</div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">Mes</label>
-          <select class="form-input" id="newMonth">
-            <option value="ene">Enero</option>
-            <option value="feb">Febrero</option>
-            <option value="mar">Marzo</option>
-            <option value="abr">Abril</option>
-            <option value="may">Mayo</option>
-            <option value="jun">Junio</option>
-            <option value="jul" selected>Julio</option>
-            <option value="ago">Agosto</option>
-            <option value="sep">Septiembre</option>
-            <option value="oct">Octubre</option>
-            <option value="nov">Noviembre</option>
-            <option value="dic">Diciembre</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Año</label>
-          <input type="number" class="form-input" id="newYear" value="2026">
-        </div>
-      </div>
-    </div>
-
-    <div class="form-section">
-      <div class="form-section-title">Métricas de Meta Ads (desde la plataforma)</div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">Inversión Total (COP)</label>
-          <input type="number" class="form-input" id="newSpend" placeholder="Ej: 1200000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Alcance</label>
-          <input type="number" class="form-input" id="newReach" placeholder="Ej: 35000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Impresiones</label>
-          <input type="number" class="form-input" id="newImpressions" placeholder="Ej: 60000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Clics totales</label>
-          <input type="number" class="form-input" id="newClicks" placeholder="Ej: 2500">
-        </div>
-        <div class="form-group">
-          <label class="form-label">CTR (%)</label>
-          <input type="number" class="form-input" id="newCTR" placeholder="Ej: 4.2" step="0.01">
-        </div>
-        <div class="form-group">
-          <label class="form-label">CPC (COP)</label>
-          <input type="number" class="form-input" id="newCPC" placeholder="Ej: 450">
-        </div>
-        <div class="form-group">
-          <label class="form-label">CPM (COP)</label>
-          <input type="number" class="form-input" id="newCPM" placeholder="Ej: 18000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Conversaciones Iniciadas</label>
-          <input type="number" class="form-input" id="newConv" placeholder="Ej: 420">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Leads (Meta)</label>
-          <input type="number" class="form-input" id="newLeads" placeholder="Ej: 55">
-        </div>
-      </div>
-    </div>
-
-    <div class="form-section">
-      <div class="form-section-title">Datos del CRM / Ventas Manuales</div>
-      <div class="form-grid">
-        <div class="form-group">
-          <label class="form-label">Cotizaciones Enviadas</label>
-          <input type="number" class="form-input" id="newQuotes" placeholder="Ej: 28">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Ventas Cerradas</label>
-          <input type="number" class="form-input" id="newSales" placeholder="Ej: 12">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Ingresos Totales (COP)</label>
-          <input type="number" class="form-input" id="newRevenue" placeholder="Ej: 4800000">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Ticket Promedio (COP)</label>
-          <input type="number" class="form-input" id="newTicket" placeholder="Ej: 400000">
-        </div>
-      </div>
-    </div>
-
-    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px">
-      <button class="btn btn-secondary" onclick="clearForm()">Limpiar</button>
-      <button class="btn btn-green" onclick="addMonth()">✓ Agregar Mes al Dashboard</button>
-    </div>
-  </div>
-
-  <!-- HISTÓRICO -->
-  <div class="card" style="margin-top:20px">
-    <div class="card-title"><div class="dot"></div>Datos Históricos Registrados</div>
-    <div class="table-wrap">
+    <div class="card-title"><div class="dot"></div>Historial de datos registrados</div>
+    <div class="tscroll">
       <table>
-        <thead>
-          <tr>
-            <th>Mes</th>
-            <th>Inversión</th>
-            <th>Alcance</th>
-            <th>Impresiones</th>
-            <th>Clics</th>
-            <th>CTR</th>
-            <th>Conv.</th>
-            <th>Leads</th>
-            <th>CPL</th>
-            <th>Cotiz.</th>
-            <th>Ventas</th>
-            <th>Ingresos</th>
-            <th>ROAS</th>
-          </tr>
-        </thead>
-        <tbody id="histTable"></tbody>
+        <thead><tr>
+          <th>Mes</th><th>Inversión</th><th>Alcance</th><th>Impresiones</th><th>Clics</th><th>CTR</th><th>Conv. WA</th><th>Costo/Conv.</th><th>Contactos Meta ⓘ</th><th>Cotizaciones</th><th>Ventas</th><th>Ingresos</th><th>ROAS</th>
+        </tr></thead>
+        <tbody id="histTbody"></tbody>
       </table>
     </div>
+    <div class="src-note">ⓘ "Contactos Meta" = campo <em>lead</em> de la API de Meta Ads. Para campañas de mensajería puede corresponder a etiquetas de WhatsApp Business. No representa leads calificados validados.</div>
   </div>
 </section>
 
 </main>
 
-<footer class="footer">
-  Dashboard Ejecutivo Entrega del Chef · Datos extraídos de Meta Ads API · Junio 2026 · Actualizado el 30 jun 2026
-</footer>
-
-<!-- ═══════════════════════ JAVASCRIPT ═══════════════════════ -->
 <script>
-// ═══════ DATA STORE ═══════
-const MONTHS_DATA = [
-  {
-    key: 'jun2026',
-    label: 'Junio 2026',
-    // Meta Ads real data
-    spend: 819409,
-    reach: 26657,
-    impressions: 46564,
-    clicks: 1748,
-    ctr: 3.75,
-    cpc: 469,
-    cpm: 17597,
-    conv: 312,
-    leads: 34,
-    // Manual / CRM
-    quotes: 0,
-    sales: 0,
-    revenue: 0,
-    ticket: 0,
-    // Calculated
-    get cpl() { return this.leads > 0 ? Math.round(this.spend / this.leads) : 0; },
-    get cpr() { return this.conv > 0 ? Math.round(this.spend / this.conv) : 0; },
-    get roas() { return this.spend > 0 && this.revenue > 0 ? (this.revenue / this.spend).toFixed(2) : 'N/A'; },
-  }
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const HIST = [{
+  key:'jun2026', label:'Jun 2026',
+  spend:819409, reach:26657, imp:46564, clicks:1748,
+  ctr:3.75, cpc:469, cpm:17597, conv:312, leads:34,
+  quotes:0, sales:0, revenue:0, ticket:0,
+  get cprConv(){ return this.conv>0 ? Math.round(this.spend/this.conv) : 0; },
+  get roas(){ return this.spend>0&&this.revenue>0 ? (this.revenue/this.spend).toFixed(2) : 'N/A'; }
+}];
+
+const CAMPS = [
+  { name:'Max/Presentación/ABO', status:'ACTIVE',  spend:657929, reach:24288, imp:40401, clicks:1410, ctr:3.49, cpc:467, cpm:16285, conv:223, cpr:2950, leads:21, freq:1.66 },
+  { name:'Nueva campaña',        status:'PAUSED',  spend:161480, reach:4060,  imp:6163,  clicks:338,  ctr:5.48, cpc:478, cpm:26202, conv:89,  cpr:1814, leads:13, freq:1.52 }
 ];
 
-const CAMPAIGNS = [
-  {
-    name: 'Max/Presentación/Interacción/ABO/Whatsapp',
-    status: 'ACTIVE',
-    obj: 'Engagement · Mensajería',
-    spend: 657929,
-    reach: 24288,
-    impressions: 40401,
-    clicks: 1410,
-    ctr: 3.49,
-    cpc: 467,
-    cpm: 16285,
-    conv: 223,
-    cpr: 2950,
-    leads: 21,
-    get cpl() { return Math.round(this.spend / this.leads); },
-    freq: 1.66,
-    bestAd: 'HOMBRE EN LA COCINA',
-    worstAd: 'LA MAMÁ CON EL BEBÉ',
-  },
-  {
-    name: 'Nueva campaña de Interacción',
-    status: 'PAUSED',
-    obj: 'Engagement · Mensajería',
-    spend: 161480,
-    reach: 4060,
-    impressions: 6163,
-    clicks: 338,
-    ctr: 5.48,
-    cpc: 478,
-    cpm: 26202,
-    conv: 89,
-    cpr: 1814,
-    leads: 13,
-    get cpl() { return Math.round(this.spend / this.leads); },
-    freq: 1.52,
-    bestAd: 'Nuevo anuncio · Copia 2',
-    worstAd: 'Nuevo anuncio · Copia',
-  }
+const ADS_RAW = [
+  { name:'HOMBRE EN LA COCINA',      spend:132149, clicks:374, ctr:6.31, cpc:353, imp:5929,  conv:61, cpr:2166, leads:11, freq:1.16, status:'ACTIVE'      },
+  { name:'Nuevo anuncio · Copia 2',  spend:76598,  clicks:221, ctr:6.61, cpc:347, imp:3343,  conv:61, cpr:1256, leads:5,  freq:1.29, status:'CAMP_PAUSED' },
+  { name:'LA MUJER PREP. PLATO',     spend:255253, clicks:435, ctr:3.53, cpc:587, imp:12325, conv:95, cpr:2687, leads:8,  freq:1.54, status:'ACTIVE'      },
+  { name:'Nuevo anuncio · Copia',    spend:57639,  clicks:61,  ctr:3.88, cpc:945, imp:1573,  conv:13, cpr:4434, leads:7,  freq:1.28, status:'CAMP_PAUSED' },
+  { name:'LA MAMÁ CON EL BEBÉ',      spend:257944, clicks:581, ctr:2.70, cpc:444, imp:21548, conv:66, cpr:3908, leads:2,  freq:1.62, status:'ACTIVE'      },
+  { name:'Nuevo anuncio · Copia 2b', spend:24983,  clicks:50,  ctr:4.35, cpc:500, imp:1150,  conv:14, cpr:1785, leads:1,  freq:1.21, status:'CAMP_PAUSED' },
 ];
+const ADS = [...ADS_RAW].sort((a,b) => a.cpr - b.cpr);
 
-const ADS = [
-  { name: 'HOMBRE EN LA COCINA',        spend: 132149, clicks: 374, ctr: 6.31, cpc: 353, impr: 5929, reach: 5123, conv: 61, cpr: 2166, leads: 11, freq: 1.16, status: 'ACTIVE',     camp: 1 },
-  { name: 'Nuevo anuncio · Copia 2',    spend:  76598, clicks: 221, ctr: 6.61, cpc: 347, impr: 3343, reach: 2597, conv: 61, cpr: 1256, leads:  5, freq: 1.29, status: 'CAMP_PAUSED', camp: 2 },
-  { name: 'LA MUJER PREPARANDO PLATO',  spend: 255253, clicks: 435, ctr: 3.53, cpc: 587, impr: 12325, reach: 7997, conv: 95, cpr: 2687, leads:  8, freq: 1.54, status: 'ACTIVE',     camp: 1 },
-  { name: 'Nuevo anuncio · Copia',      spend:  57639, clicks:  61, ctr: 3.88, cpc: 945, impr:  1573, reach: 1229, conv: 13, cpr: 4434, leads:  7, freq: 1.28, status: 'CAMP_PAUSED', camp: 2 },
-  { name: 'LA MAMÁ CON EL BEBÉ',        spend: 257944, clicks: 581, ctr: 2.70, cpc: 444, impr: 21548, reach: 13322, conv: 66, cpr: 3908, leads: 2, freq: 1.62, status: 'ACTIVE',     camp: 1 },
-  { name: 'Nuevo anuncio · Copia 2 (b)',spend:  24983, clicks:  50, ctr: 4.35, cpc: 500, impr:  1150, reach:  948, conv: 14, cpr: 1785, leads:  1, freq: 1.21, status: 'CAMP_PAUSED', camp: 2 },
-];
-
-// Sort ads by CPL asc (best first), N/A at end
-const adsSorted = [...ADS].filter(a => a.leads > 0)
-  .sort((a,b) => (a.spend/a.leads) - (b.spend/b.leads));
-
-const FUNNEL = {
-  impressions: 46564,
-  clicks: 1748,
-  conv: 312,
-  leads: 34,
-  quotes: 0,   // manual
-  sales: 0     // manual
+const VERDICTS = {
+  'HOMBRE EN LA COCINA':     'Mejor CTR activo (6.31%), CPC más bajo ($353), mejor costo/conv. activo ($2.166). Escalar presupuesto aquí.',
+  'Nuevo anuncio · Copia 2': 'CTR más alto de toda la cuenta (6.61%), costo/conv. $1.256. Migrar urgente a la campaña activa.',
+  'LA MUJER PREP. PLATO':    'Rendimiento intermedio. Mayor volumen de conversaciones (95) con inversión alta ($255k).',
+  'Nuevo anuncio · Copia':   'CPC más alto ($945), costo/conv. más alto de los pausados ($4.434). Revisar o pausar.',
+  'LA MAMÁ CON EL BEBÉ':     '⚠️ PAUSAR. CTR más bajo (2.70%), costo/conv. más alto activo ($3.908). Gasta 31.5% con menor eficiencia.',
+  'Nuevo anuncio · Copia 2b':'Bajo volumen. Sin datos suficientes para evaluar. Campaña pausada.',
 };
 
-// Colors
-const BRAND = '#E8462A';
-const COLORS = ['#E8462A','#F7A732','#2980B9','#27AE60','#8E44AD','#E67E22'];
-
-// ═══════ NAVIGATION ═══════
-function showSection(idx, el) {
-  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i === idx));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
+function tierOf(ad) {
+  if (ad.status !== 'ACTIVE') return 'P';
+  if (ad.ctr >= 5.5 && ad.cpr <= 2500) return 'S';
+  if (ad.ctr >= 4.0 || ad.cpr <= 2200) return 'A';
+  if (ad.ctr >= 3.0 && ad.cpr <= 3200) return 'B';
+  return 'C';
 }
 
-function switchMonth(key) {
-  // Future: filter data by month key
-  renderAll();
+let FUNNEL = { imp:46564, clicks:1748, conv:312, leads:34, quotes:0, sales:0 };
+
+// ─── NAV ────────────────────────────────────────────────────────────────────
+function goTab(i, el) {
+  document.querySelectorAll('.section').forEach((s,j) => s.classList.toggle('active', j===i));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  (el || document.querySelectorAll('.nav-item')[i]).classList.add('active');
+  if (i===3) buildFunnel();
 }
 
-// ═══════ RENDER ALL ═══════
-function renderAll() {
-  renderKPIs();
-  renderCampTable();
-  renderAdTable();
-  renderFunnel();
-  renderHistTable();
-  renderCharts();
-}
+// ─── FORMAT ─────────────────────────────────────────────────────────────────
+function n(v) { return Number(v).toLocaleString('es-CO'); }
 
-// ═══════ KPI CARDS ═══════
-function renderKPIs() {
-  const d = MONTHS_DATA[0];
-  const cpl = d.cpl;
+// ─── KPI GRID ───────────────────────────────────────────────────────────────
+function buildKpis() {
+  const d = HIST[0];
   const kpis = [
-    { label: 'Inversión Total', value: fmt(d.spend), sub: 'COP · Junio 2026', color: '#E8462A', icon: '💰', delta: null },
-    { label: 'Alcance', value: fmtN(d.reach), sub: 'personas únicas', color: '#2980B9', icon: '👥', delta: null },
-    { label: 'Impresiones', value: fmtN(d.impressions), sub: 'total', color: '#8E44AD', icon: '👁️', delta: null },
-    { label: 'Clics', value: fmtN(d.clicks), sub: 'total', color: '#F7A732', icon: '🖱️', delta: null },
-    { label: 'CTR', value: d.ctr + '%', sub: 'promedio cuenta', color: '#27AE60', icon: '📊', delta: { type: 'up', text: 'Sobre promedio industria' } },
-    { label: 'CPC', value: '$' + fmtN(d.cpc), sub: 'COP por clic', color: '#E67E22', icon: '💸', delta: null },
-    { label: 'CPM', value: '$' + fmtN(d.cpm), sub: 'COP por mil imp.', color: '#16A085', icon: '📉', delta: null },
-    { label: 'Conv. Iniciadas', value: fmtN(d.conv), sub: 'chats WhatsApp', color: '#2980B9', icon: '💬', delta: null },
-    { label: 'Leads Generados', value: d.leads, sub: 'prospectos captados', color: '#27AE60', icon: '🎯', delta: null },
-    { label: 'Costo por Lead', value: '$' + fmtN(cpl), sub: 'COP por lead', color: '#E8462A', icon: '📌', delta: null },
-    { label: 'Ventas', value: d.sales || '—', sub: d.sales ? 'cerradas' : 'ingresar en CRM', color: '#8E44AD', icon: '🛒', delta: null },
-    { label: 'ROAS', value: d.roas, sub: d.revenue ? 'retorno inversión' : 'sin datos de venta', color: '#27AE60', icon: '📈', delta: null },
+    { lbl:'Inversión Total',   val:'$'+n(d.spend),      sub:'COP',                         color:'#E8462A', ico:'💰', tag:null },
+    { lbl:'Alcance',           val:n(d.reach),           sub:'personas únicas',             color:'#3B82F6', ico:'👥', tag:null },
+    { lbl:'Impresiones',       val:n(d.imp),             sub:'veces mostrado',              color:'#8B5CF6', ico:'👁️', tag:null },
+    { lbl:'Clics',             val:n(d.clicks),          sub:'total',                       color:'#F59E0B', ico:'🖱️', tag:null },
+    { lbl:'CTR',               val:d.ctr+'%',            sub:'tasa de clics promedio',      color:'#22C55E', ico:'📊', tag:{c:'t-great',t:'▲ Supera benchmark industria'} },
+    { lbl:'CPC',               val:'$'+n(d.cpc),         sub:'COP por clic',               color:'#F97316', ico:'💸', tag:null },
+    { lbl:'CPM',               val:'$'+n(d.cpm),         sub:'COP por 1.000 impresiones',  color:'#06B6D4', ico:'📉', tag:null },
+    { lbl:'Conv. WA Iniciadas',val:n(d.conv),            sub:'⭐ KPI principal real',       color:'#3B82F6', ico:'💬', tag:{c:'t-good',t:'KPI principal de campaña'} },
+    { lbl:'Costo / Conv. WA',  val:'$'+n(d.cprConv),    sub:'COP por chat de WhatsApp',   color:'#E8462A', ico:'📌', tag:null },
+    { lbl:'Contactos Meta ⓘ',  val:'34',                 sub:'campo "lead" API · ver nota', color:'#94A3B8', ico:'🤔', tag:{c:'t-warn',t:'⚠️ Origen incierto · ver alerta'} },
+    { lbl:'Ventas',            val:d.sales||'—',         sub:'ingresar desde CRM',         color:'#8B5CF6', ico:'🛒', tag:{c:'t-na',t:'Pendiente — datos CRM'} },
+    { lbl:'ROAS',              val:d.roas,               sub:'sin datos de venta aún',     color:'#22C55E', ico:'📈', tag:{c:'t-na',t:'Requiere píxel + ventas'} },
   ];
-  const grid = document.getElementById('kpiGrid');
-  grid.innerHTML = kpis.map(k => `
-    <div class="kpi-card" style="--kpi-color:${k.color}">
-      <div class="kpi-icon">${k.icon}</div>
-      <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value">${k.value}</div>
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
+    <div class="kpi" style="--k-color:${k.color}">
+      <div class="kpi-head"><div class="kpi-label">${k.lbl}</div><div class="kpi-emoji">${k.ico}</div></div>
+      <div class="kpi-val">${k.val}</div>
       <div class="kpi-sub">${k.sub}</div>
-      ${k.delta ? `<div class="kpi-delta delta-${k.delta.type}">${k.delta.type==='up'?'▲':'▼'} ${k.delta.text}</div>` : ''}
-    </div>
-  `).join('');
+      ${k.tag ? `<div class="kpi-tag ${k.tag.c}">${k.tag.t}</div>` : ''}
+    </div>`).join('');
 }
 
-// ═══════ CAMPAIGN TABLE ═══════
-function renderCampTable() {
-  const tbody = document.getElementById('campTable');
-  tbody.innerHTML = CAMPAIGNS.map(c => `
-    <tr>
-      <td><strong style="font-size:12px">${c.name}</strong></td>
-      <td><span class="badge ${c.status==='ACTIVE'?'badge-green':'badge-gray'}">${c.status==='ACTIVE'?'Activa':'Pausada'}</span></td>
-      <td style="font-size:11px;color:var(--muted)">${c.obj}</td>
-      <td><strong>$${fmtN(c.spend)}</strong></td>
-      <td>${fmtN(c.reach)}</td>
-      <td>${fmtN(c.impressions)}</td>
-      <td>${fmtN(c.clicks)}</td>
-      <td><strong style="color:${c.ctr>4?'#27AE60':'var(--text)'}">${c.ctr}%</strong></td>
-      <td>$${fmtN(c.cpc)}</td>
-      <td>${fmtN(c.conv)}</td>
-      <td>$${fmtN(c.cpr)}</td>
-      <td><strong>${c.leads}</strong></td>
-      <td><strong style="color:${c.cpl<20000?'#27AE60':c.cpl>50000?'#E74C3C':'var(--text)'}">$${fmtN(c.cpl)}</strong></td>
-      <td><span class="best-tag">✓ ${c.bestAd.substring(0,18)}...</span></td>
-      <td><span class="worst-tag">✗ ${c.worstAd.substring(0,18)}...</span></td>
-    </tr>
-  `).join('');
-}
-
-// ═══════ ADS TABLE ═══════
-function renderAdTable() {
-  const tbody = document.getElementById('adTable');
-  const maxSpend = Math.max(...ADS.filter(a=>a.leads>0).map(a=>a.spend));
-
-  tbody.innerHTML = adsSorted.map((a, i) => {
-    const cpl = Math.round(a.spend / a.leads);
-    const isBest = i === 0;
-    const isWorst = i === adsSorted.length - 1;
+// ─── CREATIVE CARDS ─────────────────────────────────────────────────────────
+function buildCreatives() {
+  document.getElementById('creativeGrid').innerHTML = ADS.map(a => {
+    const t = tierOf(a);
+    const tierColor = {S:'#22C55E',A:'#3B82F6',B:'#F59E0B',C:'#EF4444',P:'#94A3B8'}[t];
+    const tierLabel = {S:'S · Escalar 🚀',A:'A · Mantener ✅',B:'B · Optimizar 🔧',C:'C · Revisar ⚠️',P:'P · Pausado 🔒'}[t];
     return `
-      <tr>
-        <td><strong style="color:${isBest?'#27AE60':isWorst?'#E74C3C':'var(--muted)'}">${i+1}</strong></td>
-        <td>
-          <div style="font-size:12px;font-weight:600">${a.name}</div>
-          ${isBest?'<span class="best-tag">MEJOR</span>':''}
-          ${isWorst?'<span class="worst-tag">PAUSAR</span>':''}
-        </td>
-        <td>$${fmtN(a.spend)}</td>
-        <td>${fmtN(a.clicks)}</td>
-        <td><strong style="color:${a.ctr>5?'#27AE60':a.ctr<3?'#E74C3C':'var(--text)'}">${a.ctr}%</strong></td>
-        <td>$${fmtN(a.cpc)}</td>
-        <td>${fmtN(a.conv)}</td>
-        <td>$${fmtN(a.cpr)}</td>
-        <td><strong>${a.leads}</strong></td>
-        <td><strong style="color:${cpl<20000?'#27AE60':cpl>80000?'#E74C3C':'var(--text)'}">$${fmtN(cpl)}</strong></td>
-        <td>${a.freq}</td>
-        <td><span class="badge ${a.status==='ACTIVE'?'badge-green':a.status==='CAMP_PAUSED'?'badge-yellow':'badge-gray'}">${a.status==='ACTIVE'?'Activo':a.status==='CAMP_PAUSED'?'C. Pausada':'Pausado'}</span></td>
-      </tr>
-    `;
+    <div class="cc ${t}">
+      <div class="cc-tier t${t}" style="background:${tierColor}">${t}</div>
+      <div class="cc-name">${a.name}</div>
+      <div class="cc-stats">
+        <div class="cs"><div class="cs-lbl">CTR</div><div class="cs-val ${a.ctr>=5.5?'gd':a.ctr<3?'bd':''}">${a.ctr}%</div></div>
+        <div class="cs"><div class="cs-lbl">CPC (COP)</div><div class="cs-val ${a.cpc<=380?'gd':a.cpc>=800?'bd':''}">${n(a.cpc)}</div></div>
+        <div class="cs"><div class="cs-lbl">Conversaciones</div><div class="cs-val">${a.conv}</div></div>
+        <div class="cs"><div class="cs-lbl">Costo/Conv.</div><div class="cs-val ${a.cpr<=2000?'gd':a.cpr>=3800?'bd':''}">${n(a.cpr)}</div></div>
+        <div class="cs"><div class="cs-lbl">Invertido (COP)</div><div class="cs-val">${n(a.spend)}</div></div>
+        <div class="cs"><div class="cs-lbl">Frecuencia</div><div class="cs-val">${a.freq}</div></div>
+      </div>
+      <div class="cc-foot">
+        <div class="badge ${a.status==='ACTIVE'?'b-green':a.status==='CAMP_PAUSED'?'b-yellow':'b-gray'}" style="margin-bottom:6px">
+          ${a.status==='ACTIVE'?'● Activo':a.status==='CAMP_PAUSED'?'⏸ Campaña pausada':'⏸ Pausado'}
+        </div>
+        &nbsp;<span style="font-size:10px;background:${tierColor}22;color:${tierColor};padding:1px 7px;border-radius:10px;font-weight:800">${tierLabel}</span>
+        <div class="cc-verdict">${VERDICTS[a.name]||''}</div>
+      </div>
+    </div>`;
   }).join('');
 }
 
-// ═══════ FUNNEL ═══════
-function renderFunnel() {
-  const d = MONTHS_DATA[0];
-  const quotes = d.quotes || 0;
-  const sales = d.sales || 0;
-
+// ─── FUNNEL ─────────────────────────────────────────────────────────────────
+function buildFunnel() {
+  const F = FUNNEL;
   const steps = [
-    { num: 1, label: 'Impresiones', value: d.impressions, color: '#8E44AD', sub: 'Veces que el anuncio fue visto' },
-    { num: 2, label: 'Clics', value: d.clicks, color: '#2980B9', sub: 'Personas que hicieron clic en el anuncio' },
-    { num: 3, label: 'Conversaciones', value: d.conv, color: '#E67E22', sub: 'Chats iniciados en WhatsApp' },
-    { num: 4, label: 'Leads Captados', value: d.leads, color: '#F7A732', sub: 'Prospectos registrados en CRM' },
-    { num: 5, label: 'Cotizaciones', value: quotes, color: '#E8462A', sub: quotes ? 'Propuestas enviadas' : 'Pendiente — ingresar en CRM' },
-    { num: 6, label: 'Ventas Cerradas', value: sales, color: '#27AE60', sub: sales ? 'Conversiones exitosas' : 'Pendiente — ingresar en CRM' },
+    { n:1, lbl:'Impresiones',      sub:'Anuncio mostrado en el feed',      val:F.imp,    color:'#8B5CF6' },
+    { n:2, lbl:'Clics al anuncio', sub:'Persona hizo clic',               val:F.clicks, color:'#3B82F6' },
+    { n:3, lbl:'Conv. WhatsApp',   sub:'Chat iniciado en WA',             val:F.conv,   color:'#F59E0B' },
+    { n:4, lbl:'Contactos Meta',   sub:'Campo "lead" API Meta (incierto)',  val:F.leads,  color:'#E8462A' },
+    { n:5, lbl:'Cotizaciones',     sub:'Propuesta enviada (CRM)',          val:F.quotes, color:'#EF4444' },
+    { n:6, lbl:'Ventas cerradas',  sub:'Venta confirmada (CRM)',           val:F.sales,  color:'#22C55E' },
   ];
+  const pct = (a, b) => b > 0 ? ((a/b)*100).toFixed(1)+'%' : '—';
+  const maxW = 100;
 
-  const prev = (i) => steps[i-1]?.value || steps[i].value;
-  const convRate = (curr, prv) => prv > 0 ? ((curr/prv)*100).toFixed(1)+'%' : '—';
-
-  const container = document.getElementById('funnelContainer');
-  container.innerHTML = steps.map((s, i) => `
-    <div class="funnel-step" style="max-width:${Math.max(45, 100 - i*10)}%">
-      ${i > 0 ? `
-        <div class="funnel-arrow">
-          <div class="conversion-rate">↓ ${convRate(s.value, prev(i))} conv.</div>
-        </div>
-      ` : ''}
-      <div class="funnel-box" style="border-color:${s.color}20;background:${s.color}08">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div class="funnel-step-num" style="background:${s.color}">${s.num}</div>
-          <div>
-            <div class="funnel-label">${s.label}</div>
-            <div class="funnel-sub">${s.sub}</div>
+  document.getElementById('funnelViz').innerHTML = steps.map((s, i) => {
+    const w = Math.max(32, maxW - i*12);
+    const prev = i > 0 ? steps[i-1].val : s.val;
+    const rate = i > 0 ? parseFloat(pct(s.val, prev)) : null;
+    const cls = rate !== null ? (rate >= 20 ? 'cp-hi' : rate < 10 ? 'cp-lo' : '') : '';
+    return `
+      ${i > 0 ? `<div class="f-connector"><div class="f-line"></div><div class="conv-pill ${cls}">${pct(s.val, prev)} conv.</div><div class="f-line"></div></div>` : ''}
+      <div class="f-row">
+        <div class="f-block" style="width:${w}%;border-color:${s.color}35;background:${s.color}0A">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="f-num" style="background:${s.color}">${s.n}</div>
+            <div><div class="f-name">${s.lbl}</div><div class="f-sub">${s.sub}</div></div>
           </div>
+          <div class="f-val" style="color:${s.color}">${s.val > 0 ? n(s.val) : '—'}</div>
         </div>
-        <div style="text-align:right">
-          <div class="funnel-value" style="color:${s.color}">${s.value > 0 ? fmtN(s.value) : '—'}</div>
-        </div>
-      </div>
-    </div>
-  `).join('');
+      </div>`;
+  }).join('');
+
+  const rates = [
+    { lbl:'Impresiones → Clics',             r: pct(F.clicks, F.imp) },
+    { lbl:'Clics → Conv. WhatsApp',          r: pct(F.conv,   F.clicks) },
+    { lbl:'Conv. WA → Contactos Meta',       r: pct(F.leads,  F.conv) },
+    { lbl:'Contactos Meta → Cotizaciones',   r: pct(F.quotes, F.leads) },
+    { lbl:'Cotizaciones → Ventas',           r: pct(F.sales,  F.quotes) },
+  ];
+  document.getElementById('funnelStats').innerHTML = rates.map(r => {
+    const pf = parseFloat(r.r);
+    const color = r.r==='—' ? 'var(--muted)' : pf>=20 ? 'var(--green)' : pf<10 ? 'var(--red)' : 'var(--yellow)';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border)">
+      <span style="color:var(--muted)">${r.lbl}</span>
+      <strong style="color:${color}">${r.r}</strong>
+    </div>`;
+  }).join('');
 }
 
-// ═══════ HIST TABLE ═══════
-function renderHistTable() {
-  const tbody = document.getElementById('histTable');
-  tbody.innerHTML = MONTHS_DATA.map(d => `
+// ─── HIST TABLE ──────────────────────────────────────────────────────────────
+function buildHistTable() {
+  document.getElementById('histTbody').innerHTML = HIST.map(d => `
     <tr>
       <td><strong>${d.label}</strong></td>
-      <td>$${fmtN(d.spend)}</td>
-      <td>${fmtN(d.reach)}</td>
-      <td>${fmtN(d.impressions)}</td>
-      <td>${fmtN(d.clicks)}</td>
-      <td>${d.ctr}%</td>
-      <td>${fmtN(d.conv)}</td>
-      <td>${d.leads}</td>
-      <td>$${fmtN(d.cpl)}</td>
-      <td>${d.quotes || '—'}</td>
-      <td>${d.sales || '—'}</td>
-      <td>${d.revenue ? '$'+fmtN(d.revenue) : '—'}</td>
-      <td>${d.roas}</td>
-    </tr>
-  `).join('');
+      <td>$${n(d.spend)}</td><td>${n(d.reach)}</td><td>${n(d.imp)}</td><td>${n(d.clicks)}</td>
+      <td>${d.ctr}%</td><td>${n(d.conv)}</td><td>$${n(d.cprConv)}</td>
+      <td><span class="badge b-yellow">${d.leads}</span></td>
+      <td>${d.quotes||'—'}</td><td>${d.sales||'—'}</td>
+      <td>${d.revenue?'$'+n(d.revenue):'—'}</td><td>${d.roas}</td>
+    </tr>`).join('');
 }
 
-// ═══════ CHARTS ═══════
-const chartInstances = {};
-
-function destroyChart(id) {
-  if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
+// ─── ANNUAL ──────────────────────────────────────────────────────────────────
+function buildAnnual() {
+  const totSpend = HIST.reduce((s,d) => s+d.spend, 0);
+  const totConv  = HIST.reduce((s,d) => s+d.conv,  0);
+  const totLeads = HIST.reduce((s,d) => s+d.leads, 0);
+  const totSales = HIST.reduce((s,d) => s+d.sales, 0);
+  const avgCTR   = (HIST.reduce((s,d) => s+d.ctr,  0) / HIST.length).toFixed(2);
+  const kpis = [
+    { lbl:'Total invertido',      val:'$'+n(totSpend),                         sub:'COP', color:'#E8462A', ico:'💰' },
+    { lbl:'Total conv. WA',       val:n(totConv),                              sub:'chats iniciados', color:'#3B82F6', ico:'💬' },
+    { lbl:'Contactos Meta',       val:totLeads,                                sub:'"lead" API · origen incierto', color:'#94A3B8', ico:'🤔' },
+    { lbl:'Total ventas',         val:totSales||'—',                           sub:'ingresar desde CRM', color:'#8B5CF6', ico:'🛒' },
+    { lbl:'CTR promedio',         val:avgCTR+'%',                              sub:'promedio del año', color:'#22C55E', ico:'📊' },
+    { lbl:'Costo/Conv. prom.',    val:'$'+n(Math.round(totSpend/totConv)),     sub:'COP por chat', color:'#F59E0B', ico:'📉' },
+  ];
+  document.getElementById('annualKpis').innerHTML = kpis.map(k => `
+    <div class="kpi" style="--k-color:${k.color}">
+      <div class="kpi-head"><div class="kpi-label">${k.lbl}</div><div class="kpi-emoji">${k.ico}</div></div>
+      <div class="kpi-val">${k.val}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
 }
 
-function renderCharts() {
-  renderSection0Charts();
-  renderSection1Charts();
-  renderSection2Charts();
-  renderSection4Charts();
-  renderSection5Charts();
+// ─── CHARTS ──────────────────────────────────────────────────────────────────
+const CC = {};
+function mk(id, cfg) { if(CC[id]) CC[id].destroy(); CC[id] = new Chart(document.getElementById(id), cfg); }
+const PAL = ['#E8462A','#3B82F6','#22C55E','#F59E0B','#8B5CF6','#06B6D4'];
+
+function buildCharts() {
+  // Tab 0
+  mk('cPie', { type:'doughnut', data:{
+    labels:['Max/ABO (80.3%)','Nueva campaña (19.7%)'],
+    datasets:[{data:[657929,161480],backgroundColor:['#E8462A','#F59E0B'],borderWidth:0,hoverOffset:8}]
+  }, options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}}}});
+
+  mk('cBar0', { type:'bar', data:{
+    labels:['Max/ABO (Activa)','Nueva campaña (Pausada)'],
+    datasets:[
+      { label:'Inversión COP/1000', data:[657.9,161.5], backgroundColor:['#E8462A99','#94A3B899'], borderRadius:8, yAxisID:'y' },
+      { label:'Conv. WhatsApp', data:[223,89], type:'line', borderColor:'#3B82F6', backgroundColor:'#3B82F615', fill:true, tension:.3, pointRadius:7, pointBackgroundColor:'#3B82F6', borderWidth:3, yAxisID:'y2' }
+    ]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'Inversión (k COP)'}},y2:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Conversaciones'}}}}});
+
+  // Tab 1
+  mk('cCampCTR', { type:'bar', data:{
+    labels:['Max/ABO\n(Activa)','Nueva campaña\n(Pausada)'],
+    datasets:[{label:'CTR (%)',data:[3.49,5.48],backgroundColor:['#F59E0B99','#22C55E99'],borderRadius:10,borderWidth:2,borderColor:['#F59E0B','#22C55E']}]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:7,ticks:{callback:v=>v+'%'}}}}});
+
+  mk('cCampCPR', { type:'bar', data:{
+    labels:['Max/ABO\n(Activa)','Nueva campaña\n(Pausada)'],
+    datasets:[{label:'Costo/Conv.',data:[2950,1814],backgroundColor:['#E8462A99','#22C55E99'],borderRadius:10,borderWidth:2,borderColor:['#E8462A','#22C55E']}]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}},scales:{y:{ticks:{callback:v=>'$'+n(v)}}}}});
+
+  // Tab 2
+  const a5 = ADS.filter(a=>a.conv>0).slice(0,5);
+  mk('cAdCTR', { type:'bar', data:{
+    labels: a5.map(a=>a.name.length>18?a.name.substring(0,17)+'…':a.name),
+    datasets:[{label:'CTR (%)', data:a5.map(a=>a.ctr), backgroundColor:a5.map(a=>a.ctr>=6?'#22C55E99':a.ctr<3?'#EF444499':'#F59E0B99'), borderRadius:6}]
+  }, options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{max:8,ticks:{callback:v=>v+'%'}}}}});
+
+  mk('cAdCPR', { type:'bar', data:{
+    labels: a5.map(a=>a.name.length>18?a.name.substring(0,17)+'…':a.name),
+    datasets:[{label:'Costo/Conv.', data:a5.map(a=>a.cpr), backgroundColor:a5.map(a=>a.cpr<=2000?'#22C55E99':a.cpr>=3800?'#EF444499':'#F59E0B99'), borderRadius:6}]
+  }, options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' $'+n(c.raw)+' COP'}}},scales:{x:{ticks:{callback:v=>'$'+n(v)}}}}});
+
+  // Tab 3 funnel bar
+  mk('cFunnel', { type:'bar', data:{
+    labels:['Impresiones','Clics','Conv. WA','Cont. Meta','Cotizaciones','Ventas'],
+    datasets:[{label:'Cantidad',data:[FUNNEL.imp,FUNNEL.clicks,FUNNEL.conv,FUNNEL.leads,FUNNEL.quotes||0,FUNNEL.sales||0],
+      backgroundColor:['#8B5CF699','#3B82F699','#F59E0B99','#E8462A99','#EF444499','#22C55E99'],borderRadius:6}]
+  }, options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{type:'logarithmic'}}}});
+
+  // Tab 4 monthly
+  const labels = HIST.map(d=>d.label);
+  const line = (data, color) => ({
+    type:'line', data:{labels, datasets:[{data, borderColor:color, backgroundColor:color+'18', fill:true, tension:.4, pointRadius:7, pointBackgroundColor:color, borderWidth:3}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}
+  });
+  mk('cMSpend',  {...line(HIST.map(d=>d.spend),'#E8462A'), options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+n(v)}}}}});
+  mk('cMConv',   line(HIST.map(d=>d.conv),'#3B82F6'));
+  mk('cMLeads',  line(HIST.map(d=>d.leads),'#94A3B8'));
+  mk('cMCTR',    {...line(HIST.map(d=>d.ctr),'#22C55E'), options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>v+'%'}}}}});
+
+  // Tab 5 annual
+  const ts=HIST.reduce((s,d)=>s+d.spend,0), tc=HIST.reduce((s,d)=>s+d.conv,0);
+  mk('cAnnBar', { type:'bar', data:{
+    labels:['Inversión\n(/1000)','Impresiones','Clics','Conv. WA','Cont. Meta'],
+    datasets:[{label:'Acumulado',data:[Math.round(ts/1000),HIST.reduce((s,d)=>s+d.imp,0),HIST.reduce((s,d)=>s+d.clicks,0),tc,HIST.reduce((s,d)=>s+d.leads,0)],backgroundColor:PAL,borderRadius:8}]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+
+  mk('cAnnPie', { type:'doughnut', data:{
+    labels:['Inversión Meta Ads (COP/1000)','Conv. WA ×1000','Contactos Meta ×100'],
+    datasets:[{data:[Math.round(ts/1000),tc,HIST.reduce((s,d)=>s+d.leads,0)*100],backgroundColor:['#E8462A','#3B82F6','#94A3B8'],borderWidth:0}]
+  }, options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'}}}});
 }
 
-function renderSection0Charts() {
-  destroyChart('chartCampResumen');
-  chartInstances['chartCampResumen'] = new Chart(document.getElementById('chartCampResumen'), {
-    type: 'bar',
-    data: {
-      labels: ['Max/ABO/Whatsapp', 'Nueva campaña Interacción'],
-      datasets: [
-        { label: 'Inversión ($COP/1000)', data: CAMPAIGNS.map(c=>c.spend/1000), backgroundColor: '#E8462A99', yAxisID: 'y' },
-        { label: 'Leads', data: CAMPAIGNS.map(c=>c.leads), backgroundColor: '#27AE6099', yAxisID: 'y2', type: 'line', tension: 0.3, borderWidth: 3, pointRadius: 6, fill: false, borderColor: '#27AE60' },
-        { label: 'Conversaciones', data: CAMPAIGNS.map(c=>c.conv), backgroundColor: '#2980B999', yAxisID: 'y2', type: 'line', tension: 0.3, borderWidth: 3, pointRadius: 6, fill: false, borderColor: '#2980B9' },
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      scales: {
-        y: { type: 'linear', position: 'left', title: { display: true, text: 'Inversión (COP/1000)' } },
-        y2: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Cant.' } }
-      },
-      plugins: { legend: { position: 'bottom' } }
-    }
-  });
-
-  destroyChart('chartInversionPie');
-  chartInstances['chartInversionPie'] = new Chart(document.getElementById('chartInversionPie'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Max/ABO (80.3%)', 'Nueva campaña (19.7%)'],
-      datasets: [{ data: [657929, 161480], backgroundColor: ['#E8462A','#F7A732'], borderWidth: 0 }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'bottom' },
-        tooltip: { callbacks: { label: (c) => ` $${fmtN(c.raw)} COP` } }
-      },
-      cutout: '65%'
-    }
-  });
-}
-
-function renderSection1Charts() {
-  destroyChart('chartCampInversion');
-  chartInstances['chartCampInversion'] = new Chart(document.getElementById('chartCampInversion'), {
-    type: 'bar',
-    data: {
-      labels: CAMPAIGNS.map(c => c.name.substring(0,28)+'...'),
-      datasets: [{
-        label: 'Inversión (COP)',
-        data: CAMPAIGNS.map(c => c.spend),
-        backgroundColor: ['#E8462A','#F7A732'],
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` $${fmtN(c.raw)} COP` } } },
-      scales: { x: { ticks: { callback: v => '$'+fmtN(v/1000)+'k' } } }
-    }
-  });
-
-  destroyChart('chartCampCTR');
-  chartInstances['chartCampCTR'] = new Chart(document.getElementById('chartCampCTR'), {
-    type: 'bar',
-    data: {
-      labels: CAMPAIGNS.map(c => c.name.substring(0,20)+'...'),
-      datasets: [
-        { label: 'CTR (%)', data: CAMPAIGNS.map(c => c.ctr), backgroundColor: '#2980B9AA', borderRadius: 6, yAxisID: 'y' },
-        { label: 'CPR ($COP)', data: CAMPAIGNS.map(c => c.cpr), backgroundColor: '#E8462AAA', borderRadius: 6, yAxisID: 'y2' },
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      scales: {
-        y: { position: 'left', title: { display: true, text: 'CTR (%)' } },
-        y2: { position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'CPR (COP)' } }
-      },
-      plugins: { legend: { position: 'bottom' } }
-    }
-  });
-}
-
-function renderSection2Charts() {
-  const mainAds = ADS.filter(a => a.leads > 0).slice(0,5);
-
-  destroyChart('chartAdCTR');
-  chartInstances['chartAdCTR'] = new Chart(document.getElementById('chartAdCTR'), {
-    type: 'bar',
-    data: {
-      labels: mainAds.map(a => a.name.substring(0,20)),
-      datasets: [{
-        label: 'CTR (%)',
-        data: mainAds.map(a => a.ctr),
-        backgroundColor: mainAds.map(a => a.ctr >= 6 ? '#27AE60AA' : a.ctr <= 3 ? '#E74C3CAA' : '#F7A732AA'),
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-      plugins: { legend: { display: false } },
-      scales: { x: { max: 8 } }
-    }
-  });
-
-  destroyChart('chartAdCPL');
-  const sorted5 = adsSorted.slice(0,5);
-  chartInstances['chartAdCPL'] = new Chart(document.getElementById('chartAdCPL'), {
-    type: 'bar',
-    data: {
-      labels: sorted5.map(a => a.name.substring(0,18)),
-      datasets: [{
-        label: 'CPL (COP)',
-        data: sorted5.map(a => Math.round(a.spend/a.leads)),
-        backgroundColor: sorted5.map((a,i) => i===0?'#27AE60AA':i===sorted5.length-1?'#E74C3CAA':'#2980B9AA'),
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` $${fmtN(c.raw)} COP` } } },
-      scales: { x: { ticks: { callback: v => '$'+fmtN(v/1000)+'k' } } }
-    }
-  });
-}
-
-function renderSection4Charts() {
-  const labels = MONTHS_DATA.map(d => d.label);
-  const spends = MONTHS_DATA.map(d => d.spend);
-  const leads  = MONTHS_DATA.map(d => d.leads);
-  const cpls   = MONTHS_DATA.map(d => d.cpl);
-  const convs  = MONTHS_DATA.map(d => d.conv);
-
-  const mkChart = (id, label, data, color, unit) => {
-    destroyChart(id);
-    chartInstances[id] = new Chart(document.getElementById(id), {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [{
-          label, data,
-          borderColor: color,
-          backgroundColor: color + '20',
-          fill: true,
-          tension: 0.3,
-          pointRadius: 6,
-          pointBackgroundColor: color,
-          borderWidth: 3
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: { y: { ticks: { callback: v => unit === 'COP' ? '$'+fmtN(v) : v } } }
-      }
-    });
-  };
-
-  mkChart('chartMonthSpend', 'Inversión (COP)', spends, '#E8462A', 'COP');
-  mkChart('chartMonthLeads', 'Leads', leads, '#27AE60', '');
-  mkChart('chartMonthCPL', 'Costo por Lead (COP)', cpls, '#8E44AD', 'COP');
-  mkChart('chartMonthConv', 'Conversaciones', convs, '#2980B9', '');
-}
-
-function renderSection5Charts() {
-  const d = MONTHS_DATA[0];
-
-  destroyChart('chartYrBar');
-  chartInstances['chartYrBar'] = new Chart(document.getElementById('chartYrBar'), {
-    type: 'bar',
-    data: {
-      labels: ['Inversión\n(COP/1000)', 'Impresiones', 'Clics', 'Conv.', 'Leads'],
-      datasets: [{
-        label: '2026 Acumulado',
-        data: [d.spend/1000, d.impressions, d.clicks, d.conv, d.leads],
-        backgroundColor: COLORS,
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-    }
-  });
-
-  destroyChart('chartYrDist');
-  chartInstances['chartYrDist'] = new Chart(document.getElementById('chartYrDist'), {
-    type: 'pie',
-    data: {
-      labels: ['Inversión Meta Ads', 'Presupuesto no asignado'],
-      datasets: [{
-        data: [d.spend, Math.max(0, 1200000 - d.spend)],
-        backgroundColor: ['#E8462A', '#ECF0F1'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'bottom' },
-        tooltip: { callbacks: { label: c => ` $${fmtN(c.raw)} COP` } }
-      }
-    }
-  });
-}
-
-// ═══════ ADD MONTH ═══════
+// ─── ADD MONTH ───────────────────────────────────────────────────────────────
+const MES = {ene:'Ene',feb:'Feb',mar:'Mar',abr:'Abr',may:'May',jun:'Jun',jul:'Jul',ago:'Ago',sep:'Sep',oct:'Oct',nov:'Nov',dic:'Dic'};
 function addMonth() {
-  const monthNames = { ene:'Enero',feb:'Febrero',mar:'Marzo',abr:'Abril',may:'Mayo',jun:'Junio',jul:'Julio',ago:'Agosto',sep:'Septiembre',oct:'Octubre',nov:'Noviembre',dic:'Diciembre' };
-  const mKey = document.getElementById('newMonth').value;
-  const year = document.getElementById('newYear').value;
-  const label = monthNames[mKey] + ' ' + year;
-  const key = mKey + year;
-
-  // Check duplicate
-  if (MONTHS_DATA.find(d => d.key === key)) {
-    alert('Ya existe un registro para ' + label + '. Elimínalo del histórico primero.');
-    return;
-  }
-
-  const spend      = parseFloat(document.getElementById('newSpend').value) || 0;
-  const reach      = parseInt(document.getElementById('newReach').value) || 0;
-  const impressions= parseInt(document.getElementById('newImpressions').value) || 0;
-  const clicks     = parseInt(document.getElementById('newClicks').value) || 0;
-  const ctr        = parseFloat(document.getElementById('newCTR').value) || 0;
-  const cpc        = parseFloat(document.getElementById('newCPC').value) || 0;
-  const cpm        = parseFloat(document.getElementById('newCPM').value) || 0;
-  const conv       = parseInt(document.getElementById('newConv').value) || 0;
-  const leads      = parseInt(document.getElementById('newLeads').value) || 0;
-  const quotes     = parseInt(document.getElementById('newQuotes').value) || 0;
-  const sales      = parseInt(document.getElementById('newSales').value) || 0;
-  const revenue    = parseFloat(document.getElementById('newRevenue').value) || 0;
-  const ticket     = parseFloat(document.getElementById('newTicket').value) || 0;
-
-  if (!spend) { alert('La inversión es requerida.'); return; }
-
-  MONTHS_DATA.push({
-    key, label, spend, reach, impressions, clicks, ctr, cpc, cpm, conv, leads, quotes, sales, revenue, ticket,
-    get cpl() { return this.leads > 0 ? Math.round(this.spend / this.leads) : 0; },
-    get cpr() { return this.conv > 0 ? Math.round(this.spend / this.conv) : 0; },
-    get roas() { return this.spend > 0 && this.revenue > 0 ? (this.revenue / this.spend).toFixed(2) : 'N/A'; },
-  });
-
-  // Add to month selector
-  const sel = document.getElementById('monthSelector');
-  const opt = document.createElement('option');
-  opt.value = key; opt.text = label;
-  sel.add(opt);
-
-  // Update funnel CRM
-  FUNNEL.quotes = MONTHS_DATA.reduce((s,d) => s+d.quotes, 0);
-  FUNNEL.sales  = MONTHS_DATA.reduce((s,d) => s+d.sales,  0);
-
-  // Update annual KPIs
-  const totSpend = MONTHS_DATA.reduce((s,d) => s+d.spend, 0);
-  const totLeads = MONTHS_DATA.reduce((s,d) => s+d.leads, 0);
-  document.getElementById('yrSpend').textContent = '$'+fmtN(Math.round(totSpend));
-  document.getElementById('yrLeads').textContent = totLeads;
-
+  const m = document.getElementById('nMes').value;
+  const y = document.getElementById('nAno').value;
+  const key = m+y, label = MES[m]+' '+y;
+  if (HIST.find(d=>d.key===key)) { alert('Ya existe '+label); return; }
+  const sp = parseFloat(document.getElementById('nSpend').value)||0;
+  if (!sp) { alert('La inversión es requerida.'); return; }
+  const obj = {
+    key, label,
+    spend: sp,
+    reach: parseInt(document.getElementById('nReach').value)||0,
+    imp:   parseInt(document.getElementById('nImp').value)||0,
+    clicks:parseInt(document.getElementById('nClics').value)||0,
+    ctr:   parseFloat(document.getElementById('nCTR').value)||0,
+    cpc:   parseFloat(document.getElementById('nCPC').value)||0,
+    cpm:   parseFloat(document.getElementById('nCPM').value)||0,
+    conv:  parseInt(document.getElementById('nConv').value)||0,
+    leads: parseInt(document.getElementById('nLeads').value)||0,
+    quotes:parseInt(document.getElementById('nQuotes').value)||0,
+    sales: parseInt(document.getElementById('nSales').value)||0,
+    revenue:parseFloat(document.getElementById('nRevenue').value)||0,
+    ticket:parseFloat(document.getElementById('nTicket').value)||0,
+    get cprConv(){ return this.conv>0?Math.round(this.spend/this.conv):0; },
+    get roas(){ return this.spend>0&&this.revenue>0?(this.revenue/this.spend).toFixed(2):'N/A'; }
+  };
+  HIST.push(obj);
+  FUNNEL.quotes = HIST.reduce((s,d)=>s+(d.quotes||0),0);
+  FUNNEL.sales  = HIST.reduce((s,d)=>s+(d.sales||0),0);
+  const sel = document.getElementById('monthSel');
+  const opt = document.createElement('option'); opt.value=key; opt.text=label; sel.add(opt); sel.value=key;
   renderAll();
   clearForm();
-  alert('✅ ' + label + ' agregado correctamente al dashboard.');
+  alert('✅ '+label+' agregado correctamente. Los gráficos ya están actualizados.');
 }
 
 function clearForm() {
-  ['newSpend','newReach','newImpressions','newClicks','newCTR','newCPC','newCPM','newConv','newLeads','newQuotes','newSales','newRevenue','newTicket'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+  ['nSpend','nReach','nImp','nClics','nCTR','nCPC','nCPM','nConv','nLeads','nQuotes','nSales','nRevenue','nTicket'].forEach(id=>document.getElementById(id).value='');
 }
 
-// ═══════ FORMAT HELPERS ═══════
-function fmtN(n) {
-  if (n === undefined || n === null) return '—';
-  return Number(n).toLocaleString('es-CO');
-}
-function fmt(n) {
-  return '$' + fmtN(n);
+// ─── RENDER ALL ──────────────────────────────────────────────────────────────
+function renderAll() {
+  buildKpis();
+  buildCreatives();
+  buildFunnel();
+  buildHistTable();
+  buildAnnual();
+  buildCharts();
 }
 
-// ═══════ INIT ═══════
 document.addEventListener('DOMContentLoaded', renderAll);
 </script>
 </body>
