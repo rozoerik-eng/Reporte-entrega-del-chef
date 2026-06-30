@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Ejecutivo — Entrega del Chef</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --brand: #E8462A;
+    --brand-dark: #C2381F;
+    --brand-light: #FDECEA;
+    --accent: #F7A732;
+    --green: #27AE60;
+    --red: #E74C3C;
+    --blue: #2980B9;
+    --purple: #8E44AD;
+    --dark: #1A1A2E;
+    --dark2: #16213E;
+    --card: #FFFFFF;
+    --bg: #F4F6FA;
+    --text: #2C3E50;
+    --muted: #7F8C8D;
+    --border: #E8ECF0;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .logo-area { display: flex; align-items: center; gap: 14px; }
+
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: var(--brand);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+
+  .logo-text h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+  .logo-text p { font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
+
+  .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .month-selector {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  select.month-pick {
+    background: transparent; border: none; color: white; font-size: 13px; cursor: pointer; outline: none;
+    font-weight: 600;
+  }
+
+  select.month-pick option { background: var(--dark); }
+
+  .btn {
+    padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 12px; font-weight: 600; transition: all 0.2s; text-transform: uppercase;
+    letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;
+  }
+
+  .btn-primary { background: var(--brand); color: white; }
+  .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
+  .btn-secondary { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.25); }
+  .btn-green { background: var(--green); color: white; }
+  .btn-green:hover { background: #219A52; }
+
+  /* LIVE BADGE */
+  .live-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(39,174,96,0.2);
+    border: 1px solid rgba(39,174,96,0.4);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px; font-weight: 600; color: #2ECC71;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    background: #2ECC71; border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex; gap: 0;
+    background: rgba(0,0,0,0.2);
+    padding: 0 32px;
+    overflow-x: auto;
+  }
+
+  .nav-tab {
+    padding: 10px 18px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-tab:hover { color: rgba(255,255,255,0.9); }
+  .nav-tab.active { color: white; border-bottom-color: var(--brand); }
+
+  /* MAIN LAYOUT */
+  .main { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+
+  /* SECTION */
+  .section { margin-bottom: 32px; display: none; }
+  .section.active { display: block; }
+
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+  }
+
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 18px; font-weight: 700; color: var(--text);
+  }
+
+  .section-title .icon {
+    width: 36px; height: 36px;
+    background: var(--brand-light);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .section-date {
+    font-size: 12px; color: var(--muted); font-weight: 500;
+    background: var(--border); padding: 4px 10px; border-radius: 20px;
+  }
+
+  /* KPI GRID */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--kpi-color, var(--brand));
+  }
+
+  .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 8px; }
+  .kpi-value { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; margin-bottom: 6px; }
+  .kpi-sub { font-size: 11px; color: var(--muted); }
+  .kpi-delta {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 6px; border-radius: 4px;
+    margin-top: 4px;
+  }
+  .delta-up { background: #D5F5E3; color: #27AE60; }
+  .delta-down { background: #FDEDEC; color: #E74C3C; }
+  .delta-neutral { background: #EBF5FB; color: #2980B9; }
+
+  .kpi-icon {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-size: 24px; opacity: 0.15;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+
+  .card-title {
+    font-size: 14px; font-weight: 700; color: var(--text);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .card-title .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--brand);
+  }
+
+  /* GRID LAYOUTS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left; padding: 10px 14px;
+    background: #F8FAFC; color: var(--muted);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
+    font-weight: 700; border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 12px 14px; border-bottom: 1px solid var(--border);
+    font-size: 13px; vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #FAFBFC; }
+
+  .badge {
+    display: inline-block; padding: 3px 8px; border-radius: 20px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .badge-green { background: #D5F5E3; color: #1E8449; }
+  .badge-red { background: #FDEDEC; color: #C0392B; }
+  .badge-yellow { background: #FEF9E7; color: #B7950B; }
+  .badge-blue { background: #EBF5FB; color: #1A5276; }
+  .badge-gray { background: #F2F3F4; color: #566573; }
+
+  /* RANKING BAR */
+  .rank-bar-wrap { display: flex; align-items: center; gap: 10px; }
+  .rank-bar-bg { flex: 1; background: #F2F3F4; border-radius: 4px; height: 6px; }
+  .rank-bar-fill { height: 6px; border-radius: 4px; background: var(--brand); transition: width 0.8s ease; }
+
+  /* FUNNEL */
+  .funnel { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+  .funnel-step {
+    width: 100%; max-width: 600px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .funnel-box {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .funnel-box:hover { border-color: var(--brand); box-shadow: var(--shadow); }
+
+  .funnel-step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 12px; color: white;
+    flex-shrink: 0;
+  }
+
+  .funnel-arrow {
+    text-align: center; color: var(--muted); font-size: 18px;
+    padding: 4px 0;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  .conversion-rate {
+    font-size: 11px; font-weight: 700;
+    color: var(--green);
+    background: #D5F5E3;
+    padding: 2px 8px; border-radius: 10px;
+  }
+
+  .funnel-label { font-weight: 700; font-size: 15px; }
+  .funnel-value { font-size: 26px; font-weight: 800; }
+  .funnel-sub { font-size: 11px; color: var(--muted); }
+
+  /* INSIGHTS */
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .insight-card {
+    border-radius: 12px;
+    padding: 18px;
+    display: flex; gap: 14px; align-items: flex-start;
+    border: 1px solid transparent;
+  }
+
+  .insight-card.positive { background: #F0FBF4; border-color: #A9DFBF; }
+  .insight-card.negative { background: #FDF2F2; border-color: #F1948A; }
+  .insight-card.warning { background: #FEFAF0; border-color: #FAD7A0; }
+  .insight-card.info { background: #EBF5FB; border-color: #A9CCE3; }
+
+  .insight-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .insight-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .insight-text { font-size: 12px; color: var(--text); line-height: 1.6; }
+
+  /* RECOMMENDATIONS */
+  .rec-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .rec-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 16px; background: white;
+    border-radius: 12px; border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .rec-item:hover { box-shadow: var(--shadow); border-color: var(--brand); }
+
+  .rec-num {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: var(--brand);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 800; font-size: 14px;
+  }
+
+  .rec-priority {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 2px 8px; border-radius: 10px;
+  }
+  .priority-alta { background: #FDEDEC; color: #C0392B; }
+  .priority-media { background: #FEF9E7; color: #B7950B; }
+  .priority-baja { background: #EBF5FB; color: #1A5276; }
+
+  /* UPDATE FORM */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-input {
+    padding: 10px 14px; border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 14px; color: var(--text);
+    transition: border-color 0.2s; background: white;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--brand); }
+
+  .form-section { margin-bottom: 24px; }
+  .form-section-title {
+    font-size: 13px; font-weight: 700; color: var(--text);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--brand-light);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* CHART CONTAINERS */
+  .chart-container { position: relative; }
+
+  /* PROGRESS CIRCLES */
+  .metric-circle {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 16px;
+  }
+  .metric-circle-label { font-size: 11px; color: var(--muted); text-align: center; font-weight: 600; }
+  .metric-circle-value { font-size: 18px; font-weight: 800; color: var(--text); }
+
+  /* ALERT BANNER */
+  .alert {
+    padding: 12px 16px; border-radius: 10px; margin-bottom: 16px;
+    display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
+  }
+  .alert-info { background: #EBF5FB; border-left: 4px solid #2980B9; color: #1A5276; }
+  .alert-warning { background: #FEF9E7; border-left: 4px solid #F39C12; color: #7D6608; }
+  .alert-success { background: #EAFAF1; border-left: 4px solid #27AE60; color: #1E8449; }
+
+  /* PRINT */
+  @media print {
+    .header-actions, .nav-tabs, .btn, .update-section { display: none !important; }
+    .section { display: block !important; page-break-before: always; }
+    .section:first-child { page-break-before: auto; }
+    body { background: white; font-size: 12px; }
+    .kpi-card, .card { box-shadow: none; border: 1px solid #ddd; }
+    .main { padding: 16px; }
+    .grid-2, .grid-3 { display: grid; }
+  }
+
+  @media (max-width: 768px) {
+    .main { padding: 16px; }
+    .header-inner { padding: 12px 16px; }
+    .nav-tabs { padding: 0 16px; }
+    .grid-2, .grid-3, .grid-2-1 { grid-template-columns: 1fr; }
+    .insight-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* SCORE CARD */
+  .score-ring {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 20px;
+  }
+
+  .score-number { font-size: 48px; font-weight: 900; color: var(--brand); line-height: 1; }
+  .score-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+  .score-desc { font-size: 11px; color: var(--text); margin-top: 8px; text-align: center; }
+
+  /* BEST/WORST PILLS */
+  .best-tag { background: #D5F5E3; color: #1E8449; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+  .worst-tag { background: #FDEDEC; color: #C0392B; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+
+  /* COMPARE ARROW */
+  .vs-arrow { font-size: 11px; color: var(--muted); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center; padding: 24px 32px;
+    border-top: 1px solid var(--border);
+    color: var(--muted); font-size: 11px;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-icon">🍽️</div>
+      <div class="logo-text">
+        <h1>Entrega del Chef</h1>
+        <p>Dashboard Ejecutivo · Meta Ads</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        Datos en vivo · Meta Ads
+      </div>
+
+      <div class="month-selector">
+        📅&nbsp;
+        <select class="month-pick" id="monthSelector" onchange="switchMonth(this.value)">
+          <option value="jun2026">Junio 2026</option>
+        </select>
+      </div>
+
+      <button class="btn btn-secondary" onclick="document.getElementById('updatePanel').scrollIntoView({behavior:'smooth'})">
+        ➕ Nuevo Mes
+      </button>
+      <button class="btn btn-secondary" onclick="window.print()">
+        🖨️ PDF
+      </button>
+    </div>
+  </div>
+
+  <nav class="nav-tabs" id="navTabs">
+    <div class="nav-tab active" onclick="showSection(0, this)">📊 Resumen</div>
+    <div class="nav-tab" onclick="showSection(1, this)">🎯 Campañas</div>
+    <div class="nav-tab" onclick="showSection(2, this)">🎨 Creativos</div>
+    <div class="nav-tab" onclick="showSection(3, this)">🔻 Embudo</div>
+    <div class="nav-tab" onclick="showSection(4, this)">📈 Crecimiento</div>
+    <div class="nav-tab" onclick="showSection(5, this)">🏆 KPIs Anuales</div>
+    <div class="nav-tab" onclick="showSection(6, this)">💡 Insights</div>
+    <div class="nav-tab" onclick="showSection(7, this)">🚀 Recomendaciones</div>
+    <div class="nav-tab" onclick="showSection(8, this)">🔄 Actualizar</div>
+  </nav>
+</header>
+
+<main class="main">
+
+<!-- ═══════════════════════ SECCIÓN 1: RESUMEN EJECUTIVO ═══════════════════════ -->
+<section class="section active" id="sec0">
+  <div class="section-header">
+    <div class="section-title">
+      <div class="icon">📊</div>
+      Resumen Ejecutivo
+    </div>
+    <div class="section-date">Junio 2026 · 1 – 29 jun · Datos reales Meta Ads</div>
+  </div>
+
+  <div class="alert alert-info">
+    <span>ℹ️</span>
+    <div>Datos extraídos directamente de Meta Ads el 30 de junio de 2026. El seguimiento de ROAS no está activo (sin píxel de compra). Se recomienda instalar el píxel y configurar eventos de conversión para rastrear ventas.</div>
+  </div>
+
+  <!-- KPIs principales -->
+  <div class="kpi-grid" id="kpiGrid">
+    <!-- Los KPIs se renderizan por JS -->
+  </div>
+
+  <!-- Gráficos resumen -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Inversión vs Resultados por Campaña</div>
+      <div class="chart-container" style="height:240px">
+        <canvas id="chartCampResumen"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Distribución de la Inversión</div>
+      <div class="chart-container" style="height:240px">
+        <canvas id="chartInversionPie"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 2: CAMPAÑAS ═══════════════════════ -->
+<section class="section" id="sec1">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">🎯</div>Rendimiento por Campaña</div>
+    <div class="section-date">Junio 2026</div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title"><div class="dot"></div>Tabla Comparativa de Campañas</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Campaña</th>
+            <th>Estado</th>
+            <th>Objetivo</th>
+            <th>Inversión</th>
+            <th>Alcance</th>
+            <th>Impresiones</th>
+            <th>Clics</th>
+            <th>CTR</th>
+            <th>CPC</th>
+            <th>Conv.</th>
+            <th>CPR</th>
+            <th>Leads</th>
+            <th>CPL</th>
+            <th>Mejor Creativo</th>
+            <th>Peor Creativo</th>
+          </tr>
+        </thead>
+        <tbody id="campTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Inversión por Campaña</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartCampInversion"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>CTR y Costo por Resultado</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartCampCTR"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 3: CREATIVOS ═══════════════════════ -->
+<section class="section" id="sec2">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">🎨</div>Rendimiento por Creativo</div>
+    <div class="section-date">Junio 2026 · Todos los anuncios activos</div>
+  </div>
+
+  <div class="grid-2-1" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Ranking de Anuncios (por Eficiencia CPL)</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Anuncio</th>
+              <th>Inversión</th>
+              <th>Clics</th>
+              <th>CTR</th>
+              <th>CPC</th>
+              <th>Conv.</th>
+              <th>CPR</th>
+              <th>Leads</th>
+              <th>CPL</th>
+              <th>Frec.</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="adTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Mejor vs Peor Anuncio</div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:#F0FBF4;border-radius:10px;padding:16px;border:1.5px solid #A9DFBF">
+          <div style="font-size:10px;font-weight:700;color:#1E8449;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">🏆 Mejor Anuncio</div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:10px">HOMBRE EN LA COCINA</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><div style="font-size:10px;color:#666">CTR</div><div style="font-weight:800;color:#27AE60">6.31%</div></div>
+            <div><div style="font-size:10px;color:#666">CPC</div><div style="font-weight:800;color:#27AE60">$353</div></div>
+            <div><div style="font-size:10px;color:#666">Leads</div><div style="font-weight:800;color:#27AE60">11</div></div>
+            <div><div style="font-size:10px;color:#666">CPL</div><div style="font-weight:800;color:#27AE60">$12.014</div></div>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:#1E8449">✓ Mejor CTR, menor CPC, mayor número de leads y mejor CPL de todos los creativos activos.</div>
+        </div>
+
+        <div style="background:#FDF2F2;border-radius:10px;padding:16px;border:1.5px solid #F1948A">
+          <div style="font-size:10px;font-weight:700;color:#C0392B;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">⚠️ Peor Anuncio</div>
+          <div style="font-weight:700;font-size:14px;margin-bottom:10px">LA MAMÁ CON EL BEBÉ</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><div style="font-size:10px;color:#666">CTR</div><div style="font-weight:800;color:#E74C3C">2.70%</div></div>
+            <div><div style="font-size:10px;color:#666">CPC</div><div style="font-weight:800;color:#E74C3C">$444</div></div>
+            <div><div style="font-size:10px;color:#666">Leads</div><div style="font-weight:800;color:#E74C3C">2</div></div>
+            <div><div style="font-size:10px;color:#666">CPL</div><div style="font-weight:800;color:#E74C3C">$128.972</div></div>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:#C0392B">✗ Gasta el 31.5% del presupuesto total pero genera solo 2 leads. CTR más bajo. Revisar creatividad.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>CTR por Creativo</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartAdCTR"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Costo por Lead por Creativo</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartAdCPL"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 4: EMBUDO ═══════════════════════ -->
+<section class="section" id="sec3">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">🔻</div>Embudo de Ventas</div>
+    <div class="section-date">Junio 2026</div>
+  </div>
+
+  <div class="alert alert-warning">
+    <span>⚠️</span>
+    <div>Las etapas de Cotizaciones y Ventas requieren datos manuales del CRM. Ingresa estos valores en la sección "Actualizar" para completar el embudo.</div>
+  </div>
+
+  <div class="grid-2-1">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Embudo de Conversión Completo</div>
+      <div class="funnel" id="funnelContainer"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Tasas de Conversión por Etapa</div>
+      <div class="chart-container" style="height:280px">
+        <canvas id="chartFunnel"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 5: CRECIMIENTO MENSUAL ═══════════════════════ -->
+<section class="section" id="sec4">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">📈</div>Crecimiento Mensual</div>
+    <div class="section-date">Evolución histórica</div>
+  </div>
+
+  <div class="alert alert-success">
+    <span>✅</span>
+    <div>Junio 2026 es el primer mes con datos registrados. Los gráficos de tendencia se actualizarán automáticamente al agregar nuevos meses desde la sección "Actualizar".</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Inversión Mensual (COP)</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartMonthSpend"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Leads Mensuales</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartMonthLeads"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Costo por Lead Mensual (COP)</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartMonthCPL"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Conversaciones Iniciadas Mensual</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartMonthConv"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 6: KPIs ANUALES ═══════════════════════ -->
+<section class="section" id="sec5">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">🏆</div>KPIs Acumulados del Año</div>
+    <div class="section-date">2026 · Acumulado desde inicio de actividad</div>
+  </div>
+
+  <div class="kpi-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
+    <div class="kpi-card" style="--kpi-color:#E8462A">
+      <div class="kpi-icon">💰</div>
+      <div class="kpi-label">Total Invertido</div>
+      <div class="kpi-value" id="yrSpend">$819.409</div>
+      <div class="kpi-sub">COP · Junio 2026</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#2980B9">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-label">Total Alcance</div>
+      <div class="kpi-value" id="yrReach">26.657</div>
+      <div class="kpi-sub">personas únicas</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#8E44AD">
+      <div class="kpi-icon">👁️</div>
+      <div class="kpi-label">Total Impresiones</div>
+      <div class="kpi-value" id="yrImpressions">46.564</div>
+      <div class="kpi-sub">veces mostrado</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#27AE60">
+      <div class="kpi-icon">🖱️</div>
+      <div class="kpi-label">Total Leads</div>
+      <div class="kpi-value" id="yrLeads">34</div>
+      <div class="kpi-sub">prospectos captados</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#F7A732">
+      <div class="kpi-icon">💬</div>
+      <div class="kpi-label">Conv. Iniciadas</div>
+      <div class="kpi-value" id="yrConv">312</div>
+      <div class="kpi-sub">chats de WhatsApp</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#E8462A">
+      <div class="kpi-icon">📉</div>
+      <div class="kpi-label">CPL Promedio</div>
+      <div class="kpi-value" id="yrCPL">$24.100</div>
+      <div class="kpi-sub">COP por lead</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#2980B9">
+      <div class="kpi-icon">📊</div>
+      <div class="kpi-label">CTR Promedio</div>
+      <div class="kpi-value" id="yrCTR">3.75%</div>
+      <div class="kpi-sub">tasa de clics</div>
+    </div>
+    <div class="kpi-card" style="--kpi-color:#27AE60">
+      <div class="kpi-icon">🛒</div>
+      <div class="kpi-label">Total Ventas</div>
+      <div class="kpi-value" id="yrSales">—</div>
+      <div class="kpi-sub">ingresar desde CRM</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:20px">
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Acumulado Anual por Métrica</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartYrBar"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot"></div>Distribución Inversión por Tipo Resultado</div>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartYrDist"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 7: INSIGHTS ═══════════════════════ -->
+<section class="section" id="sec6">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">💡</div>Análisis e Insights Automáticos</div>
+    <div class="section-date">Generado · 30 jun 2026</div>
+  </div>
+
+  <div class="insight-grid">
+    <div class="insight-card positive">
+      <div class="insight-icon">✅</div>
+      <div>
+        <div class="insight-title">Qué funcionó — El creativo "HOMBRE EN LA COCINA"</div>
+        <div class="insight-text">Con un CTR del 6.31%, CPC de $353 COP y CPL de $12.014 COP, este anuncio supera ampliamente el promedio de la cuenta (CTR 3.75%, CPC $469). Genera el mayor número de leads activos (11) con la tercera inversión más baja. <strong>Escalar este creativo es la acción más rentable disponible ahora mismo.</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-card positive">
+      <div class="insight-icon">✅</div>
+      <div>
+        <div class="insight-title">Qué funcionó — "Nuevo anuncio · Copia 2" (campaña pausada)</div>
+        <div class="insight-text">Aunque pertenece a una campaña pausada, este anuncio logró el CTR más alto de toda la cuenta (6.61%), el CPC más bajo ($347) y el costo por conversación más bajo ($1.256). <strong>Reactivar este anuncio en la campaña activa podría reducir el CPR en un ~57%.</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-card negative">
+      <div class="insight-icon">❌</div>
+      <div>
+        <div class="insight-title">Qué no funcionó — "LA MAMÁ CON EL BEBÉ"</div>
+        <div class="insight-text">Consume el <strong>31.5% del presupuesto total ($257.944 COP)</strong> pero genera solo 2 leads con un CPL de $128.972 COP (10.7x más caro que el mejor anuncio). El CTR del 2.70% indica que el creativo no resuena con la audiencia. <strong>Pausar inmediatamente y reasignar presupuesto.</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-card negative">
+      <div class="insight-icon">❌</div>
+      <div>
+        <div class="insight-title">Qué no funcionó — Campaña "Nueva campaña de Interacción" fue pausada</div>
+        <div class="insight-text">Esta campaña tenía un CPL de $12.422 COP (el mejor de todas las campañas) y un CTR del 5.48%. Al pausarla se perdió la fuente de leads más eficiente. <strong>Los datos sugieren que debería estar activa en lugar de la campaña actual.</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-card warning">
+      <div class="insight-icon">⚠️</div>
+      <div>
+        <div class="insight-title">Alerta — Tendencia de CTR en descenso</div>
+        <div class="insight-text">Meta Ads reporta que los creativos "HOMBRE EN LA COCINA" (-32.15%) y "LA MAMÁ CON EL BEBÉ" (-15.20%) muestran tendencia negativa de CTR. Esto indica <strong>fatiga creativa</strong>: la audiencia ya ha visto estos anuncios suficientes veces. Se necesitan nuevas variaciones de creativos en julio.</div>
+      </div>
+    </div>
+
+    <div class="insight-card warning">
+      <div class="insight-icon">⚠️</div>
+      <div>
+        <div class="insight-title">Alerta — Sin seguimiento de ventas activo</div>
+        <div class="insight-text">Actualmente <strong>no hay píxel de conversiones de compra</strong> configurado en Meta (purchase_roas = N/A). Esto significa que Meta no puede optimizar para ventas reales, solo para conversaciones. <strong>Instalar el píxel y configurar eventos de compra es crítico para mejorar el ROAS.</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-card info">
+      <div class="insight-icon">💡</div>
+      <div>
+        <div class="insight-title">Oportunidad — Embudo de conversación a venta</div>
+        <div class="insight-text">Se iniciaron 312 conversaciones de WhatsApp con un costo de solo $2.626 COP cada una. Sin embargo, solo 34 se convirtieron en leads registrados. <strong>Optimizar el proceso de cierre en WhatsApp (guión de ventas, respuesta rápida, seguimiento) podría multiplicar las ventas sin aumentar la inversión publicitaria.</strong></div>
+      </div>
+    </div>
+
+    <div class="insight-card info">
+      <div class="insight-icon">💡</div>
+      <div>
+        <div class="insight-title">Oportunidad — Campaña de Engagement con objetivo de leads</div>
+        <div class="insight-text">Ambas campañas activas usan objetivo ENGAGEMENT (conversaciones), no generación de leads directa. <strong>Probar una campaña con objetivo "Clientes potenciales" (Lead Ads) o "Ventas" puede mejorar la calidad de los leads y reducir el CPL.</strong> El costo por conversación de $2.626 es bueno pero las conversaciones no siempre cierran.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 8: RECOMENDACIONES ═══════════════════════ -->
+<section class="section" id="sec7">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">🚀</div>Recomendaciones Estratégicas</div>
+    <div class="section-date">Plan de acción · Julio 2026</div>
+  </div>
+
+  <div class="alert alert-info">
+    <span>📋</span>
+    <div>Recomendaciones basadas en datos reales de Meta Ads de junio 2026. Ordenadas por prioridad e impacto esperado.</div>
+  </div>
+
+  <div class="rec-list">
+    <div class="rec-item">
+      <div class="rec-num">1</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <strong>Pausar "LA MAMÁ CON EL BEBÉ" y reasignar $257.944 COP</strong>
+          <span class="rec-priority priority-alta">🔴 URGENTE</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">Este anuncio tiene un CPL de $128.972 (10.7x peor que el mejor). Mover su presupuesto al creativo "HOMBRE EN LA COCINA" podría generar ~21 leads adicionales con el mismo presupuesto. <strong>Acción: pausar hoy, reasignar mañana.</strong></div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">2</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <strong>Reactivar "Nuevo anuncio · Copia 2" en la campaña principal</strong>
+          <span class="rec-priority priority-alta">🔴 URGENTE</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">CTR 6.61%, CPC $347, CPR $1.256. Es el anuncio más eficiente de toda la cuenta y está en una campaña pausada. Duplicarlo a la campaña activa puede reducir el costo por conversación a la mitad. <strong>Acción: duplicar anuncio a campaña "Max/ABO".</strong></div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">3</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <strong>Crear 3 nuevas variaciones del creativo "HOMBRE EN LA COCINA"</strong>
+          <span class="rec-priority priority-alta">🔴 ALTA</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">El CTR de este anuncio cayó 32.15% (fatiga creativa). Para mantener su rendimiento en julio necesita nuevas versiones: cambiar el copy, el color de fondo, el CTA o el encuadre del video. Probar al menos 3 variaciones con A/B test. <strong>Acción: briefing de creativos esta semana.</strong></div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">4</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <strong>Instalar Píxel de Meta con evento de Compra</strong>
+          <span class="rec-priority priority-alta">🔴 ALTA</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">Sin el píxel de compra no hay ROAS real, no se puede optimizar para ventas y Meta no puede encontrar audiencias de compradores potenciales. Configurar: píxel en la landing, evento "Purchase" con valor de conversión, evento "Lead" en el formulario. <strong>Acción: implementar en la primera semana de julio.</strong></div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">5</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <strong>Crear protocolo de cierre en WhatsApp para las 312 conversaciones</strong>
+          <span class="rec-priority priority-media">🟡 MEDIA</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">De 312 conversaciones iniciadas solo 34 se convirtieron en leads (10.9%). Mejorar la tasa de respuesta, crear plantillas de mensaje, establecer tiempo máximo de respuesta de 5 minutos y un guión de ventas puede duplicar las conversiones sin gastar más en ads. <strong>Acción: crear guión y plantillas de WhatsApp.</strong></div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">6</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <strong>Lanzar campaña de Retargeting para conversaciones no convertidas</strong>
+          <span class="rec-priority priority-media">🟡 MEDIA</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">Las 278 personas que iniciaron conversaciones pero no convirtieron son el público más caliente disponible. Crear audiencia personalizada con "personas que enviaron mensaje en los últimos 30 días" y mostrarles un anuncio de oferta o prueba gratis puede capturar ventas sin costo adicional de prospección. <strong>Acción: crear audiencia custom + campaña retargeting.</strong></div>
+      </div>
+    </div>
+
+    <div class="rec-item">
+      <div class="rec-num">7</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <strong>Aumentar el presupuesto mensual en un 20-30% en julio</strong>
+          <span class="rec-priority priority-baja">🔵 MEDIA-BAJA</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">La frecuencia actual es de 1.75 (saludable, sin fatiga de audiencia aún). El CTR general de 3.75% supera el promedio de la industria (1.5-2%). Con los cambios de creativos recomendados, el sistema está listo para escalar. Un incremento de $200.000 COP/mes dirigido al creativo ganador puede generar 15-20 leads adicionales. <strong>Acción: aprobar aumento de presupuesto para semana 2 de julio.</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SECCIÓN 9: ACTUALIZAR ═══════════════════════ -->
+<section class="section update-section" id="sec8" id="updatePanel">
+  <div class="section-header">
+    <div class="section-title"><div class="icon">🔄</div>Sistema de Actualización Mensual</div>
+  </div>
+
+  <div class="alert alert-info">
+    <span>ℹ️</span>
+    <div>Ingresa los datos del nuevo mes para agregar al dashboard. Los gráficos de crecimiento se actualizarán automáticamente. Los datos de Meta Ads (inversión, alcance, impresiones, clics, CTR, CPM, CPC) se obtienen directamente de la API. Aquí ingresas los datos complementarios del CRM y ventas.</div>
+  </div>
+
+  <div class="card">
+    <div class="form-section">
+      <div class="form-section-title">Período</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Mes</label>
+          <select class="form-input" id="newMonth">
+            <option value="ene">Enero</option>
+            <option value="feb">Febrero</option>
+            <option value="mar">Marzo</option>
+            <option value="abr">Abril</option>
+            <option value="may">Mayo</option>
+            <option value="jun">Junio</option>
+            <option value="jul" selected>Julio</option>
+            <option value="ago">Agosto</option>
+            <option value="sep">Septiembre</option>
+            <option value="oct">Octubre</option>
+            <option value="nov">Noviembre</option>
+            <option value="dic">Diciembre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Año</label>
+          <input type="number" class="form-input" id="newYear" value="2026">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Métricas de Meta Ads (desde la plataforma)</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Inversión Total (COP)</label>
+          <input type="number" class="form-input" id="newSpend" placeholder="Ej: 1200000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Alcance</label>
+          <input type="number" class="form-input" id="newReach" placeholder="Ej: 35000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Impresiones</label>
+          <input type="number" class="form-input" id="newImpressions" placeholder="Ej: 60000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Clics totales</label>
+          <input type="number" class="form-input" id="newClicks" placeholder="Ej: 2500">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CTR (%)</label>
+          <input type="number" class="form-input" id="newCTR" placeholder="Ej: 4.2" step="0.01">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CPC (COP)</label>
+          <input type="number" class="form-input" id="newCPC" placeholder="Ej: 450">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CPM (COP)</label>
+          <input type="number" class="form-input" id="newCPM" placeholder="Ej: 18000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Conversaciones Iniciadas</label>
+          <input type="number" class="form-input" id="newConv" placeholder="Ej: 420">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Leads (Meta)</label>
+          <input type="number" class="form-input" id="newLeads" placeholder="Ej: 55">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">Datos del CRM / Ventas Manuales</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Cotizaciones Enviadas</label>
+          <input type="number" class="form-input" id="newQuotes" placeholder="Ej: 28">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ventas Cerradas</label>
+          <input type="number" class="form-input" id="newSales" placeholder="Ej: 12">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ingresos Totales (COP)</label>
+          <input type="number" class="form-input" id="newRevenue" placeholder="Ej: 4800000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ticket Promedio (COP)</label>
+          <input type="number" class="form-input" id="newTicket" placeholder="Ej: 400000">
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px">
+      <button class="btn btn-secondary" onclick="clearForm()">Limpiar</button>
+      <button class="btn btn-green" onclick="addMonth()">✓ Agregar Mes al Dashboard</button>
+    </div>
+  </div>
+
+  <!-- HISTÓRICO -->
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><div class="dot"></div>Datos Históricos Registrados</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Mes</th>
+            <th>Inversión</th>
+            <th>Alcance</th>
+            <th>Impresiones</th>
+            <th>Clics</th>
+            <th>CTR</th>
+            <th>Conv.</th>
+            <th>Leads</th>
+            <th>CPL</th>
+            <th>Cotiz.</th>
+            <th>Ventas</th>
+            <th>Ingresos</th>
+            <th>ROAS</th>
+          </tr>
+        </thead>
+        <tbody id="histTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  Dashboard Ejecutivo Entrega del Chef · Datos extraídos de Meta Ads API · Junio 2026 · Actualizado el 30 jun 2026
+</footer>
+
+<!-- ═══════════════════════ JAVASCRIPT ═══════════════════════ -->
+<script>
+// ═══════ DATA STORE ═══════
+const MONTHS_DATA = [
+  {
+    key: 'jun2026',
+    label: 'Junio 2026',
+    // Meta Ads real data
+    spend: 819409,
+    reach: 26657,
+    impressions: 46564,
+    clicks: 1748,
+    ctr: 3.75,
+    cpc: 469,
+    cpm: 17597,
+    conv: 312,
+    leads: 34,
+    // Manual / CRM
+    quotes: 0,
+    sales: 0,
+    revenue: 0,
+    ticket: 0,
+    // Calculated
+    get cpl() { return this.leads > 0 ? Math.round(this.spend / this.leads) : 0; },
+    get cpr() { return this.conv > 0 ? Math.round(this.spend / this.conv) : 0; },
+    get roas() { return this.spend > 0 && this.revenue > 0 ? (this.revenue / this.spend).toFixed(2) : 'N/A'; },
+  }
+];
+
+const CAMPAIGNS = [
+  {
+    name: 'Max/Presentación/Interacción/ABO/Whatsapp',
+    status: 'ACTIVE',
+    obj: 'Engagement · Mensajería',
+    spend: 657929,
+    reach: 24288,
+    impressions: 40401,
+    clicks: 1410,
+    ctr: 3.49,
+    cpc: 467,
+    cpm: 16285,
+    conv: 223,
+    cpr: 2950,
+    leads: 21,
+    get cpl() { return Math.round(this.spend / this.leads); },
+    freq: 1.66,
+    bestAd: 'HOMBRE EN LA COCINA',
+    worstAd: 'LA MAMÁ CON EL BEBÉ',
+  },
+  {
+    name: 'Nueva campaña de Interacción',
+    status: 'PAUSED',
+    obj: 'Engagement · Mensajería',
+    spend: 161480,
+    reach: 4060,
+    impressions: 6163,
+    clicks: 338,
+    ctr: 5.48,
+    cpc: 478,
+    cpm: 26202,
+    conv: 89,
+    cpr: 1814,
+    leads: 13,
+    get cpl() { return Math.round(this.spend / this.leads); },
+    freq: 1.52,
+    bestAd: 'Nuevo anuncio · Copia 2',
+    worstAd: 'Nuevo anuncio · Copia',
+  }
+];
+
+const ADS = [
+  { name: 'HOMBRE EN LA COCINA',        spend: 132149, clicks: 374, ctr: 6.31, cpc: 353, impr: 5929, reach: 5123, conv: 61, cpr: 2166, leads: 11, freq: 1.16, status: 'ACTIVE',     camp: 1 },
+  { name: 'Nuevo anuncio · Copia 2',    spend:  76598, clicks: 221, ctr: 6.61, cpc: 347, impr: 3343, reach: 2597, conv: 61, cpr: 1256, leads:  5, freq: 1.29, status: 'CAMP_PAUSED', camp: 2 },
+  { name: 'LA MUJER PREPARANDO PLATO',  spend: 255253, clicks: 435, ctr: 3.53, cpc: 587, impr: 12325, reach: 7997, conv: 95, cpr: 2687, leads:  8, freq: 1.54, status: 'ACTIVE',     camp: 1 },
+  { name: 'Nuevo anuncio · Copia',      spend:  57639, clicks:  61, ctr: 3.88, cpc: 945, impr:  1573, reach: 1229, conv: 13, cpr: 4434, leads:  7, freq: 1.28, status: 'CAMP_PAUSED', camp: 2 },
+  { name: 'LA MAMÁ CON EL BEBÉ',        spend: 257944, clicks: 581, ctr: 2.70, cpc: 444, impr: 21548, reach: 13322, conv: 66, cpr: 3908, leads: 2, freq: 1.62, status: 'ACTIVE',     camp: 1 },
+  { name: 'Nuevo anuncio · Copia 2 (b)',spend:  24983, clicks:  50, ctr: 4.35, cpc: 500, impr:  1150, reach:  948, conv: 14, cpr: 1785, leads:  1, freq: 1.21, status: 'CAMP_PAUSED', camp: 2 },
+];
+
+// Sort ads by CPL asc (best first), N/A at end
+const adsSorted = [...ADS].filter(a => a.leads > 0)
+  .sort((a,b) => (a.spend/a.leads) - (b.spend/b.leads));
+
+const FUNNEL = {
+  impressions: 46564,
+  clicks: 1748,
+  conv: 312,
+  leads: 34,
+  quotes: 0,   // manual
+  sales: 0     // manual
+};
+
+// Colors
+const BRAND = '#E8462A';
+const COLORS = ['#E8462A','#F7A732','#2980B9','#27AE60','#8E44AD','#E67E22'];
+
+// ═══════ NAVIGATION ═══════
+function showSection(idx, el) {
+  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i === idx));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function switchMonth(key) {
+  // Future: filter data by month key
+  renderAll();
+}
+
+// ═══════ RENDER ALL ═══════
+function renderAll() {
+  renderKPIs();
+  renderCampTable();
+  renderAdTable();
+  renderFunnel();
+  renderHistTable();
+  renderCharts();
+}
+
+// ═══════ KPI CARDS ═══════
+function renderKPIs() {
+  const d = MONTHS_DATA[0];
+  const cpl = d.cpl;
+  const kpis = [
+    { label: 'Inversión Total', value: fmt(d.spend), sub: 'COP · Junio 2026', color: '#E8462A', icon: '💰', delta: null },
+    { label: 'Alcance', value: fmtN(d.reach), sub: 'personas únicas', color: '#2980B9', icon: '👥', delta: null },
+    { label: 'Impresiones', value: fmtN(d.impressions), sub: 'total', color: '#8E44AD', icon: '👁️', delta: null },
+    { label: 'Clics', value: fmtN(d.clicks), sub: 'total', color: '#F7A732', icon: '🖱️', delta: null },
+    { label: 'CTR', value: d.ctr + '%', sub: 'promedio cuenta', color: '#27AE60', icon: '📊', delta: { type: 'up', text: 'Sobre promedio industria' } },
+    { label: 'CPC', value: '$' + fmtN(d.cpc), sub: 'COP por clic', color: '#E67E22', icon: '💸', delta: null },
+    { label: 'CPM', value: '$' + fmtN(d.cpm), sub: 'COP por mil imp.', color: '#16A085', icon: '📉', delta: null },
+    { label: 'Conv. Iniciadas', value: fmtN(d.conv), sub: 'chats WhatsApp', color: '#2980B9', icon: '💬', delta: null },
+    { label: 'Leads Generados', value: d.leads, sub: 'prospectos captados', color: '#27AE60', icon: '🎯', delta: null },
+    { label: 'Costo por Lead', value: '$' + fmtN(cpl), sub: 'COP por lead', color: '#E8462A', icon: '📌', delta: null },
+    { label: 'Ventas', value: d.sales || '—', sub: d.sales ? 'cerradas' : 'ingresar en CRM', color: '#8E44AD', icon: '🛒', delta: null },
+    { label: 'ROAS', value: d.roas, sub: d.revenue ? 'retorno inversión' : 'sin datos de venta', color: '#27AE60', icon: '📈', delta: null },
+  ];
+  const grid = document.getElementById('kpiGrid');
+  grid.innerHTML = kpis.map(k => `
+    <div class="kpi-card" style="--kpi-color:${k.color}">
+      <div class="kpi-icon">${k.icon}</div>
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+      ${k.delta ? `<div class="kpi-delta delta-${k.delta.type}">${k.delta.type==='up'?'▲':'▼'} ${k.delta.text}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ═══════ CAMPAIGN TABLE ═══════
+function renderCampTable() {
+  const tbody = document.getElementById('campTable');
+  tbody.innerHTML = CAMPAIGNS.map(c => `
+    <tr>
+      <td><strong style="font-size:12px">${c.name}</strong></td>
+      <td><span class="badge ${c.status==='ACTIVE'?'badge-green':'badge-gray'}">${c.status==='ACTIVE'?'Activa':'Pausada'}</span></td>
+      <td style="font-size:11px;color:var(--muted)">${c.obj}</td>
+      <td><strong>$${fmtN(c.spend)}</strong></td>
+      <td>${fmtN(c.reach)}</td>
+      <td>${fmtN(c.impressions)}</td>
+      <td>${fmtN(c.clicks)}</td>
+      <td><strong style="color:${c.ctr>4?'#27AE60':'var(--text)'}">${c.ctr}%</strong></td>
+      <td>$${fmtN(c.cpc)}</td>
+      <td>${fmtN(c.conv)}</td>
+      <td>$${fmtN(c.cpr)}</td>
+      <td><strong>${c.leads}</strong></td>
+      <td><strong style="color:${c.cpl<20000?'#27AE60':c.cpl>50000?'#E74C3C':'var(--text)'}">$${fmtN(c.cpl)}</strong></td>
+      <td><span class="best-tag">✓ ${c.bestAd.substring(0,18)}...</span></td>
+      <td><span class="worst-tag">✗ ${c.worstAd.substring(0,18)}...</span></td>
+    </tr>
+  `).join('');
+}
+
+// ═══════ ADS TABLE ═══════
+function renderAdTable() {
+  const tbody = document.getElementById('adTable');
+  const maxSpend = Math.max(...ADS.filter(a=>a.leads>0).map(a=>a.spend));
+
+  tbody.innerHTML = adsSorted.map((a, i) => {
+    const cpl = Math.round(a.spend / a.leads);
+    const isBest = i === 0;
+    const isWorst = i === adsSorted.length - 1;
+    return `
+      <tr>
+        <td><strong style="color:${isBest?'#27AE60':isWorst?'#E74C3C':'var(--muted)'}">${i+1}</strong></td>
+        <td>
+          <div style="font-size:12px;font-weight:600">${a.name}</div>
+          ${isBest?'<span class="best-tag">MEJOR</span>':''}
+          ${isWorst?'<span class="worst-tag">PAUSAR</span>':''}
+        </td>
+        <td>$${fmtN(a.spend)}</td>
+        <td>${fmtN(a.clicks)}</td>
+        <td><strong style="color:${a.ctr>5?'#27AE60':a.ctr<3?'#E74C3C':'var(--text)'}">${a.ctr}%</strong></td>
+        <td>$${fmtN(a.cpc)}</td>
+        <td>${fmtN(a.conv)}</td>
+        <td>$${fmtN(a.cpr)}</td>
+        <td><strong>${a.leads}</strong></td>
+        <td><strong style="color:${cpl<20000?'#27AE60':cpl>80000?'#E74C3C':'var(--text)'}">$${fmtN(cpl)}</strong></td>
+        <td>${a.freq}</td>
+        <td><span class="badge ${a.status==='ACTIVE'?'badge-green':a.status==='CAMP_PAUSED'?'badge-yellow':'badge-gray'}">${a.status==='ACTIVE'?'Activo':a.status==='CAMP_PAUSED'?'C. Pausada':'Pausado'}</span></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ═══════ FUNNEL ═══════
+function renderFunnel() {
+  const d = MONTHS_DATA[0];
+  const quotes = d.quotes || 0;
+  const sales = d.sales || 0;
+
+  const steps = [
+    { num: 1, label: 'Impresiones', value: d.impressions, color: '#8E44AD', sub: 'Veces que el anuncio fue visto' },
+    { num: 2, label: 'Clics', value: d.clicks, color: '#2980B9', sub: 'Personas que hicieron clic en el anuncio' },
+    { num: 3, label: 'Conversaciones', value: d.conv, color: '#E67E22', sub: 'Chats iniciados en WhatsApp' },
+    { num: 4, label: 'Leads Captados', value: d.leads, color: '#F7A732', sub: 'Prospectos registrados en CRM' },
+    { num: 5, label: 'Cotizaciones', value: quotes, color: '#E8462A', sub: quotes ? 'Propuestas enviadas' : 'Pendiente — ingresar en CRM' },
+    { num: 6, label: 'Ventas Cerradas', value: sales, color: '#27AE60', sub: sales ? 'Conversiones exitosas' : 'Pendiente — ingresar en CRM' },
+  ];
+
+  const prev = (i) => steps[i-1]?.value || steps[i].value;
+  const convRate = (curr, prv) => prv > 0 ? ((curr/prv)*100).toFixed(1)+'%' : '—';
+
+  const container = document.getElementById('funnelContainer');
+  container.innerHTML = steps.map((s, i) => `
+    <div class="funnel-step" style="max-width:${Math.max(45, 100 - i*10)}%">
+      ${i > 0 ? `
+        <div class="funnel-arrow">
+          <div class="conversion-rate">↓ ${convRate(s.value, prev(i))} conv.</div>
+        </div>
+      ` : ''}
+      <div class="funnel-box" style="border-color:${s.color}20;background:${s.color}08">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="funnel-step-num" style="background:${s.color}">${s.num}</div>
+          <div>
+            <div class="funnel-label">${s.label}</div>
+            <div class="funnel-sub">${s.sub}</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div class="funnel-value" style="color:${s.color}">${s.value > 0 ? fmtN(s.value) : '—'}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ═══════ HIST TABLE ═══════
+function renderHistTable() {
+  const tbody = document.getElementById('histTable');
+  tbody.innerHTML = MONTHS_DATA.map(d => `
+    <tr>
+      <td><strong>${d.label}</strong></td>
+      <td>$${fmtN(d.spend)}</td>
+      <td>${fmtN(d.reach)}</td>
+      <td>${fmtN(d.impressions)}</td>
+      <td>${fmtN(d.clicks)}</td>
+      <td>${d.ctr}%</td>
+      <td>${fmtN(d.conv)}</td>
+      <td>${d.leads}</td>
+      <td>$${fmtN(d.cpl)}</td>
+      <td>${d.quotes || '—'}</td>
+      <td>${d.sales || '—'}</td>
+      <td>${d.revenue ? '$'+fmtN(d.revenue) : '—'}</td>
+      <td>${d.roas}</td>
+    </tr>
+  `).join('');
+}
+
+// ═══════ CHARTS ═══════
+const chartInstances = {};
+
+function destroyChart(id) {
+  if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
+}
+
+function renderCharts() {
+  renderSection0Charts();
+  renderSection1Charts();
+  renderSection2Charts();
+  renderSection4Charts();
+  renderSection5Charts();
+}
+
+function renderSection0Charts() {
+  destroyChart('chartCampResumen');
+  chartInstances['chartCampResumen'] = new Chart(document.getElementById('chartCampResumen'), {
+    type: 'bar',
+    data: {
+      labels: ['Max/ABO/Whatsapp', 'Nueva campaña Interacción'],
+      datasets: [
+        { label: 'Inversión ($COP/1000)', data: CAMPAIGNS.map(c=>c.spend/1000), backgroundColor: '#E8462A99', yAxisID: 'y' },
+        { label: 'Leads', data: CAMPAIGNS.map(c=>c.leads), backgroundColor: '#27AE6099', yAxisID: 'y2', type: 'line', tension: 0.3, borderWidth: 3, pointRadius: 6, fill: false, borderColor: '#27AE60' },
+        { label: 'Conversaciones', data: CAMPAIGNS.map(c=>c.conv), backgroundColor: '#2980B999', yAxisID: 'y2', type: 'line', tension: 0.3, borderWidth: 3, pointRadius: 6, fill: false, borderColor: '#2980B9' },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { type: 'linear', position: 'left', title: { display: true, text: 'Inversión (COP/1000)' } },
+        y2: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Cant.' } }
+      },
+      plugins: { legend: { position: 'bottom' } }
+    }
+  });
+
+  destroyChart('chartInversionPie');
+  chartInstances['chartInversionPie'] = new Chart(document.getElementById('chartInversionPie'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Max/ABO (80.3%)', 'Nueva campaña (19.7%)'],
+      datasets: [{ data: [657929, 161480], backgroundColor: ['#E8462A','#F7A732'], borderWidth: 0 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' },
+        tooltip: { callbacks: { label: (c) => ` $${fmtN(c.raw)} COP` } }
+      },
+      cutout: '65%'
+    }
+  });
+}
+
+function renderSection1Charts() {
+  destroyChart('chartCampInversion');
+  chartInstances['chartCampInversion'] = new Chart(document.getElementById('chartCampInversion'), {
+    type: 'bar',
+    data: {
+      labels: CAMPAIGNS.map(c => c.name.substring(0,28)+'...'),
+      datasets: [{
+        label: 'Inversión (COP)',
+        data: CAMPAIGNS.map(c => c.spend),
+        backgroundColor: ['#E8462A','#F7A732'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` $${fmtN(c.raw)} COP` } } },
+      scales: { x: { ticks: { callback: v => '$'+fmtN(v/1000)+'k' } } }
+    }
+  });
+
+  destroyChart('chartCampCTR');
+  chartInstances['chartCampCTR'] = new Chart(document.getElementById('chartCampCTR'), {
+    type: 'bar',
+    data: {
+      labels: CAMPAIGNS.map(c => c.name.substring(0,20)+'...'),
+      datasets: [
+        { label: 'CTR (%)', data: CAMPAIGNS.map(c => c.ctr), backgroundColor: '#2980B9AA', borderRadius: 6, yAxisID: 'y' },
+        { label: 'CPR ($COP)', data: CAMPAIGNS.map(c => c.cpr), backgroundColor: '#E8462AAA', borderRadius: 6, yAxisID: 'y2' },
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        y: { position: 'left', title: { display: true, text: 'CTR (%)' } },
+        y2: { position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'CPR (COP)' } }
+      },
+      plugins: { legend: { position: 'bottom' } }
+    }
+  });
+}
+
+function renderSection2Charts() {
+  const mainAds = ADS.filter(a => a.leads > 0).slice(0,5);
+
+  destroyChart('chartAdCTR');
+  chartInstances['chartAdCTR'] = new Chart(document.getElementById('chartAdCTR'), {
+    type: 'bar',
+    data: {
+      labels: mainAds.map(a => a.name.substring(0,20)),
+      datasets: [{
+        label: 'CTR (%)',
+        data: mainAds.map(a => a.ctr),
+        backgroundColor: mainAds.map(a => a.ctr >= 6 ? '#27AE60AA' : a.ctr <= 3 ? '#E74C3CAA' : '#F7A732AA'),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: { x: { max: 8 } }
+    }
+  });
+
+  destroyChart('chartAdCPL');
+  const sorted5 = adsSorted.slice(0,5);
+  chartInstances['chartAdCPL'] = new Chart(document.getElementById('chartAdCPL'), {
+    type: 'bar',
+    data: {
+      labels: sorted5.map(a => a.name.substring(0,18)),
+      datasets: [{
+        label: 'CPL (COP)',
+        data: sorted5.map(a => Math.round(a.spend/a.leads)),
+        backgroundColor: sorted5.map((a,i) => i===0?'#27AE60AA':i===sorted5.length-1?'#E74C3CAA':'#2980B9AA'),
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` $${fmtN(c.raw)} COP` } } },
+      scales: { x: { ticks: { callback: v => '$'+fmtN(v/1000)+'k' } } }
+    }
+  });
+}
+
+function renderSection4Charts() {
+  const labels = MONTHS_DATA.map(d => d.label);
+  const spends = MONTHS_DATA.map(d => d.spend);
+  const leads  = MONTHS_DATA.map(d => d.leads);
+  const cpls   = MONTHS_DATA.map(d => d.cpl);
+  const convs  = MONTHS_DATA.map(d => d.conv);
+
+  const mkChart = (id, label, data, color, unit) => {
+    destroyChart(id);
+    chartInstances[id] = new Chart(document.getElementById(id), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label, data,
+          borderColor: color,
+          backgroundColor: color + '20',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 6,
+          pointBackgroundColor: color,
+          borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { ticks: { callback: v => unit === 'COP' ? '$'+fmtN(v) : v } } }
+      }
+    });
+  };
+
+  mkChart('chartMonthSpend', 'Inversión (COP)', spends, '#E8462A', 'COP');
+  mkChart('chartMonthLeads', 'Leads', leads, '#27AE60', '');
+  mkChart('chartMonthCPL', 'Costo por Lead (COP)', cpls, '#8E44AD', 'COP');
+  mkChart('chartMonthConv', 'Conversaciones', convs, '#2980B9', '');
+}
+
+function renderSection5Charts() {
+  const d = MONTHS_DATA[0];
+
+  destroyChart('chartYrBar');
+  chartInstances['chartYrBar'] = new Chart(document.getElementById('chartYrBar'), {
+    type: 'bar',
+    data: {
+      labels: ['Inversión\n(COP/1000)', 'Impresiones', 'Clics', 'Conv.', 'Leads'],
+      datasets: [{
+        label: '2026 Acumulado',
+        data: [d.spend/1000, d.impressions, d.clicks, d.conv, d.leads],
+        backgroundColor: COLORS,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+    }
+  });
+
+  destroyChart('chartYrDist');
+  chartInstances['chartYrDist'] = new Chart(document.getElementById('chartYrDist'), {
+    type: 'pie',
+    data: {
+      labels: ['Inversión Meta Ads', 'Presupuesto no asignado'],
+      datasets: [{
+        data: [d.spend, Math.max(0, 1200000 - d.spend)],
+        backgroundColor: ['#E8462A', '#ECF0F1'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' },
+        tooltip: { callbacks: { label: c => ` $${fmtN(c.raw)} COP` } }
+      }
+    }
+  });
+}
+
+// ═══════ ADD MONTH ═══════
+function addMonth() {
+  const monthNames = { ene:'Enero',feb:'Febrero',mar:'Marzo',abr:'Abril',may:'Mayo',jun:'Junio',jul:'Julio',ago:'Agosto',sep:'Septiembre',oct:'Octubre',nov:'Noviembre',dic:'Diciembre' };
+  const mKey = document.getElementById('newMonth').value;
+  const year = document.getElementById('newYear').value;
+  const label = monthNames[mKey] + ' ' + year;
+  const key = mKey + year;
+
+  // Check duplicate
+  if (MONTHS_DATA.find(d => d.key === key)) {
+    alert('Ya existe un registro para ' + label + '. Elimínalo del histórico primero.');
+    return;
+  }
+
+  const spend      = parseFloat(document.getElementById('newSpend').value) || 0;
+  const reach      = parseInt(document.getElementById('newReach').value) || 0;
+  const impressions= parseInt(document.getElementById('newImpressions').value) || 0;
+  const clicks     = parseInt(document.getElementById('newClicks').value) || 0;
+  const ctr        = parseFloat(document.getElementById('newCTR').value) || 0;
+  const cpc        = parseFloat(document.getElementById('newCPC').value) || 0;
+  const cpm        = parseFloat(document.getElementById('newCPM').value) || 0;
+  const conv       = parseInt(document.getElementById('newConv').value) || 0;
+  const leads      = parseInt(document.getElementById('newLeads').value) || 0;
+  const quotes     = parseInt(document.getElementById('newQuotes').value) || 0;
+  const sales      = parseInt(document.getElementById('newSales').value) || 0;
+  const revenue    = parseFloat(document.getElementById('newRevenue').value) || 0;
+  const ticket     = parseFloat(document.getElementById('newTicket').value) || 0;
+
+  if (!spend) { alert('La inversión es requerida.'); return; }
+
+  MONTHS_DATA.push({
+    key, label, spend, reach, impressions, clicks, ctr, cpc, cpm, conv, leads, quotes, sales, revenue, ticket,
+    get cpl() { return this.leads > 0 ? Math.round(this.spend / this.leads) : 0; },
+    get cpr() { return this.conv > 0 ? Math.round(this.spend / this.conv) : 0; },
+    get roas() { return this.spend > 0 && this.revenue > 0 ? (this.revenue / this.spend).toFixed(2) : 'N/A'; },
+  });
+
+  // Add to month selector
+  const sel = document.getElementById('monthSelector');
+  const opt = document.createElement('option');
+  opt.value = key; opt.text = label;
+  sel.add(opt);
+
+  // Update funnel CRM
+  FUNNEL.quotes = MONTHS_DATA.reduce((s,d) => s+d.quotes, 0);
+  FUNNEL.sales  = MONTHS_DATA.reduce((s,d) => s+d.sales,  0);
+
+  // Update annual KPIs
+  const totSpend = MONTHS_DATA.reduce((s,d) => s+d.spend, 0);
+  const totLeads = MONTHS_DATA.reduce((s,d) => s+d.leads, 0);
+  document.getElementById('yrSpend').textContent = '$'+fmtN(Math.round(totSpend));
+  document.getElementById('yrLeads').textContent = totLeads;
+
+  renderAll();
+  clearForm();
+  alert('✅ ' + label + ' agregado correctamente al dashboard.');
+}
+
+function clearForm() {
+  ['newSpend','newReach','newImpressions','newClicks','newCTR','newCPC','newCPM','newConv','newLeads','newQuotes','newSales','newRevenue','newTicket'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+}
+
+// ═══════ FORMAT HELPERS ═══════
+function fmtN(n) {
+  if (n === undefined || n === null) return '—';
+  return Number(n).toLocaleString('es-CO');
+}
+function fmt(n) {
+  return '$' + fmtN(n);
+}
+
+// ═══════ INIT ═══════
+document.addEventListener('DOMContentLoaded', renderAll);
+</script>
+</body>
+</html>
