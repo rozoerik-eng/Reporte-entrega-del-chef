@@ -30,11 +30,6 @@ recomendaciones · plan de agosto.
 - **En línea:** activar GitHub Pages en *Settings → Pages*, con origen en esta rama
   y carpeta raíz (`/`). El informe queda servido en la URL del proyecto.
 
-## Histórico
-
-- `dashboard.html` — primer tablero interactivo mensual (versión anterior, se conserva
-  como referencia).
-
 ## Nota sobre los datos
 
 Ventana de atribución de 1 día por visualización y 7 días por clic. El período con
