@@ -1,0 +1,1298 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrega del Chef — Informe Meta Ads · Junio–Julio 2026</title>
+<meta name="description" content="Informe ejecutivo de desempeño de Meta Ads para Entrega del Chef. Bimestre junio–julio 2026: inversión, alcance, tráfico, conversiones, rendimiento por campaña, conjunto y anuncio, embudo, hallazgos y plan de agosto.">
+<meta name="author" content="Entrega del Chef">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNSIgZmlsbD0iIzBCNkY5QyIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIzLjIiLz48L3N2Zz4=">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Entrega del Chef — Informe Meta Ads · Junio–Julio 2026">
+<meta property="og:description" content="Informe ejecutivo de desempeño de Meta Ads para Entrega del Chef. Bimestre junio–julio 2026: inversión, alcance, tráfico, conversiones, rendimiento por campaña, conjunto y anuncio, embudo, hallazgos y plan de agosto.">
+<style>
+/* reset mínimo */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+dl,dd,figure,blockquote{margin:0}
+img,svg{max-width:100%}
+button{font:inherit;color:inherit}
+</style>
+</head>
+<body>
+<style>
+:root{
+  color-scheme: light;
+  --paper:#FAFAF9; --plane:#F2F2F0; --card:#FFFFFF;
+  --ink:#101418; --ink2:#4A5560; --ink3:#7C8791;
+  --rule:#E4E5E2; --base:#C7CAC6; --hair:rgba(16,20,24,.09);
+  --s1:#0B6F9C; --s2:#B87A00;
+  --o1:#7FB2CE; --o2:#5BA0C2; --o3:#2E86AF; --o4:#0B6F9C; --o5:#0A5A80; --o6:#084563;
+  --emph:#084563;
+  --good:#0ca30c; --goodtx:#006300; --crit:#d03b3b; --warn:#fab219; --serious:#ec835a;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --max:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --paper:#14171A; --plane:#0C0E10; --card:#191D21;
+    --ink:#FFFFFF; --ink2:#B9C0C7; --ink3:#818A93;
+    --rule:#26292D; --base:#343840; --hair:rgba(255,255,255,.10);
+    --s1:#3E9BC8; --s2:#BE8508;
+    --o1:#DCEBF4; --o2:#B8D6E8; --o3:#8FBBD4; --o4:#66A6C6; --o5:#3E90B4; --o6:#1B7BA8;
+    --emph:#B8D6E8;
+    --goodtx:#0ca30c;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#14171A; --plane:#0C0E10; --card:#191D21;
+  --ink:#FFFFFF; --ink2:#B9C0C7; --ink3:#818A93;
+  --rule:#26292D; --base:#343840; --hair:rgba(255,255,255,.10);
+  --s1:#3E9BC8; --s2:#BE8508;
+  --o1:#DCEBF4; --o2:#B8D6E8; --o3:#8FBBD4; --o4:#66A6C6; --o5:#3E90B4; --o6:#1B7BA8;
+    --emph:#B8D6E8;
+  --goodtx:#0ca30c;
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 32px}
+
+/* ---------- Cover ---------- */
+.cover{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:96px 0 72px;border-bottom:1px solid var(--rule)}
+.brandline{display:flex;align-items:center;gap:14px;margin-bottom:64px}
+.brandmark{width:30px;height:30px;border-radius:3px;background:var(--s1);flex:none;position:relative}
+.brandmark::after{content:"";position:absolute;inset:9px 9px auto auto;width:12px;height:12px;border:2px solid var(--paper);border-radius:50%}
+.brandline span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink2);font-weight:600}
+.cover h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6.2vw,68px);line-height:1.08;letter-spacing:-.02em;margin:0 0 20px;text-wrap:balance;max-width:16ch}
+.cover .sub{font-size:19px;color:var(--ink2);max-width:52ch;margin:0 0 56px;line-height:1.55}
+.covermeta{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:26px;padding-top:28px;border-top:1px solid var(--rule);max-width:900px}
+.covermeta dt{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:6px}
+.covermeta dd{margin:0;font-size:15px;color:var(--ink);font-weight:500}
+
+/* ---------- Sections ---------- */
+section{padding:88px 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
+.eyebrow .n{font-size:11px;font-weight:700;color:var(--s1);letter-spacing:.08em;font-variant-numeric:tabular-nums}
+.eyebrow .t{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(25px,3.3vw,36px);line-height:1.22;letter-spacing:-.015em;margin:0 0 26px;text-wrap:balance;max-width:27ch}
+.fn{padding-right:10px}
+h3{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink2);font-weight:700;margin:52px 0 18px}
+p{margin:0 0 18px;max-width:70ch;color:var(--ink2)}
+p strong,li strong{color:var(--ink);font-weight:600}
+.lede{font-size:17px;color:var(--ink);max-width:64ch;line-height:1.62}
+
+/* ---------- Stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0}
+.tile{background:var(--card);padding:22px 20px}
+.tile .lbl{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:11px;line-height:1.35}
+.tile .val{font-size:29px;font-weight:600;letter-spacing:-.02em;line-height:1;color:var(--ink)}
+.tile .val .u{font-size:15px;font-weight:500;color:var(--ink2);letter-spacing:0}
+.tile .foot{margin-top:11px;font-size:12.5px;color:var(--ink3);display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.delta{font-weight:700;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;gap:3px}
+.up{color:var(--goodtx)} .down{color:var(--crit)} .flat{color:var(--ink3)}
+
+/* ---------- Charts ---------- */
+figure{margin:32px 0 0;background:var(--card);border:1px solid var(--rule);padding:24px 24px 18px}
+figcaption{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.figsub{font-size:12.5px;color:var(--ink3);margin-bottom:20px;max-width:74ch;line-height:1.5}
+.plot{position:relative;width:100%}
+.plot svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+.legend i{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink2);font-style:normal}
+.legend i b{width:11px;height:11px;border-radius:2px;flex:none}
+.tblbtn{margin-top:14px;background:none;border:none;border-top:1px solid var(--rule);width:100%;text-align:left;padding:11px 0 2px;font:inherit;font-size:12px;color:var(--ink3);cursor:pointer;letter-spacing:.05em}
+.tblbtn:hover{color:var(--s1)}
+.tblbtn:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.tblwrap{display:none;overflow-x:auto;margin-top:12px}
+.tblwrap.open{display:block}
+
+/* ---------- Tooltip ---------- */
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);padding:9px 12px;border-radius:4px;font-size:12px;line-height:1.5;white-space:nowrap;opacity:0;transition:opacity .1s;z-index:20;box-shadow:0 3px 14px rgba(0,0,0,.2)}
+.tip.on{opacity:1}
+.tip b{font-weight:700}
+.tip .k{color:var(--ink3);display:inline-block;min-width:88px}
+
+/* ---------- Tables ---------- */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tblscroll{overflow-x:auto;margin:28px 0;border:1px solid var(--rule)}
+table{width:100%;border-collapse:collapse;font-size:13px;background:var(--card)}
+th{text-align:left;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);font-weight:700;padding:13px 14px;border-bottom:1px solid var(--base);white-space:nowrap;vertical-align:bottom}
+td{padding:12px 14px;border-bottom:1px solid var(--rule);color:var(--ink2);white-space:nowrap;font-variant-numeric:tabular-nums}
+td.name{white-space:normal;min-width:190px;color:var(--ink);font-weight:500;font-variant-numeric:normal}
+td.note{white-space:normal;min-width:260px;font-variant-numeric:normal;font-size:12.5px;line-height:1.5}
+tbody tr:last-child td{border-bottom:none}
+th.num,td.num{text-align:right}
+tr.tot td{font-weight:700;color:var(--ink);background:var(--plane);border-top:1px solid var(--base)}
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.03em}
+.pill.on{background:rgba(12,163,12,.13);color:var(--goodtx)}
+.pill.off{background:var(--plane);color:var(--ink3)}
+
+/* ---------- Findings / recs ---------- */
+.finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0}
+.find{background:var(--card);padding:22px}
+.find .k{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:9px}
+.find .v{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.35}
+.find p{font-size:13px;margin:0;line-height:1.58}
+.rec{display:flex;gap:22px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.rec:last-child{border-bottom:none}
+.rec .num{font-family:var(--serif);font-size:26px;color:var(--s1);line-height:1;flex:none;width:34px;padding-top:2px}
+.rec h4{margin:0 0 8px;font-size:16.5px;font-weight:600;color:var(--ink);line-height:1.35}
+.rec p{margin:0 0 8px;font-size:14px}
+.rec p:last-child{margin:0}
+.why{font-size:13px;color:var(--ink3);border-left:2px solid var(--rule);padding-left:14px;margin-top:12px!important}
+.why b{color:var(--ink2);font-weight:600}
+.tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:3px;margin-bottom:10px}
+.tag.alta{background:rgba(208,59,59,.12);color:var(--crit)}
+.tag.media{background:rgba(250,178,25,.18);color:#8a6000}
+.tag.baja{background:rgba(12,163,12,.12);color:var(--goodtx)}
+:root[data-theme="dark"] .tag.media{color:var(--warn)}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])) .tag.media{color:var(--warn)}}
+
+/* ---------- Roadmap ---------- */
+.weeks{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:32px 0}
+.wk{background:var(--card);padding:24px 20px}
+.wk .w{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--s1);font-weight:700;margin-bottom:5px}
+.wk .d{font-size:11.5px;color:var(--ink3);margin-bottom:15px}
+.wk ul{margin:0;padding-left:17px}
+.wk li{font-size:13px;color:var(--ink2);margin-bottom:11px;line-height:1.5}
+.wk li:last-child{margin-bottom:0}
+
+/* ---------- Funnel ---------- */
+.fn{margin:28px 0}
+.fnrow{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;margin-bottom:5px}
+.fnlbl{font-size:12.5px;color:var(--ink2);text-align:right;line-height:1.3}
+.fnbarwrap{position:relative;height:34px;display:flex;align-items:center}
+.fnbar{height:34px;border-radius:0 3px 3px 0;display:flex;align-items:center;padding:0 12px;min-width:3px;transition:width .3s}
+.fnbar span{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fnout{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding-left:10px;white-space:nowrap}
+.fnstep{display:grid;grid-template-columns:150px 1fr;gap:18px;margin-bottom:5px}
+.fnstep .r{grid-column:2;font-size:11.5px;color:var(--ink3);padding-left:2px}
+.fnstep .r b{font-weight:700}
+.fnstep .r.bad b{color:var(--crit)}
+
+/* ---------- Misc ---------- */
+.callout{border-left:3px solid var(--s1);background:var(--plane);padding:20px 24px;margin:32px 0}
+.callout.risk{border-left-color:var(--crit)}
+.callout p{margin:0;max-width:74ch}
+.callout p+p{margin-top:12px}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:44px;margin:32px 0}
+ul.clean{margin:0 0 18px;padding-left:19px;max-width:70ch}
+ul.clean li{margin-bottom:11px;color:var(--ink2)}
+footer{padding:52px 0 72px;color:var(--ink3);font-size:12.5px}
+footer p{color:var(--ink3);font-size:12.5px;max-width:74ch}
+.themebtn{position:fixed;right:18px;bottom:18px;z-index:50;background:var(--card);border:1px solid var(--base);color:var(--ink2);border-radius:20px;padding:8px 15px;font:inherit;font-size:12px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.09)}
+.themebtn:hover{border-color:var(--s1);color:var(--s1)}
+.themebtn:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  section{padding:60px 0}
+  .cover{padding:64px 0 48px;min-height:auto}
+  .fnrow,.fnstep{grid-template-columns:92px 1fr;gap:11px}
+  .fnlbl{font-size:11.5px}
+  .rec{gap:14px}
+  .split{gap:28px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  :root{--paper:#fff;--card:#fff;--plane:#f6f6f4;--ink:#000;--ink2:#333;--ink3:#666;--rule:#ddd}
+  body{font-size:10.5pt}
+  section{padding:26pt 0;break-inside:avoid}
+  figure,.tiles,.finds,.weeks,.tblscroll,.rec{break-inside:avoid}
+  .themebtn,.tblbtn{display:none}
+  .cover{min-height:auto;padding:0 0 26pt}
+  h2{font-size:17pt}
+}
+</style>
+
+<button class="themebtn" id="themebtn" type="button">Modo oscuro</button>
+
+<div class="wrap">
+
+<!-- ================= 1 · PORTADA ================= -->
+<header class="cover">
+  <div class="brandline"><i class="brandmark"></i><span>Entrega del Chef</span></div>
+  <h1>Informe de desempeño Meta&nbsp;Ads</h1>
+  <p class="sub">Análisis del bimestre junio–julio 2026: qué se hizo, qué resultados produjo, dónde está el cuello de botella y qué haremos en agosto.</p>
+  <dl class="covermeta">
+    <div><dt>Cliente</dt><dd>Entrega del Chef</dd></div>
+    <div><dt>Período analizado</dt><dd>1 jun – 31 jul 2026</dd></div>
+    <div><dt>Fecha del informe</dt><dd>3 de agosto de 2026</dd></div>
+    <div><dt>Fuente</dt><dd>Meta Ads · cuenta 1019117777447861</dd></div>
+    <div><dt>Moneda</dt><dd>Peso colombiano (COP)</dd></div>
+  </dl>
+</header>
+
+<!-- ================= 2 · RESUMEN EJECUTIVO ================= -->
+<section id="resumen">
+  <div class="eyebrow"><span class="n">02</span><span class="t">Resumen ejecutivo</span></div>
+  <h2>Triplicamos las conversaciones y bajamos su costo 39%. El problema ya no es la pauta: es lo que pasa después del «hola».</h2>
+
+  <p class="lede">En dos meses invertimos <strong>$2.382.876</strong> y generamos <strong>1.253 conversaciones de WhatsApp</strong>. Julio fue claramente mejor que junio en todo lo que la pauta controla — costo por mil impresiones, costo por clic, costo por conversación — pero <strong>los leads apenas crecieron 18%</strong> mientras las conversaciones crecieron 182%. Ese desajuste es el hallazgo central del bimestre.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="lbl">Inversión total</div><div class="val">$2.382.876</div><div class="foot">51 días con entrega</div></div>
+    <div class="tile"><div class="lbl">Conversaciones</div><div class="val">1.253</div><div class="foot"><span class="delta up">▲ 182%</span> jun → jul</div></div>
+    <div class="tile"><div class="lbl">Costo / conversación</div><div class="val">$1.902</div><div class="foot"><span class="delta up">▼ 39%</span> jun → jul</div></div>
+    <div class="tile"><div class="lbl">Leads calificados</div><div class="val">74</div><div class="foot"><span class="delta flat">▲ 18%</span> jun → jul</div></div>
+    <div class="tile"><div class="lbl">Compras registradas</div><div class="val">21</div><div class="foot">Solo julio · $71.638 c/u</div></div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h3>Qué se hizo</h3>
+      <p>Se pasó de una arquitectura de <strong>presentación con segmentación abierta</strong> (junio) a sumar una <strong>capa de evaluación con retargeting</strong> sobre quienes ya habían interactuado con las cuentas de Instagram y Facebook (julio). Se migró de presupuesto por conjunto (ABO) a presupuesto por campaña (CBO) y se introdujo una línea creativa nueva —el producto en primer plano— frente a la línea de situación de vida que dominaba junio.</p>
+      <h3>Qué funcionó</h3>
+      <ul class="clean">
+        <li>La <strong>capa de retargeting</strong> produjo conversaciones a $851 — menos de la mitad del promedio de la cuenta.</li>
+        <li>El <strong>CPM cayó 38%</strong> y el costo por clic en enlace <strong>60%</strong>: el mismo dinero compró mucho más alcance útil.</li>
+        <li>Un solo anuncio —<strong>Yogurt griego</strong>— generó el 40% de todas las conversaciones del bimestre.</li>
+        <li>Empezaron a registrarse <strong>compras atribuidas</strong> (21 en julio), señal que en junio no existía.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Qué no funcionó</h3>
+      <ul class="clean">
+        <li>La tasa de <strong>conversación → lead cayó de 10,4% a 4,3%</strong>. Se triplicó el tráfico de conversaciones pero la conversión se diluyó.</li>
+        <li>El <strong>costo por lead subió 46%</strong> ($25.838 → $37.610) pese a que todo lo demás mejoró.</li>
+        <li>La campaña de <strong>combos (ABO)</strong> se pausó tras gastar $237.824 con un costo por conversación de $3.716, cuatro veces el de la mejor campaña.</li>
+        <li><strong>La entrega se detuvo el 28 de julio</strong>: tres días del mes sin pauta.</li>
+      </ul>
+      <h3>Conclusión</h3>
+      <p>La adquisición está resuelta y es escalable. El límite de crecimiento hoy no está en Meta sino en <strong>la calificación y respuesta de las conversaciones de WhatsApp</strong>. Escalar presupuesto sin arreglar eso multiplica el costo por lead, no las ventas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3 · OBJETIVOS ================= -->
+<section id="objetivos">
+  <div class="eyebrow"><span class="n">03</span><span class="t">Objetivos de las campañas</span></div>
+  <h2>Cuatro campañas, dos etapas del embudo, un mismo destino: la conversación de WhatsApp.</h2>
+
+  <p>Las cuatro campañas activas comparten objetivo de Meta (<strong>Interacción</strong>) y meta de optimización (<strong>Respuestas / conversaciones iniciadas</strong>). Ninguna optimiza a compra, porque el proceso de venta del negocio termina en una conversación humana, no en un checkout. Lo que las diferencia es <strong>a quién le hablan</strong> y <strong>en qué momento del recorrido</strong>.</p>
+
+  <div class="tblscroll">
+    <table>
+      <caption class="sr-only">Arquitectura de campañas</caption>
+      <thead><tr>
+        <th>Campaña</th><th>Etapa del embudo</th><th>A quién le habla</th><th>Presupuesto</th><th>Rol en la estrategia</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="name">Presentación 1 · Segmentación abierta<br><span style="color:var(--ink3);font-size:11.5px;font-weight:400">Max/Presentacion/interaccion/ABO</span></td>
+          <td>Descubrimiento</td><td>Público frío, sin segmentar</td><td>ABO · $13.333/día por conjunto</td>
+          <td class="note">Primer contacto. Deja que el algoritmo encuentre al comprador y, sobre todo, <strong>construye el público que después reciclan las campañas de evaluación</strong>.</td>
+        </tr>
+        <tr>
+          <td class="name">Presentación 2 · Segmentación abierta<br><span style="color:var(--ink3);font-size:11.5px;font-weight:400">Max/Presentacion-2-/interaccion/CBO</span></td>
+          <td>Descubrimiento</td><td>Público frío, sin segmentar</td><td>CBO · $20.000/día</td>
+          <td class="note">Reemplazo de la anterior con presupuesto centralizado. Sostiene la entrada de gente nueva al embudo durante todo julio.</td>
+        </tr>
+        <tr>
+          <td class="name">Evaluación · Retargeting<br><span style="color:var(--ink3);font-size:11.5px;font-weight:400">Max/evaluacion/interaccion/CBO</span></td>
+          <td>Consideración</td><td>Interacción con IG/FB y reproducciones de video de 10 s, ventanas de 30 y 90 días</td><td>CBO · $12.500/día por conjunto</td>
+          <td class="note">Recoge a quien ya mostró interés y lo empuja a escribir. Es la campaña que convierte el gasto de presentación en conversaciones baratas.</td>
+        </tr>
+        <tr>
+          <td class="name">Evaluación 2 · Combos<br><span style="color:var(--ink3);font-size:11.5px;font-weight:400">Max/evaluacion-2-combos/interaccion/ABO</span></td>
+          <td>Consideración</td><td>Mismos públicos de retargeting, oferta de combos</td><td>ABO · $7.500/día por conjunto</td>
+          <td class="note">Prueba de oferta: mismo público, mensaje de combo en vez de producto. Se pausó el 10 de julio por bajo rendimiento.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>El diseño es correcto: <strong>presentación alimenta el público que evaluación cosecha</strong>. Los datos de julio confirman que el mecanismo funciona — la campaña de evaluación produce conversaciones a un tercio del costo de las de presentación, precisamente porque las de presentación pagaron por construir esa audiencia primero.</p>
+</section>
+
+<!-- ================= 4 · INVERSIÓN ================= -->
+<section id="inversion">
+  <div class="eyebrow"><span class="n">04</span><span class="t">Inversión</span></div>
+  <h2>Subimos la inversión 71% y cada peso compró más: el costo unitario cayó en todas las métricas.</h2>
+
+  <div class="tiles">
+    <div class="tile"><div class="lbl">Inversión total</div><div class="val">$2.382.876</div><div class="foot">51 días con entrega</div></div>
+    <div class="tile"><div class="lbl">Junio</div><div class="val">$878.486</div><div class="foot">23 días · $38.195/día</div></div>
+    <div class="tile"><div class="lbl">Julio</div><div class="val">$1.504.390</div><div class="foot">28 días · $53.728/día</div></div>
+    <div class="tile"><div class="lbl">Variación mensual</div><div class="val" style="color:var(--s1)">+71,2%</div><div class="foot">Inversión diaria <span class="delta up">▲ 41%</span></div></div>
+  </div>
+
+  <figure>
+    <figcaption>Inversión diaria</figcaption>
+    <div class="figsub">Junio arranca el día 8 (fecha de lanzamiento de la primera campaña) y julio se corta el día 28. El escalón visible a mitad de julio corresponde a la entrada de la campaña de retargeting.</div>
+    <div class="plot" id="c-spend"></div>
+    <button class="tblbtn" data-t="c-spend">Ver datos ▾</button><div class="tblwrap" id="c-spend-tbl"></div>
+  </figure>
+
+  <h3>¿Fue eficiente el gasto?</h3>
+  <p>Sí, y de forma poco ambigua. Cuando una cuenta sube 71% la inversión, lo normal es que los costos unitarios <em>suban</em>: se agota el público barato y hay que pagar más por cada impresión adicional. Aquí pasó lo contrario. El <strong>CPM bajó 38%</strong>, el <strong>CPC bajó 44%</strong> y el <strong>costo por conversación bajó 39%</strong>. Eso solo ocurre cuando mejora la relevancia del anuncio para el público que lo ve — es decir, cuando la segmentación y el creativo funcionan mejor, no cuando simplemente se compra más volumen.</p>
+
+  <div class="callout risk">
+    <p><strong>Hallazgo operativo:</strong> la entrega se detuvo el 28 de julio. Los días 29, 30 y 31 no registran inversión ni impresiones. Al ritmo promedio de julio (33 conversaciones/día), esos tres días representan aproximadamente <strong>99 conversaciones no generadas</strong> y $161.000 de presupuesto sin ejecutar.</p>
+  </div>
+</section>
+
+<!-- ================= 5 · ALCANCE ================= -->
+<section id="alcance">
+  <div class="eyebrow"><span class="n">05</span><span class="t">Alcance y reconocimiento</span></div>
+  <h2>Llegamos a 2,3 veces más personas pagando 38% menos por cada mil impresiones.</h2>
+
+  <div class="tiles">
+    <div class="tile"><div class="lbl">Alcance julio</div><div class="val">61.809</div><div class="foot"><span class="delta up">▲ 129%</span> vs 27.037 en junio</div></div>
+    <div class="tile"><div class="lbl">Impresiones julio</div><div class="val">133.849</div><div class="foot"><span class="delta up">▲ 177%</span> vs 48.285</div></div>
+    <div class="tile"><div class="lbl">Frecuencia julio</div><div class="val">2,17</div><div class="foot"><span class="delta flat">▲ 21%</span> vs 1,79</div></div>
+    <div class="tile"><div class="lbl">CPM julio</div><div class="val">$11.239</div><div class="foot"><span class="delta up">▼ 38%</span> vs $18.194</div></div>
+  </div>
+
+  <figure>
+    <figcaption>Impresiones diarias</figcaption>
+    <div class="figsub">El volumen se duplica a partir del 9 de julio, cuando la campaña de retargeting entra en régimen. El pico del 24 de julio corresponde a una entrega masiva en Estados de WhatsApp, un formato de muy bajo CPM.</div>
+    <div class="plot" id="c-imp"></div>
+    <button class="tblbtn" data-t="c-imp">Ver datos ▾</button><div class="tblwrap" id="c-imp-tbl"></div>
+  </figure>
+
+  <h3>Qué significan estos números</h3>
+  <p><strong>El CPM es el precio de la atención.</strong> Que caiga 38% mientras el volumen se triplica significa que Meta está encontrando el anuncio más relevante para quien lo ve: el sistema de subasta premia con precios más bajos a los anuncios que la gente no ignora. Es la señal más limpia de que el creativo de julio conectó mejor que el de junio.</p>
+  <p><strong>La frecuencia de 2,17 es saludable.</strong> Significa que cada persona vio el anuncio poco más de dos veces en el mes. Por debajo de 1,5 el mensaje no alcanza a fijarse; por encima de 3,5 empieza la fatiga y el CPM sube. Estamos en la zona correcta, con espacio para escalar antes de tocar techo.</p>
+  <p><strong>El alcance de 61.809 personas es la restricción real del negocio.</strong> El 94,6% de la inversión se entregó en Bogotá, que es donde el servicio opera. Eso está bien, pero también significa que el público disponible es finito: cada mes de escalado agresivo consumirá ese inventario más rápido y la frecuencia subirá. Es un argumento a favor de mejorar la conversión antes que el volumen.</p>
+</section>
+
+<!-- ================= 6 · TRÁFICO ================= -->
+<section id="trafico">
+  <div class="eyebrow"><span class="n">06</span><span class="t">Rendimiento del tráfico</span></div>
+  <h2>El costo por clic en enlace cayó 60%. El contenido dejó de ser el problema.</h2>
+
+  <div class="tiles">
+    <div class="tile"><div class="lbl">Clics totales julio</div><div class="val">5.630</div><div class="foot"><span class="delta up">▲ 207%</span> vs 1.835</div></div>
+    <div class="tile"><div class="lbl">CTR julio</div><div class="val">4,21<span class="u">%</span></div><div class="foot"><span class="delta up">▲ 0,41 pp</span> vs 3,80%</div></div>
+    <div class="tile"><div class="lbl">CPC julio</div><div class="val">$267</div><div class="foot"><span class="delta up">▼ 44%</span> vs $479</div></div>
+    <div class="tile"><div class="lbl">Clics en enlace</div><div class="val">2.532</div><div class="foot"><span class="delta up">▲ 330%</span> vs 589</div></div>
+    <div class="tile"><div class="lbl">Costo / clic enlace</div><div class="val">$594</div><div class="foot"><span class="delta up">▼ 60%</span> vs $1.491</div></div>
+  </div>
+
+  <figure>
+    <figcaption>CTR diario</figcaption>
+    <div class="figsub">Porcentaje de impresiones que terminan en clic. La línea se mantiene consistentemente por encima del nivel de junio durante todo julio, con la excepción del 24 (día de entrega masiva en Estados, donde el CTR estructural es bajo).</div>
+    <div class="plot" id="c-ctr"></div>
+    <button class="tblbtn" data-t="c-ctr">Ver datos ▾</button><div class="tblwrap" id="c-ctr-tbl"></div>
+  </figure>
+
+  <h3>Qué tan atractivo fue el contenido</h3>
+  <p>Un <strong>CTR de 4,21%</strong> es alto. En comercio y alimentos la referencia habitual está entre 1% y 2%; superar el 4% indica que el anuncio no se está leyendo como publicidad sino como contenido. La distancia entre el CTR general (4,21%) y el CTR de clics en enlace (1,89%) muestra además que buena parte de la interacción es de consumo —ver el video, ampliar la imagen, reaccionar— antes del clic. Eso es normal y sano en formatos de video.</p>
+
+  <h3>Qué tan eficiente fue la pauta</h3>
+  <p>La métrica que más importa aquí es el <strong>costo por clic en enlace: cayó de $1.491 a $594</strong>. Es la caída más pronunciada de todo el informe y explica buena parte del abaratamiento de la conversación. La razón es de composición: en junio el 32% de los clics iban a un enlace; en julio, el 45%. Los anuncios de julio no solo consiguieron más clics, consiguieron <strong>clics con más intención</strong>.</p>
+</section>
+
+<!-- ================= 7 · CONVERSIONES ================= -->
+<section id="conversiones">
+  <div class="eyebrow"><span class="n">07</span><span class="t">Conversiones</span></div>
+  <h2>925 conversaciones en julio. Solo 40 se convirtieron en lead.</h2>
+
+  <p>La cuenta registra tres eventos de conversión distintos, y conviene no confundirlos porque miden cosas diferentes:</p>
+
+  <div class="tblscroll">
+    <table>
+      <thead><tr><th>Evento</th><th>Qué mide</th><th class="num">Junio</th><th class="num">Julio</th><th class="num">Total</th><th class="num">Costo unitario jul</th><th class="num">Variación</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Conversaciones iniciadas</td><td class="note">Alguien abre un chat de WhatsApp desde el anuncio. Es el resultado que optimizan las campañas.</td><td class="num">328</td><td class="num">925</td><td class="num">1.253</td><td class="num">$1.626</td><td class="num"><span class="delta up">▲ 182%</span></td></tr>
+        <tr><td class="name">Leads</td><td class="note">La conversación avanza hasta calificar como oportunidad real de venta.</td><td class="num">34</td><td class="num">40</td><td class="num">74</td><td class="num">$37.610</td><td class="num"><span class="delta flat">▲ 18%</span></td></tr>
+        <tr><td class="name">Compras atribuidas</td><td class="note">Compra registrada y atribuida al anuncio. No existía en junio.</td><td class="num">0</td><td class="num">21</td><td class="num">21</td><td class="num">$71.638</td><td class="num">nuevo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure>
+    <figcaption>Conversaciones diarias</figcaption>
+    <div class="figsub">La serie muestra dos regímenes claros: junio oscila entre 7 y 39 conversaciones diarias; julio se estabiliza por encima de 30 desde el día 7 y toca máximos de 52 y 54.</div>
+    <div class="plot" id="c-conv"></div>
+    <button class="tblbtn" data-t="c-conv">Ver datos ▾</button><div class="tblwrap" id="c-conv-tbl"></div>
+  </figure>
+
+  <div class="callout risk">
+    <p><strong>El dato que gobierna todo el informe.</strong> En junio, 1 de cada 9,6 conversaciones se convirtió en lead (10,4%). En julio, 1 de cada 23,1 (4,3%). Se triplicó el volumen de conversaciones y la tasa de calificación se redujo a menos de la mitad.</p>
+    <p>Hay dos explicaciones posibles y ambas exigen acción: <strong>(a)</strong> el retargeting trae gente más curiosa que compradora, o <strong>(b)</strong> el equipo de WhatsApp no dio abasto con el triple de mensajes y las conversaciones se enfriaron sin respuesta. Los datos de Meta no distinguen entre las dos — <strong>el tiempo de primera respuesta en WhatsApp sí lo haría</strong>, y es la primera medición que hay que instrumentar.</p>
+  </div>
+
+  <div class="callout">
+    <p><strong>Sobre el ROAS.</strong> No es posible calcularlo con los datos actuales. La cuenta registra 21 compras en julio pero <strong>no tiene configurado el valor de conversión</strong>, por lo que Meta reporta las compras sin monto asociado. Sin ese dato no hay retorno sobre inversión publicitaria que reportar — solo costo por compra ($71.638). Configurar el valor de compra es la única forma de que este informe pueda hablar de rentabilidad y no solo de eficiencia.</p>
+  </div>
+</section>
+
+<!-- ================= 8 · CAMPAÑAS ================= -->
+<section id="campanas">
+  <div class="eyebrow"><span class="n">08</span><span class="t">Rendimiento por campaña</span></div>
+  <h2>Una sola campaña generó el 48% de las conversaciones con el 22% del presupuesto.</h2>
+
+  <figure>
+    <figcaption>Costo por conversación, por campaña</figcaption>
+    <div class="figsub">Período completo. Barra más corta = más eficiente. El tono oscuro marca las campañas que quedan por debajo del promedio de la cuenta.</div>
+    <div class="plot" id="c-camp"></div>
+    <button class="tblbtn" data-t="c-camp">Ver datos ▾</button><div class="tblwrap" id="c-camp-tbl"></div>
+  </figure>
+
+  <div class="tblscroll">
+    <table>
+      <thead><tr>
+        <th>Campaña</th><th>Objetivo</th><th class="num">Inversión</th><th class="num">Alcance</th><th class="num">Impres.</th>
+        <th class="num">CTR</th><th class="num">CPC</th><th class="num">Convers.</th><th class="num">Costo/conv.</th><th class="num">Leads</th><th class="num">Compras</th><th>Estado</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="name">Evaluación · Retargeting (CBO)</td><td>Interacción</td><td class="num">$515.944</td><td class="num">31.948</td><td class="num">71.511</td><td class="num">4,80%</td><td class="num">$150</td><td class="num">606</td><td class="num" style="color:var(--goodtx);font-weight:700">$851</td><td class="num">28</td><td class="num">17</td><td><span class="pill on">Activa</span></td></tr>
+        <tr><td class="name">Presentación 2 · Abierta (CBO)</td><td>Interacción</td><td class="num">$800.956</td><td class="num">33.121</td><td class="num">45.099</td><td class="num">3,48%</td><td class="num">$511</td><td class="num">301</td><td class="num">$2.661</td><td class="num">21</td><td class="num">2</td><td><span class="pill on">Activa</span></td></tr>
+        <tr><td class="name">Presentación 1 · Abierta (ABO)</td><td>Interacción</td><td class="num">$828.152</td><td class="num">28.487</td><td class="num">47.351</td><td class="num">3,70%</td><td class="num">$471</td><td class="num">282</td><td class="num">$2.937</td><td class="num">23</td><td class="num">1</td><td><span class="pill off">Pausada</span></td></tr>
+        <tr><td class="name">Evaluación 2 · Combos (ABO)</td><td>Interacción</td><td class="num">$237.824</td><td class="num">8.749</td><td class="num">18.173</td><td class="num">3,87%</td><td class="num">$338</td><td class="num">64</td><td class="num" style="color:var(--crit);font-weight:700">$3.716</td><td class="num">2</td><td class="num">1</td><td><span class="pill off">Pausada</span></td></tr>
+        <tr class="tot"><td>Total cuenta</td><td>—</td><td class="num">$2.382.876</td><td class="num">—</td><td class="num">182.134</td><td class="num">4,10%</td><td class="num">$319</td><td class="num">1.253</td><td class="num">$1.902</td><td class="num">74</td><td class="num">21</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Análisis campaña por campaña</h3>
+
+  <div class="rec"><div class="num">A</div><div>
+    <h4>Evaluación · Retargeting (CBO) — <span style="color:var(--goodtx)">escalar</span></h4>
+    <p><strong>Qué funcionó:</strong> todo lo medible. CTR de 4,80%, CPC de $150 —la mitad del promedio de la cuenta— y conversaciones a $851. Con el 21,7% del presupuesto produjo el 48,4% de las conversaciones y <strong>17 de las 21 compras del bimestre</strong>. Es la única campaña que demuestra impacto en venta, no solo en volumen.</p>
+    <p><strong>Qué no funcionó:</strong> nada estructural. Solo llevaba 25 días activa al cierre del período, de modo que su presupuesto todavía no refleja su rendimiento.</p>
+    <p class="why"><b>Decisión:</b> mantener y escalar. Es la candidata natural para absorber el presupuesto que se libere de las campañas pausadas, con incrementos graduales del 20–25% cada tres días para no romper la fase de aprendizaje.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">B</div><div>
+    <h4>Presentación 2 · Segmentación abierta (CBO) — <span style="color:#8a6000">optimizar</span></h4>
+    <p><strong>Qué funcionó:</strong> cumple su función de alimentar el embudo. Es la campaña que sostiene la entrada de público nuevo, y sin ella la campaña de retargeting se quedaría sin audiencia que cosechar. Su valor real es indirecto y no aparece en su propia fila.</p>
+    <p><strong>Qué no funcionó:</strong> se deterioró dentro del mes. Su costo por conversación pasó de $1.930 en junio a $2.973 en julio (+54%) y su CTR cayó de 5,36% a 3,16%. Su costo por lead se disparó a $78.407, el peor de las campañas con volumen.</p>
+    <p class="why"><b>Decisión:</b> mantener, pero con creativo nuevo. El deterioro tiene forma de fatiga: mismo público, mismos anuncios, más impresiones. Renovar la línea creativa antes de tocar el presupuesto.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">C</div><div>
+    <h4>Presentación 1 · Segmentación abierta (ABO) — <span style="color:var(--ink3)">correctamente pausada</span></h4>
+    <p><strong>Qué funcionó:</strong> hizo su trabajo en junio. Con $704.787 generó 238 conversaciones a $2.961 y, sobre todo, <strong>construyó el público de interacción que hoy explota la campaña de retargeting</strong>. Su rentabilidad real está en la campaña A, no en su propia línea.</p>
+    <p><strong>Qué no funcionó:</strong> la estructura ABO repartió presupuesto a ciegas entre tres conjuntos de rendimiento muy desigual. El conjunto de «públicos similares» consumió presupuesto para producir cero conversaciones.</p>
+    <p class="why"><b>Decisión:</b> mantener pausada. Su función la cumple mejor la versión CBO, que deja que el algoritmo asigne el gasto en vez de fijarlo por conjunto.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">D</div><div>
+    <h4>Evaluación 2 · Combos (ABO) — <span style="color:var(--crit)">no reactivar en su forma actual</span></h4>
+    <p><strong>Qué funcionó:</strong> muy poco. Alcanzó un CTR aceptable (3,87%) y consiguió una compra.</p>
+    <p><strong>Qué no funcionó:</strong> el costo por conversación fue de $3.716, cuatro veces el de la campaña A pese a atacar <strong>exactamente los mismos públicos de retargeting</strong>. Esa es la comparación que importa: mismo público, distinta oferta, cuatro veces el costo. Solo produjo 2 leads con $237.824 invertidos.</p>
+    <p class="why"><b>Decisión:</b> el problema no es el público sino el mensaje. La oferta de combos, tal como está formulada, no compite con el producto en primer plano. Si se reintenta, debe ser como conjunto dentro de la campaña A —para que compita en la misma subasta— y no como campaña separada con presupuesto propio.</p>
+  </div></div>
+</section>
+
+<!-- ================= 9 · CONJUNTOS ================= -->
+<section id="conjuntos">
+  <div class="eyebrow"><span class="n">09</span><span class="t">Rendimiento por conjunto de anuncios</span></div>
+  <h2>El retargeting de 90 días es 3,6 veces más eficiente que la segmentación abierta.</h2>
+
+  <figure>
+    <figcaption>Costo por conversación, por conjunto de anuncios</figcaption>
+    <div class="figsub">Período completo, ordenado de más a menos eficiente. El tono oscuro marca los conjuntos por debajo del promedio de la cuenta. Se excluye «Públicos similares», que no registró conversaciones.</div>
+    <div class="plot" id="c-adset"></div>
+    <button class="tblbtn" data-t="c-adset">Ver datos ▾</button><div class="tblwrap" id="c-adset-tbl"></div>
+  </figure>
+
+  <div class="tblscroll">
+    <table>
+      <thead><tr>
+        <th>Conjunto</th><th>Campaña</th><th class="num">Inversión</th><th class="num">Impres.</th><th class="num">CTR</th><th class="num">CPC</th>
+        <th class="num">Convers.</th><th class="num">Costo/conv.</th><th class="num">Leads</th><th class="num">Compras</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="name">Interacción IG/FB 90 d + video 10 s</td><td>Evaluación</td><td class="num">$371.365</td><td class="num">54.791</td><td class="num">4,94%</td><td class="num">$137</td><td class="num">497</td><td class="num" style="color:var(--goodtx);font-weight:700">$747</td><td class="num">24</td><td class="num">15</td></tr>
+        <tr><td class="name">Interacción IG/FB 30 d + video 10 s</td><td>Evaluación</td><td class="num">$109.440</td><td class="num">14.320</td><td class="num">4,51%</td><td class="num">$169</td><td class="num">101</td><td class="num" style="color:var(--goodtx);font-weight:700">$1.084</td><td class="num">4</td><td class="num">2</td></tr>
+        <tr><td class="name">Públicos segmentación abierta</td><td>Presentación 1</td><td class="num">$752.678</td><td class="num">43.517</td><td class="num">3,75%</td><td class="num">$461</td><td class="num">263</td><td class="num">$2.862</td><td class="num">22</td><td class="num">1</td></tr>
+        <tr><td class="name">Interacción IG/FB 30 d (combos)</td><td>Evaluación 2</td><td class="num">$126.130</td><td class="num">9.860</td><td class="num">4,00%</td><td class="num">$320</td><td class="num">43</td><td class="num">$2.933</td><td class="num">2</td><td class="num">1</td></tr>
+        <tr><td class="name">Públicos seg. abierta</td><td>Presentación 2</td><td class="num">$800.956</td><td class="num">45.099</td><td class="num">3,48%</td><td class="num">$511</td><td class="num">301</td><td class="num">$2.661</td><td class="num">21</td><td class="num">2</td></tr>
+        <tr><td class="name">Públicos por intereses</td><td>Presentación 1</td><td class="num">$74.849</td><td class="num">3.789</td><td class="num">3,33%</td><td class="num">$594</td><td class="num">19</td><td class="num">$3.939</td><td class="num">1</td><td class="num">0</td></tr>
+        <tr><td class="name">Interacción IG/FB 90 d — copia</td><td>Evaluación</td><td class="num">$35.139</td><td class="num">2.400</td><td class="num">3,46%</td><td class="num">$423</td><td class="num">8</td><td class="num">$4.392</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td class="name">Interacción IG/FB 90 d (combos)</td><td>Evaluación 2</td><td class="num">$111.694</td><td class="num">8.313</td><td class="num">3,73%</td><td class="num">$360</td><td class="num">21</td><td class="num" style="color:var(--crit);font-weight:700">$5.319</td><td class="num">0</td><td class="num">0</td></tr>
+        <tr><td class="name">Públicos similares</td><td>Presentación 1</td><td class="num">$625</td><td class="num">45</td><td class="num">2,22%</td><td class="num">$625</td><td class="num">0</td><td class="num">—</td><td class="num">0</td><td class="num">0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Las mejores audiencias, y por qué lo son</h3>
+  <p><strong>1 · Interacción IG/FB 90 días + reproducción de video de 10 s ($747 por conversación).</strong> Es la mejor audiencia de la cuenta por un margen enorme. Funciona por tres razones que se acumulan: la persona <em>ya reconoce la marca</em>, de modo que el anuncio no tiene que presentarla; el filtro de «10 segundos de video» selecciona a quien mostró atención sostenida, no un scroll accidental; y la ventana de 90 días es lo bastante amplia para tener volumen — 25.911 personas alcanzadas — sin diluirse. Su CPC de $137 es un tercio del promedio de la cuenta.</p>
+  <p><strong>2 · La misma audiencia a 30 días ($1.084).</strong> Confirma el patrón pero cuesta 45% más. La razón es de inventario: al recortar la ventana a 30 días el público se reduce a 8.918 personas y Meta debe pagar más caro por cada impresión adicional dentro de un grupo pequeño. <strong>La lección es que la ventana larga es preferible, no la reciente.</strong></p>
+  <p><strong>3 · Segmentación abierta ($2.661–$2.862).</strong> Tres veces más cara, pero necesaria: es la única fuente de público nuevo y, por lo tanto, la que rellena las audiencias de retargeting. Su costo debe leerse como inversión en construcción de audiencia, no como ineficiencia.</p>
+  <p><strong>Lo que no funcionó:</strong> los <strong>públicos por intereses</strong> ($3.939) rindieron peor que dejar al algoritmo sin restricciones — un resultado habitual desde que Meta mejoró su modelo de entrega. Y los <strong>públicos similares</strong> nunca recibieron presupuesto real ($625 en total): en una estructura ABO, un conjunto que no gana la subasta interna simplemente no gasta, y el aprendizaje nunca ocurre.</p>
+</section>
+
+<!-- ================= 10 · ANUNCIOS ================= -->
+<section id="anuncios">
+  <div class="eyebrow"><span class="n">10</span><span class="t">Rendimiento por anuncio</span></div>
+  <h2>Un solo anuncio produjo el 40% de las conversaciones del bimestre.</h2>
+
+  <figure>
+    <figcaption>Costo por conversación, por anuncio</figcaption>
+    <div class="figsub">Anuncios con inversión superior a $50.000, ordenados del mejor al peor. El tono oscuro marca los que quedan por debajo del promedio de la cuenta.</div>
+    <div class="plot" id="c-ads"></div>
+    <button class="tblbtn" data-t="c-ads">Ver datos ▾</button><div class="tblwrap" id="c-ads-tbl"></div>
+  </figure>
+
+  <div class="tblscroll">
+    <table>
+      <thead><tr>
+        <th>#</th><th>Anuncio</th><th>Línea creativa</th><th class="num">Inversión</th><th class="num">CTR</th><th class="num">CPC</th>
+        <th class="num">Frec.</th><th class="num">Convers.</th><th class="num">Costo/conv.</th><th class="num">Leads</th><th class="num">Compras</th><th class="num">Interacc.</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="name">Yogurt griego — 90 días</td><td>Producto</td><td class="num">$370.698</td><td class="num">4,93%</td><td class="num">$137</td><td class="num">2,12</td><td class="num">497</td><td class="num" style="color:var(--goodtx);font-weight:700">$746</td><td class="num">24</td><td class="num">15</td><td class="num">1.618</td></tr>
+        <tr><td class="num">2</td><td class="name">Yogurt griego — 30 días</td><td>Producto</td><td class="num">$109.440</td><td class="num">4,51%</td><td class="num">$169</td><td class="num">1,61</td><td class="num">101</td><td class="num" style="color:var(--goodtx);font-weight:700">$1.084</td><td class="num">4</td><td class="num">2</td><td class="num">418</td></tr>
+        <tr><td class="num">3</td><td class="name">Hombre en la cocina (P2)</td><td>Situación</td><td class="num">$279.047</td><td class="num" style="font-weight:700">7,45%</td><td class="num">$376</td><td class="num">1,52</td><td class="num">145</td><td class="num">$1.924</td><td class="num">7</td><td class="num">0</td><td class="num">5.397</td></tr>
+        <tr><td class="num">4</td><td class="name">Hombre en la cocina (P1)</td><td>Situación</td><td class="num">$232.809</td><td class="num" style="font-weight:700">6,43%</td><td class="num">$385</td><td class="num">1,34</td><td class="num">100</td><td class="num">$2.328</td><td class="num">12</td><td class="num">1</td><td class="num">4.817</td></tr>
+        <tr><td class="num">5</td><td class="name">Mujer preparando plato (P1)</td><td>Situación</td><td class="num">$260.557</td><td class="num">3,55%</td><td class="num">$588</td><td class="num">1,54</td><td class="num">97</td><td class="num">$2.686</td><td class="num">8</td><td class="num">0</td><td class="num">4.708</td></tr>
+        <tr><td class="num">6</td><td class="name">Combo Equilibrio — copia</td><td>Combo</td><td class="num">$111.568</td><td class="num">4,23%</td><td class="num">$315</td><td class="num">1,66</td><td class="num">37</td><td class="num">$3.015</td><td class="num">2</td><td class="num">1</td><td class="num">167</td></tr>
+        <tr><td class="num">7</td><td class="name">Canción Entrega del Chef</td><td>Marca</td><td class="num">$65.044</td><td class="num" style="color:var(--crit)">1,37%</td><td class="num">$241</td><td class="num">1,01</td><td class="num">20</td><td class="num">$3.252</td><td class="num">0</td><td class="num">0</td><td class="num">3.109</td></tr>
+        <tr><td class="num">8</td><td class="name">Mujer preparando plato (P2)</td><td>Situación</td><td class="num">$396.966</td><td class="num">3,56%</td><td class="num" style="color:var(--crit)">$813</td><td class="num">1,73</td><td class="num">122</td><td class="num">$3.254</td><td class="num">7</td><td class="num">2</td><td class="num">5.287</td></tr>
+        <tr><td class="num">9</td><td class="name">La mamá con el bebé (abierta)</td><td>Situación</td><td class="num">$258.339</td><td class="num" style="color:var(--crit)">2,70%</td><td class="num">$443</td><td class="num">1,62</td><td class="num">66</td><td class="num">$3.914</td><td class="num">2</td><td class="num">0</td><td class="num">750</td></tr>
+        <tr><td class="num">10</td><td class="name">La mamá con el bebé (intereses)</td><td>Situación</td><td class="num">$56.934</td><td class="num">3,15%</td><td class="num">$558</td><td class="num">1,42</td><td class="num">14</td><td class="num">$4.067</td><td class="num">1</td><td class="num">0</td><td class="num">70</td></tr>
+        <tr><td class="num">11</td><td class="name">Anuncio de interacción — copia</td><td>Situación</td><td class="num">$57.639</td><td class="num">3,88%</td><td class="num">$945</td><td class="num">1,28</td><td class="num">13</td><td class="num">$4.434</td><td class="num" style="color:var(--goodtx);font-weight:700">7</td><td class="num">0</td><td class="num">659</td></tr>
+        <tr><td class="num">12</td><td class="name">Combo Equilibrio — 90 días</td><td>Combo</td><td class="num">$102.855</td><td class="num">3,72%</td><td class="num">$351</td><td class="num">1,71</td><td class="num">20</td><td class="num" style="color:var(--crit);font-weight:700">$5.143</td><td class="num">0</td><td class="num">0</td><td class="num">132</td></tr>
+        <tr class="tot"><td colspan="3">Otros 12 anuncios (inversión &lt; $50.000)</td><td class="num">$80.980</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">21</td><td class="num">$3.856</td><td class="num">0</td><td class="num">0</td><td class="num">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Qué nos dicen los creativos</h3>
+
+  <p><strong>El producto vende; la situación de vida entretiene.</strong> Es la lectura más importante de esta tabla. Los dos anuncios de <em>Yogurt griego</em> —producto en primer plano, sin narrativa— ocupan los dos primeros puestos con $746 y $1.084 por conversación y concentran <strong>17 de las 21 compras</strong>. Los anuncios de situación (<em>Hombre en la cocina</em>, <em>Mujer preparando plato</em>, <em>La mamá con el bebé</em>) generan mucha más interacción —hasta 5.397 interacciones frente a 1.618— pero convierten entre 2,5 y 5 veces más caro. Están comprando atención, no clientes.</p>
+
+  <p><strong>El CTR alto puede ser una trampa.</strong> <em>Hombre en la cocina</em> tiene el mejor CTR de la cuenta (7,45%) y aun así cuesta $1.924 por conversación, 2,6 veces más que el ganador. El anuncio consigue el clic pero pierde a la persona en el camino a WhatsApp. Cuando el CTR es alto y el costo por conversación también, el problema no está en el creativo sino en la promesa: el anuncio ofrece algo que la conversación no continúa.</p>
+
+  <p><strong>El peor anuncio de la cuenta es <em>Combo Equilibrio — 90 días</em></strong> ($5.143 por conversación, cero leads con $102.855 invertidos). Comparte público exacto con el mejor anuncio de la cuenta, lo que aísla la variable: <strong>el problema es la oferta de combo, no la audiencia</strong>.</p>
+
+  <p><strong><em>Canción Entrega del Chef</em> es un caso aparte.</strong> Su CTR de 1,37% es el más bajo con diferencia, pero su frecuencia de 1,005 y su alcance de 19.661 personas revelan que se entregó casi por completo en Estados de WhatsApp — un formato de exposición, no de respuesta. Juzgarlo por CTR es un error de medición. Genera 3.109 interacciones a $241 el clic; si su rol es recordación, cumple. No debería competir en la misma tabla que los anuncios de conversión.</p>
+
+  <p><strong>Qué reemplazar:</strong> los cuatro anuncios de situación de vida con más de $250.000 invertidos y más de $2.600 por conversación (<em>Mujer preparando plato</em> en sus dos versiones, <em>La mamá con el bebé</em>) y los dos de combos. Entre los seis concentran <strong>$1.130.000 de inversión y 18 leads</strong>. Ese presupuesto rinde tres veces más en la línea de producto.</p>
+</section>
+
+<!-- ================= 11 · EMBUDO ================= -->
+<section id="embudo">
+  <div class="eyebrow"><span class="n">11</span><span class="t">Principales métricas del embudo</span></div>
+  <h2>El embudo mejoró en cada etapa menos en la que decide la venta.</h2>
+
+  <p>Cada etapa se muestra a escala real sobre las impresiones del mes. El tono se oscurece a medida que el embudo avanza; el porcentaje entre barras indica qué proporción sobrevive a cada paso.</p>
+
+  <div id="funnels"></div>
+
+  <h3>Dónde se pierde el tráfico</h3>
+  <p><strong>Etapa 1 — Impresión a clic (3,80% → 4,21%).</strong> Mejoró. El creativo llama más la atención que en junio. Es la etapa más sana del embudo.</p>
+  <p><strong>Etapa 2 — Clic a clic en enlace (32,1% → 45,0%).</strong> La mayor mejora de todo el embudo, +13 puntos. En junio, dos de cada tres clics eran interacción con el post sin intención de ir a WhatsApp; en julio casi la mitad sí avanza. Es el efecto directo del retargeting: hablarle a quien ya conoce la marca.</p>
+  <p><strong>Etapa 3 — Clic en enlace a conversación (55,7% → 36,5%).</strong> Empeoró, pero es un empeoramiento aparente. En julio hubo <strong>4,3 veces más</strong> clics en enlace; que una proporción menor de un volumen mucho mayor termine en conversación es esperable y sigue produciendo casi el triple de conversaciones absolutas (328 → 925).</p>
+  <p><strong>Etapa 4 — Conversación a lead (10,4% → 4,3%).</strong> <span style="color:var(--crit);font-weight:600">Aquí se rompe el embudo.</span> Es la única etapa donde la caída no se compensa con volumen: 597 conversaciones adicionales produjeron apenas 6 leads adicionales. Si julio hubiera mantenido la tasa de conversión de junio, habría generado <strong>96 leads en lugar de 40</strong>.</p>
+  <p><strong>Etapa 5 — Lead a compra (52,5% en julio).</strong> Una vez que la conversación califica como lead, más de la mitad termina en compra. <strong>El cierre funciona.</strong> Eso refuerza el diagnóstico: el problema no está en vender, está en el filtro entre la conversación y el lead.</p>
+
+  <div class="callout risk">
+    <p><strong>El costo de esa etapa, en pesos.</strong> Recuperar la tasa de calificación de junio (10,4%) sobre el volumen de julio significaría 96 leads en vez de 40. Al ritmo de cierre observado (52,5%), serían <strong>50 compras en vez de 21</strong> — con exactamente el mismo presupuesto de medios. Ninguna optimización de pauta disponible ofrece un retorno comparable.</p>
+  </div>
+</section>
+
+<!-- ================= 12 · COMPARACIÓN ================= -->
+<section id="comparacion">
+  <div class="eyebrow"><span class="n">12</span><span class="t">Comparación mensual</span></div>
+  <h2>Todo lo que mide la pauta mejoró. Lo único que se deterioró fue el costo por lead.</h2>
+
+  <div class="tblscroll">
+    <table>
+      <thead><tr><th>Indicador</th><th class="num">Junio 2026</th><th class="num">Julio 2026</th><th class="num">Variación</th><th></th><th>Lectura</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Inversión</td><td class="num">$878.486</td><td class="num">$1.504.390</td><td class="num">+71,2%</td><td>⬆️</td><td class="note">Decisión deliberada de escalado</td></tr>
+        <tr><td class="name">Alcance</td><td class="num">27.037</td><td class="num">61.809</td><td class="num" style="color:var(--goodtx)">+128,6%</td><td>⬆️</td><td class="note">Crece más rápido que la inversión</td></tr>
+        <tr><td class="name">Impresiones</td><td class="num">48.285</td><td class="num">133.849</td><td class="num" style="color:var(--goodtx)">+177,2%</td><td>⬆️</td><td class="note">Más del doble por peso invertido</td></tr>
+        <tr><td class="name">Frecuencia</td><td class="num">1,79</td><td class="num">2,17</td><td class="num">+21,2%</td><td>➡️</td><td class="note">Sigue en rango saludable</td></tr>
+        <tr><td class="name">CPM</td><td class="num">$18.194</td><td class="num">$11.239</td><td class="num" style="color:var(--goodtx)">−38,2%</td><td>⬇️</td><td class="note">Mejor relevancia en la subasta</td></tr>
+        <tr><td class="name">Clics (todos)</td><td class="num">1.835</td><td class="num">5.630</td><td class="num" style="color:var(--goodtx)">+206,8%</td><td>⬆️</td><td class="note">Triplica con 71% más de gasto</td></tr>
+        <tr><td class="name">CTR</td><td class="num">3,80%</td><td class="num">4,21%</td><td class="num" style="color:var(--goodtx)">+10,8%</td><td>⬆️</td><td class="note">Muy por encima del sector</td></tr>
+        <tr><td class="name">CPC</td><td class="num">$479</td><td class="num">$267</td><td class="num" style="color:var(--goodtx)">−44,3%</td><td>⬇️</td><td class="note">Casi la mitad</td></tr>
+        <tr><td class="name">Clics en enlace</td><td class="num">589</td><td class="num">2.532</td><td class="num" style="color:var(--goodtx)">+329,9%</td><td>⬆️</td><td class="note">Clics con intención real</td></tr>
+        <tr><td class="name">CTR de enlace único</td><td class="num">2,05%</td><td class="num">3,13%</td><td class="num" style="color:var(--goodtx)">+52,7%</td><td>⬆️</td><td class="note">Mejor calidad de tráfico</td></tr>
+        <tr><td class="name">Costo por clic en enlace</td><td class="num">$1.491</td><td class="num">$594</td><td class="num" style="color:var(--goodtx)">−60,2%</td><td>⬇️</td><td class="note">La mayor mejora del bimestre</td></tr>
+        <tr><td class="name">Conversaciones</td><td class="num">328</td><td class="num">925</td><td class="num" style="color:var(--goodtx)">+182,0%</td><td>⬆️</td><td class="note">El resultado que optimizan las campañas</td></tr>
+        <tr><td class="name">Costo por conversación</td><td class="num">$2.678</td><td class="num">$1.626</td><td class="num" style="color:var(--goodtx)">−39,3%</td><td>⬇️</td><td class="note">Escala y abarata a la vez</td></tr>
+        <tr style="background:rgba(208,59,59,.05)"><td class="name">Leads</td><td class="num">34</td><td class="num">40</td><td class="num" style="color:var(--crit)">+17,6%</td><td>➡️</td><td class="note"><strong>No sigue al volumen de conversaciones</strong></td></tr>
+        <tr style="background:rgba(208,59,59,.05)"><td class="name">Costo por lead</td><td class="num">$25.838</td><td class="num">$37.610</td><td class="num" style="color:var(--crit)">+45,6%</td><td>⬆️</td><td class="note"><strong>El único costo que sube</strong></td></tr>
+        <tr><td class="name">Compras atribuidas</td><td class="num">0</td><td class="num">21</td><td class="num" style="color:var(--goodtx)">nuevo</td><td>⬆️</td><td class="note">Primera señal de venta medida</td></tr>
+        <tr><td class="name">ROAS</td><td class="num">n/d</td><td class="num">n/d</td><td class="num">—</td><td>➡️</td><td class="note">Sin valor de conversión configurado</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure>
+    <figcaption>Junio frente a julio, indicadores indexados</figcaption>
+    <div class="legend"><i><b style="background:var(--s1)"></b>Creció frente a junio</i><i><b style="background:var(--s2)"></b>Cayó frente a junio</i></div><div class="figsub">Junio = 100 en cada indicador, para comparar magnitudes de distinta escala en un mismo eje. El color indica la dirección del cambio, no si es bueno o malo: en los cuatro indicadores de costo, caer es lo deseable.</div>
+    <div class="plot" id="c-idx"></div>
+    <button class="tblbtn" data-t="c-idx">Ver datos ▾</button><div class="tblwrap" id="c-idx-tbl"></div>
+  </figure>
+</section>
+
+<!-- ================= 13 · HALLAZGOS ================= -->
+<section id="hallazgos">
+  <div class="eyebrow"><span class="n">13</span><span class="t">Hallazgos</span></div>
+  <h2>Dónde está el dinero bien puesto y dónde está el dinero dormido.</h2>
+
+  <div class="finds">
+    <div class="find"><div class="k">Mejor campaña</div><div class="v">Evaluación · Retargeting</div><p>$851 por conversación con el 22% del presupuesto. Produjo el 48% de las conversaciones y 17 de las 21 compras del bimestre.</p></div>
+    <div class="find"><div class="k">Mejor audiencia</div><div class="v">Interacción IG/FB 90 días + video 10 s</div><p>$747 por conversación y CPC de $137. La ventana larga gana a la de 30 días porque tiene inventario suficiente para no encarecerse.</p></div>
+    <div class="find"><div class="k">Mejor anuncio</div><div class="v">Yogurt griego — 90 días</div><p>497 conversaciones a $746 y 15 compras. Producto en primer plano, sin narrativa. El 40% de las conversaciones del bimestre salieron de aquí.</p></div>
+    <div class="find"><div class="k">Peor anuncio</div><div class="v">Combo Equilibrio — 90 días</div><p>$5.143 por conversación y cero leads con $102.855. Mismo público que el mejor anuncio: el fallo está en la oferta, no en la audiencia.</p></div>
+    <div class="find"><div class="k">Mejor día</div><div class="v">Jueves</div><p>$1.672 por conversación, 26% por debajo del viernes. El mejor día individual fue el jueves 9 de julio: 52 conversaciones a $930.</p></div>
+    <div class="find"><div class="k">Mejor horario</div><div class="v">21:00 – 23:00</div><p>$1.214–$1.238 por conversación, casi la mitad que la franja de las 9:00 ($2.759), que recibe más presupuesto.</p></div>
+    <div class="find"><div class="k">Mejor ubicación</div><div class="v">Reels de Facebook</div><p>$1.665 por conversación frente a $1.883 del feed, con 128 conversaciones. Recibe solo el 8,9% de la inversión.</p></div>
+    <div class="find"><div class="k">Mayor oportunidad</div><div class="v">El público de 25–34 años</div><p>Conversaciones a $1.154 —48% más barato que el de 65+— pero recibe apenas el 8% del presupuesto frente al 30% del segmento mayor.</p></div>
+    <div class="find"><div class="k">Riesgo principal</div><div class="v">Concentración creativa</div><p>Un anuncio soporta el 40% del resultado. Cuando se fatigue —y con frecuencia 2,12 ya está en camino— la cuenta pierde su motor sin reemplazo probado.</p></div>
+  </div>
+
+  <h3>Por franja horaria</h3>
+  <figure>
+    <figcaption>Conversaciones y costo por conversación, por hora del día</figcaption>
+    <div class="figsub">Período completo, hora del anunciante. Las barras muestran el volumen de conversaciones; el color más oscuro marca las horas donde el costo por conversación está por debajo de $1.500.</div>
+    <div class="plot" id="c-hour"></div>
+    <button class="tblbtn" data-t="c-hour">Ver datos ▾</button><div class="tblwrap" id="c-hour-tbl"></div>
+  </figure>
+  <p>El patrón es nítido y contraintuitivo: <strong>la franja nocturna de 21:00 a 23:00 produce conversaciones un 45% más baratas que la franja matinal de 7:00 a 10:00</strong>, que concentra mucho más presupuesto. Tiene sentido para el negocio — la decisión de qué comer mañana se toma de noche, no a las nueve de la mañana con la agenda encima. La franja de 19:00 a 21:00 combina lo mejor de ambos: volumen alto (149 conversaciones) y costo bajo ($1.238–$1.459).</p>
+
+  <h3>Por día de la semana</h3>
+  <figure>
+    <figcaption>Costo por conversación, por día de la semana</figcaption>
+    <div class="figsub">Promedio del período completo. Barra más corta = más eficiente; el tono oscuro marca los días por debajo del promedio de la cuenta.</div>
+    <div class="plot" id="c-dow"></div>
+    <button class="tblbtn" data-t="c-dow">Ver datos ▾</button><div class="tblwrap" id="c-dow-tbl"></div>
+  </figure>
+  <p>El <strong>viernes es el peor día</strong> ($2.103 por conversación, CTR de 3,00% frente al 4,5% del resto de la semana) y sin embargo recibe presupuesto equivalente. <strong>Jueves y sábado</strong> son los más eficientes. La diferencia entre el mejor y el peor día es del 26% — suficiente para justificar un ajuste de reparto, no para apagar días completos.</p>
+
+  <h3>Por edad y género</h3>
+  <div class="split">
+    <figure style="margin-top:0">
+      <figcaption>Costo por conversación, por rango de edad</figcaption>
+      <div class="figsub">El tono se oscurece con la edad. Junto a cada barra, el porcentaje del presupuesto que recibe el segmento.</div>
+      <div class="plot" id="c-age"></div>
+      <button class="tblbtn" data-t="c-age">Ver datos ▾</button><div class="tblwrap" id="c-age-tbl"></div>
+    </figure>
+    <figure style="margin-top:0">
+      <figcaption>Costo por conversación, por género</figcaption>
+      <div class="figsub">Junto a cada barra, el porcentaje del presupuesto que recibe. Se excluye el 3,3% de inversión sin género identificado.</div>
+      <div class="plot" id="c-gen"></div>
+      <button class="tblbtn" data-t="c-gen">Ver datos ▾</button><div class="tblwrap" id="c-gen-tbl"></div>
+    </figure>
+  </div>
+
+  <p><strong>La cuenta está pagando de más por el público mayor.</strong> Los segmentos de 55–64 y 65+ concentran el <strong>54,5% de la inversión</strong> y entregan conversaciones a $2.136 y $2.213. El segmento de 25–34 las entrega a <strong>$1.154</strong> —48% más barato— con solo el 8% del presupuesto. El patrón se repite en género: los hombres convierten a $1.297 frente a $2.094 de las mujeres, y reciben el 15,5% de la inversión frente al 81,2%.</p>
+  <p>Esto <em>no</em> significa que el público mayor esté mal. Significa que el algoritmo está entregando ahí porque el creativo actual —producto en primer plano, estética tradicional— resuena con ese perfil, y nadie le ha dado material para explorar el otro. <strong>Es una oportunidad de expansión, no un error que corregir.</strong> Con la misma inversión, mover $300.000 del segmento 65+ al de 25–34 produciría alrededor de <strong>124 conversaciones adicionales</strong> si el costo se mantuviera — cifra que debe leerse como techo optimista, porque escalar un segmento siempre lo encarece.</p>
+
+  <h3>Por ubicación</h3>
+  <figure>
+    <figcaption>Inversión y costo por conversación, por ubicación</figcaption>
+    <div class="figsub">Período completo, ordenado de más a menos eficiente. El volumen de conversaciones acompaña cada barra: las tres primeras son demasiado pequeñas para concluir nada.</div>
+    <div class="plot" id="c-plc"></div>
+    <button class="tblbtn" data-t="c-plc">Ver datos ▾</button><div class="tblwrap" id="c-plc-tbl"></div>
+  </figure>
+  <p>El <strong>feed absorbe el 74,3% de la inversión</strong> y funciona bien ($1.883), pero acumula una frecuencia de 2,52 — la más alta de todas las ubicaciones, y la primera señal de saturación. <strong>Reels de Facebook rinde mejor ($1.665) con el 8,9% del gasto.</strong> Dos ubicaciones muestran señales prometedoras con muy poco volumen: <em>video in-stream</em> ($1.227) y <em>búsqueda</em> ($375); son demasiado pequeñas para concluir nada, pero suficientes para justificar una prueba controlada.</p>
+
+  <div class="callout risk">
+    <p><strong>Riesgos detectados.</strong> Tres, en orden de urgencia:</p>
+    <p><strong>1 · Dependencia de un solo creativo.</strong> <em>Yogurt griego</em> sostiene el 40% del resultado con frecuencia 2,12 y subiendo. No hay un segundo anuncio de rendimiento comparable listo para relevarlo.</p>
+    <p><strong>2 · Capacidad de respuesta en WhatsApp.</strong> La caída de la tasa de calificación coincide exactamente con el triplicado del volumen. Escalar más presupuesto sin resolverlo empeora el costo por lead.</p>
+    <p><strong>3 · Medición incompleta.</strong> Sin valor de conversión configurado no hay ROAS, y sin ROAS toda decisión de presupuesto se toma sobre costo, no sobre retorno. Es el riesgo más silencioso y el más fácil de corregir.</p>
+  </div>
+</section>
+
+<!-- ================= 14 · RECOMENDACIONES ================= -->
+<section id="recomendaciones">
+  <div class="eyebrow"><span class="n">14</span><span class="t">Recomendaciones</span></div>
+  <h2>Seis decisiones, en orden de impacto sobre el resultado.</h2>
+
+  <div class="rec"><div class="num">1</div><div>
+    <span class="tag alta">Prioridad alta</span>
+    <h4>Instrumentar la respuesta en WhatsApp antes de subir presupuesto</h4>
+    <p>Medir tiempo de primera respuesta, tasa de respuesta dentro de los primeros 5 minutos y motivo de abandono de las conversaciones que no califican. Definir un umbral de servicio y asignar responsable.</p>
+    <p class="why"><b>Por qué:</b> es la única variable del informe cuyo arreglo produce más ventas sin gastar un peso más en medios. Recuperar la tasa de calificación de junio sobre el volumen de julio significa <b>96 leads en vez de 40</b> y unas <b>50 compras en vez de 21</b>, con el mismo presupuesto. Ninguna optimización de pauta se acerca a ese retorno.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">2</div><div>
+    <span class="tag alta">Prioridad alta</span>
+    <h4>Configurar el valor de conversión en el evento de compra</h4>
+    <p>Enviar el monto de cada pedido en el evento de compra, vía píxel o API de conversiones, para que Meta reciba valor y no solo conteo.</p>
+    <p class="why"><b>Por qué:</b> hoy la cuenta registra 21 compras sin monto, de modo que <b>el ROAS no existe como métrica</b> y todas las decisiones de presupuesto se toman sobre costo. Además, sin valor Meta no puede optimizar hacia clientes de ticket alto — está tratando todas las compras como equivalentes. Es la corrección de menor esfuerzo y mayor efecto compuesto del informe.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">3</div><div>
+    <span class="tag alta">Prioridad alta</span>
+    <h4>Redistribuir presupuesto hacia la campaña de retargeting</h4>
+    <p>Llevar la campaña de Evaluación del 22% al 40% de la inversión mensual, con incrementos del 20–25% cada tres días. Financiarlo con el presupuesto de los seis anuncios de situación y combos que hoy consumen $1.130.000 para producir 18 leads.</p>
+    <p class="why"><b>Por qué:</b> produce conversaciones a $851 frente a $2.661–$2.937 de las campañas de presentación, y concentra 17 de las 21 compras. El escalonado gradual evita reiniciar la fase de aprendizaje, que es lo que suele arruinar un escalado agresivo.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">4</div><div>
+    <span class="tag media">Prioridad media</span>
+    <h4>Producir tres creativos nuevos en la línea de producto</h4>
+    <p>Replicar la fórmula de <em>Yogurt griego</em> —producto en primer plano, sin narrativa de situación— con tres productos distintos. Lanzarlos como conjunto de prueba dentro de la campaña de retargeting, no como campaña aparte.</p>
+    <p class="why"><b>Por qué:</b> la línea de producto convierte entre 2,5 y 5 veces mejor que la de situación de vida, y hoy solo hay dos anuncios sosteniéndola. Con frecuencia 2,12 y subiendo, <b>el mejor anuncio de la cuenta se fatigará dentro de 4 a 6 semanas</b> y no hay relevo probado. Este es el trabajo que evita una caída, no el que produce una subida.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">5</div><div>
+    <span class="tag media">Prioridad media</span>
+    <h4>Abrir una prueba deliberada sobre 25–44 años y público masculino</h4>
+    <p>Crear un conjunto acotado a 25–44 años con presupuesto de prueba equivalente al 10% de la cuenta, con creativo específico para ese perfil. Mantener el resto de la estructura intacta para poder comparar.</p>
+    <p class="why"><b>Por qué:</b> el segmento de 25–34 convierte a $1.154 —48% más barato que el de 65+— con el 8% del presupuesto, y los hombres a $1.297 frente a $2.094 de las mujeres. La entrega actual refleja a quién le habla el creativo existente, no dónde está el mejor cliente. Es la mayor bolsa de eficiencia sin explotar de la cuenta.</p>
+  </div></div>
+
+  <div class="rec"><div class="num">6</div><div>
+    <span class="tag baja">Prioridad baja</span>
+    <h4>Ajustar reparto por franja horaria y ubicación</h4>
+    <p>Reforzar la franja de 19:00 a 23:00, reducir la de 7:00 a 10:00, y subir Reels de Facebook del 8,9% a cerca del 15% de la entrega. Probar video in-stream con presupuesto acotado.</p>
+    <p class="why"><b>Por qué:</b> la franja nocturna produce conversaciones un 45% más baratas que la matinal y Reels rinde 12% mejor que el feed, que además ya muestra frecuencia de 2,52. Son ganancias de un solo dígito alto — reales, pero secundarias frente a las cinco anteriores. <b>Hacerlas primero sería optimizar el margen mientras el embudo pierde el centro.</b></p>
+  </div></div>
+</section>
+
+<!-- ================= 15 · PLAN ================= -->
+<section id="plan">
+  <div class="eyebrow"><span class="n">15</span><span class="t">Plan para agosto 2026</span></div>
+  <h2>Primero se arregla la conversión. Después se escala.</h2>
+
+  <p class="lede">El orden importa. Escalar presupuesto en la primera semana, antes de resolver la respuesta en WhatsApp y la medición de valor, multiplicaría el problema en lugar del resultado.</p>
+
+  <div class="weeks">
+    <div class="wk">
+      <div class="w">Semana 1</div><div class="d">4 – 10 de agosto</div>
+      <ul>
+        <li><strong>Reanudar la entrega</strong> —detenida desde el 28 de julio— y restablecer el presupuesto diario.</li>
+        <li>Instrumentar la medición de <strong>tiempo de primera respuesta</strong> en WhatsApp y fijar el umbral de servicio.</li>
+        <li>Configurar el <strong>valor de conversión</strong> en el evento de compra.</li>
+        <li>Pausar los seis anuncios de situación y combos con costo por conversación superior a $2.600.</li>
+      </ul>
+    </div>
+    <div class="wk">
+      <div class="w">Semana 2</div><div class="d">11 – 17 de agosto</div>
+      <ul>
+        <li>Subir la campaña de <strong>Evaluación al 30%</strong> del presupuesto, en dos incrementos del 20%.</li>
+        <li>Lanzar los <strong>tres creativos nuevos</strong> de línea de producto dentro de la campaña de retargeting.</li>
+        <li>Abrir el conjunto de prueba <strong>25–44 años</strong> con el 10% del presupuesto.</li>
+        <li>Primera lectura del tiempo de respuesta: contrastar contra la tasa de calificación diaria.</li>
+      </ul>
+    </div>
+    <div class="wk">
+      <div class="w">Semana 3</div><div class="d">18 – 24 de agosto</div>
+      <ul>
+        <li>Evaluar los creativos nuevos a los 7 días. <strong>Escalar los que bajen de $1.200</strong> por conversación; retirar los que superen $2.600.</li>
+        <li>Subir la campaña de <strong>Evaluación al 40%</strong> si el costo por conversación se mantiene por debajo de $1.100.</li>
+        <li>Ajustar el reparto horario hacia la franja <strong>19:00–23:00</strong>.</li>
+        <li>Subir <strong>Reels de Facebook</strong> a cerca del 15% de la entrega.</li>
+      </ul>
+    </div>
+    <div class="wk">
+      <div class="w">Semana 4</div><div class="d">25 – 31 de agosto</div>
+      <ul>
+        <li>Primer <strong>informe con ROAS real</strong>, ya con valor de conversión acumulando datos.</li>
+        <li>Decidir sobre el conjunto de 25–44: escalar o cerrar, según costo por conversación comparado.</li>
+        <li>Revisar <strong>frecuencia del feed</strong>; si supera 3,0, redistribuir hacia Reels y Stories.</li>
+        <li>Preparar la <strong>siguiente tanda creativa</strong> para septiembre, antes de que aparezca la fatiga.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Cómo sabremos que funcionó</h3>
+  <div class="tblscroll">
+    <table>
+      <thead><tr><th>Indicador</th><th class="num">Julio 2026</th><th class="num">Meta agosto</th><th>Qué demostraría</th></tr></thead>
+      <tbody>
+        <tr><td class="name">Tasa conversación → lead</td><td class="num">4,3%</td><td class="num" style="color:var(--s1);font-weight:700">≥ 7,0%</td><td class="note">Que el cuello de botella era operativo y es corregible</td></tr>
+        <tr><td class="name">Costo por lead</td><td class="num">$37.610</td><td class="num" style="color:var(--s1);font-weight:700">≤ $24.000</td><td class="note">Que el escalado ya no encarece el resultado de negocio</td></tr>
+        <tr><td class="name">Costo por conversación</td><td class="num">$1.626</td><td class="num" style="color:var(--s1);font-weight:700">≤ $1.400</td><td class="note">Que la redistribución hacia retargeting funcionó</td></tr>
+        <tr><td class="name">Anuncios bajo $1.200/conv.</td><td class="num">2</td><td class="num" style="color:var(--s1);font-weight:700">≥ 4</td><td class="note">Que ya no dependemos de un solo creativo</td></tr>
+        <tr><td class="name">ROAS</td><td class="num">n/d</td><td class="num" style="color:var(--s1);font-weight:700">medido</td><td class="note">Que podemos decidir sobre retorno y no sobre costo</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Nota metodológica.</strong> Todos los datos provienen de la API de Meta Ads para la cuenta 1019117777447861, extraídos el 3 de agosto de 2026 con ventana de atribución de 1 día por visualización y 7 días por clic. «Conversaciones» corresponde a <em>conversaciones de mensajería iniciadas</em>; «Leads» a <em>leads atribuidos</em>; «Compras» a <em>compras omnicanal atribuidas</em>. El período efectivo con entrega va del 8 de junio al 28 de julio de 2026. Las cifras de alcance no son aditivas entre meses ni entre campañas, por lo que no se totalizan. El ROAS no se reporta porque la cuenta no tiene configurado el valor de conversión.</p>
+</footer>
+
+</div>
+
+<script>
+"use strict";
+/* ============ Tema ============ */
+(function(){
+  var b=document.getElementById('themebtn');
+  function cur(){var s=document.documentElement.getAttribute('data-theme');
+    if(s)return s;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function paint(){b.textContent=cur()==='dark'?'Modo claro':'Modo oscuro';}
+  b.addEventListener('click',function(){
+    document.documentElement.setAttribute('data-theme',cur()==='dark'?'light':'dark');
+    paint(); redraw();
+  });
+  paint();
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){paint();redraw();});
+})();
+
+/* ============ Utilidades ============ */
+var NS='http://www.w3.org/2000/svg';
+function E(n,a){var e=document.createElementNS(NS,n);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
+function cssv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function nf(v,d){return v.toLocaleString('es-CO',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+function cop(v){return '$'+nf(Math.round(v));}
+function pc(v,d){return nf(v,d===undefined?2:d)+'%';}
+
+/* ============ Datos ============ */
+var DIA=[
+["06-08",120,16,0,0],["06-09",2388,186,5,1],["06-10",871,45,2,1],["06-11",981,41,0,0],
+["06-12",506,53,2,0],["06-13",49302,2951,148,30],["06-14",68034,3578,147,30],["06-15",54039,2671,153,39],
+["06-16",48754,1799,72,20],["06-17",65449,2824,159,30],["06-18",39620,2315,84,14],["06-19",69810,3597,159,29],
+["06-20",59450,2651,110,24],["06-21",33759,1358,55,7],["06-22",43472,2094,65,12],["06-23",51981,2381,66,12],
+["06-24",33630,2737,78,15],["06-25",33535,3914,88,8],["06-26",36957,2996,116,11],["06-27",44400,3997,90,7],
+["06-28",34530,2093,71,12],["06-29",48913,2325,84,10],["06-30",57985,1663,81,16],
+["07-01",60650,2028,72,16],["07-02",48288,1769,79,17],["07-03",42469,1489,56,10],["07-04",36595,1425,76,22],
+["07-05",39546,1481,86,13],["07-06",51092,2527,92,21],["07-07",67717,3223,169,41],["07-08",47544,3414,159,35],
+["07-09",48348,5576,291,52],["07-10",43841,4732,212,33],["07-11",44176,4153,197,34],["07-12",44903,3936,168,34],
+["07-13",35965,1786,100,17],["07-14",64897,3562,156,32],["07-15",72312,6765,326,54],["07-16",50473,5525,229,39],
+["07-17",41807,4285,175,23],["07-18",45459,5149,251,35],["07-19",59808,7337,300,40],["07-20",61896,6861,321,43],
+["07-21",56775,5703,286,44],["07-22",69754,6622,316,45],["07-23",58000,5089,257,37],["07-24",56877,17395,316,33],
+["07-25",55637,4562,235,42],["07-26",52655,5529,202,27],["07-27",88986,5990,274,50],["07-28",57920,5936,229,36]
+];
+var MES={"06":"jun","07":"jul"};
+function dlab(d){var p=d.split("-");return parseInt(p[1],10)+" "+MES[p[0]];}
+
+var CAMP=[
+ ["Evaluación · Retargeting",515944,606,851],
+ ["Presentación 2 · Abierta",800956,301,2661],
+ ["Presentación 1 · Abierta",828152,282,2937],
+ ["Evaluación 2 · Combos",237824,64,3716]
+];
+var ADSET=[
+ ["Interacción 90 d + video 10 s",371365,497,747],
+ ["Interacción 30 d + video 10 s",109440,101,1084],
+ ["Públicos seg. abierta (P2)",800956,301,2661],
+ ["Públicos seg. abierta (P1)",752678,263,2862],
+ ["Interacción 30 d (combos)",126130,43,2933],
+ ["Públicos por intereses",74849,19,3939],
+ ["Interacción 90 d — copia",35139,8,4392],
+ ["Interacción 90 d (combos)",111694,21,5319]
+];
+var ADS=[
+ ["Yogurt griego — 90 días",370698,497,746],
+ ["Yogurt griego — 30 días",109440,101,1084],
+ ["Hombre en la cocina (P2)",279047,145,1924],
+ ["Hombre en la cocina (P1)",232809,100,2328],
+ ["Mujer preparando plato (P1)",260557,97,2686],
+ ["Combo Equilibrio — copia",111568,37,3015],
+ ["Canción Entrega del Chef",65044,20,3252],
+ ["Mujer preparando plato (P2)",396966,122,3254],
+ ["La mamá con el bebé (abierta)",258339,66,3914],
+ ["La mamá con el bebé (intereses)",56934,14,4067],
+ ["Anuncio de interacción — copia",57639,13,4434],
+ ["Combo Equilibrio — 90 días",102855,20,5143]
+];
+var HORA=[
+ [0,26650,16],[1,21681,13],[2,14871,10],[3,14749,7],[4,21967,13],[5,46904,23],
+ [6,97476,42],[7,113537,48],[8,129871,78],[9,162771,59],[10,163820,77],[11,163839,81],
+ [12,184258,87],[13,159255,80],[14,127880,64],[15,122417,72],[16,122130,50],[17,146614,72],
+ [18,115366,57],[19,122541,84],[20,107820,65],[21,100293,81],[22,62179,46],[23,33987,28]
+];
+var DOW=[["Jueves",279245,167,1672],["Sábado",335019,194,1727],["Miércoles",350210,196,1787],
+ ["Lunes",384483,192,2003],["Martes",408417,202,2022],["Domingo",333235,163,2044],["Viernes",292267,139,2103]];
+var EDAD=[["18–24",21545,18,1197],["25–34",191524,166,1154],["35–44",367091,212,1731],
+ ["45–54",495454,256,1935],["55–64",589524,276,2136],["65+",708019,320,2213]];
+var GEN=[["Mujeres",1934942,924,2094],["Hombres",369563,285,1297]];
+var PLC=[
+ ["Búsqueda",2625,7,375],["Perfil de Facebook",2583,3,861],["Video in-stream",15954,13,1227],
+ ["Marketplace",3310,2,1655],["Reels de Facebook",213146,128,1665],["Feed",1770398,940,1883],
+ ["Stories de Facebook",36421,17,2142],["Stories de Instagram",153152,66,2320],
+ ["Reels de Instagram",144840,62,2336],["Estados de WhatsApp",37620,15,2508]
+];
+var IDX=[
+ ["Impresiones",177.2],["Clics en enlace",329.9],["Conversaciones",182.0],["Clics",206.8],
+ ["Alcance",128.6],["Inversión",71.2],["CTR",10.8],["Frecuencia",21.2],["Leads",17.6],
+ ["Costo/lead",45.6],["CPM",-38.2],["CPC",-44.3],["Costo/conversación",-39.3],["Costo/clic enlace",-60.2]
+];
+var EMBUDO={
+ jun:[["Impresiones",48285],["Alcance",27037],["Clics",1835],["Clics en enlace",589],["Conversaciones",328],["Leads",34]],
+ jul:[["Impresiones",133849],["Alcance",61809],["Clics",5630],["Clics en enlace",2532],["Conversaciones",925],["Leads",40]]
+};
+
+/* ============ Tooltip ============ */
+function mkTip(host){var t=document.createElement('div');t.className='tip';host.appendChild(t);return t;}
+function showTip(t,host,x,y,html){
+  t.innerHTML=html;t.classList.add('on');
+  var w=host.clientWidth, tw=t.offsetWidth;
+  var lx=x-tw/2; if(lx<0)lx=0; if(lx+tw>w)lx=w-tw;
+  t.style.left=lx+'px'; t.style.top=(y-t.offsetHeight-12)+'px';
+}
+function hideTip(t){t.classList.remove('on');}
+
+/* ============ Tabla espejo ============ */
+function mkTable(id,head,rows){
+  var w=document.getElementById(id+'-tbl'); if(!w)return;
+  var h='<table><thead><tr>';
+  head.forEach(function(c,i){h+='<th'+(i?' class="num"':'')+'>'+c+'</th>';});
+  h+='</tr></thead><tbody>';
+  rows.forEach(function(r){
+    h+='<tr>';
+    r.forEach(function(c,i){h+='<td'+(i?' class="num"':' class="name"')+'>'+c+'</td>';});
+    h+='</tr>';
+  });
+  w.innerHTML=h+'</tbody></table>';
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.tblbtn'); if(!b)return;
+  var w=document.getElementById(b.dataset.t+'-tbl');
+  var open=w.classList.toggle('open');
+  b.textContent=open?'Ocultar datos ▴':'Ver datos ▾';
+});
+
+/* ============ Gráfico de líneas ============ */
+function lineChart(id,opts){
+  var host=document.getElementById(id); if(!host)return;
+  host.innerHTML=''; var tip=mkTip(host);
+  var W=host.clientWidth||760, H=opts.h||250;
+  var pl=opts.pl||58, pr=16, pt=14, pb=34;
+  var cw=W-pl-pr, ch=H-pt-pb;
+  var d=opts.data, n=d.length;
+  var mx=Math.max.apply(null,d.map(function(r){return r.v;}));
+  mx=mx*1.08||1;
+  var svg=E('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':opts.aria||opts.title});
+  var ink3=cssv('--ink3'), rule=cssv('--rule'), s1=cssv('--s1'), card=cssv('--card');
+
+  // grid
+  var G=4;
+  for(var i=0;i<=G;i++){
+    var y=pt+ch-(ch*i/G);
+    svg.appendChild(E('line',{x1:pl,x2:pl+cw,y1:y,y2:y,stroke:rule,'stroke-width':1}));
+    var t=E('text',{x:pl-9,y:y+4,'text-anchor':'end',fill:ink3,'font-size':10.5,'font-family':cssv('--sans')});
+    t.style.fontVariantNumeric='tabular-nums';
+    t.textContent=opts.fmtAxis(mx*i/G); svg.appendChild(t);
+  }
+  function X(i){return pl+(n===1?cw/2:cw*i/(n-1));}
+  function Y(v){return pt+ch-ch*v/mx;}
+
+  // separador de mes
+  var sep=-1;
+  for(var i=1;i<n;i++){ if(d[i].k.slice(0,2)!==d[i-1].k.slice(0,2)){sep=i;break;} }
+  if(sep>0){
+    var sx=(X(sep)+X(sep-1))/2;
+    svg.appendChild(E('line',{x1:sx,x2:sx,y1:pt,y2:pt+ch,stroke:cssv('--base'),'stroke-width':1}));
+    var lt=E('text',{x:sx+7,y:pt+12,fill:ink3,'font-size':10.5,'font-family':cssv('--sans')});
+    lt.textContent='julio'; svg.appendChild(lt);
+  }
+
+  // área + línea
+  var dd='',ar='';
+  d.forEach(function(r,i){ dd+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(r.v).toFixed(1)+' '; });
+  ar=dd+'L'+X(n-1).toFixed(1)+' '+(pt+ch)+' L'+X(0).toFixed(1)+' '+(pt+ch)+' Z';
+  var gid='g'+id;
+  var defs=E('defs'); var lg=E('linearGradient',{id:gid,x1:0,y1:0,x2:0,y2:1});
+  var st1=E('stop',{offset:'0%','stop-color':s1,'stop-opacity':.16});
+  var st2=E('stop',{offset:'100%','stop-color':s1,'stop-opacity':0});
+  lg.appendChild(st1);lg.appendChild(st2);defs.appendChild(lg);svg.appendChild(defs);
+  svg.appendChild(E('path',{d:ar,fill:'url(#'+gid+')'}));
+  svg.appendChild(E('path',{d:dd,fill:'none',stroke:s1,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'}));
+
+  // eje x
+  svg.appendChild(E('line',{x1:pl,x2:pl+cw,y1:pt+ch,y2:pt+ch,stroke:cssv('--base'),'stroke-width':1}));
+  var step=Math.ceil(n/7);
+  d.forEach(function(r,i){
+    if(i%step) return;
+    var t=E('text',{x:X(i),y:pt+ch+19,'text-anchor':'middle',fill:ink3,'font-size':10.5,'font-family':cssv('--sans')});
+    t.textContent=dlab(r.k); svg.appendChild(t);
+  });
+
+  // punto máximo etiquetado
+  var mi=0; d.forEach(function(r,i){if(r.v>d[mi].v)mi=i;});
+  svg.appendChild(E('circle',{cx:X(mi),cy:Y(d[mi].v),r:4,fill:s1,stroke:card,'stroke-width':2}));
+  var ml=E('text',{x:X(mi),y:Y(d[mi].v)-13,'text-anchor':mi>n-6?'end':'middle',fill:cssv('--ink'),'font-size':11.5,'font-weight':700,'font-family':cssv('--sans')});
+  ml.textContent=opts.fmt(d[mi].v); svg.appendChild(ml);
+
+  // capa de hover
+  var cross=E('line',{x1:0,x2:0,y1:pt,y2:pt+ch,stroke:cssv('--base'),'stroke-width':1,opacity:0});
+  var dot=E('circle',{r:5,fill:s1,stroke:card,'stroke-width':2,opacity:0});
+  svg.appendChild(cross);svg.appendChild(dot);
+  var hit=E('rect',{x:pl,y:pt,width:cw,height:ch,fill:'transparent',style:'cursor:crosshair'});
+  svg.appendChild(hit);
+  function move(ev){
+    var b=svg.getBoundingClientRect();
+    var px=(ev.clientX-b.left)*(W/b.width);
+    var i=Math.round((px-pl)/(cw/(n-1))); if(i<0)i=0; if(i>n-1)i=n-1;
+    var r=d[i];
+    cross.setAttribute('x1',X(i));cross.setAttribute('x2',X(i));cross.setAttribute('opacity',1);
+    dot.setAttribute('cx',X(i));dot.setAttribute('cy',Y(r.v));dot.setAttribute('opacity',1);
+    showTip(tip,host,X(i)*(b.width/W),Y(r.v)*(b.height/H),
+      '<b>'+dlab(r.k)+'</b><br><span class="k">'+opts.title+'</span> <b>'+opts.fmt(r.v)+'</b>'+(r.extra||''));
+  }
+  hit.addEventListener('mousemove',move);
+  hit.addEventListener('mouseleave',function(){cross.setAttribute('opacity',0);dot.setAttribute('opacity',0);hideTip(tip);});
+  host.appendChild(svg);
+  mkTable(id,['Fecha',opts.title],d.map(function(r){return [dlab(r.k),opts.fmt(r.v)];}));
+}
+
+/* ============ Barras horizontales ============ */
+function hbar(id,opts){
+  var host=document.getElementById(id); if(!host)return;
+  host.innerHTML=''; var tip=mkTip(host);
+  var rows=opts.rows, n=rows.length;
+  var lw=opts.lw||168, pr=opts.pr||78, bh=opts.bh||26, gap=10;
+  var W=host.clientWidth||700;
+  var pt=(opts.avg!==undefined)?22:0;
+  var H=pt+n*(bh+gap)+2;
+  var cw=W-lw-pr;
+  var mx=Math.max.apply(null,rows.map(function(r){return r.v;}))*1.02;
+  var svg=E('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':opts.aria||opts.title});
+  var ink=cssv('--ink'),ink2=cssv('--ink2'),ink3=cssv('--ink3');
+
+  rows.forEach(function(r,i){
+    var y=pt+i*(bh+gap), w=Math.max(2,cw*r.v/mx);
+    var lt=E('text',{x:lw-12,y:y+bh/2+4,'text-anchor':'end',fill:ink2,'font-size':12,'font-family':cssv('--sans')});
+    lt.textContent=r.l; svg.appendChild(lt);
+    var g=E('g',{style:'cursor:default'});
+    g.appendChild(E('rect',{x:lw,y:y,width:w,height:bh,rx:3,fill:r.c||cssv('--s1')}));
+    var vt=E('text',{x:lw+w+10,y:y+bh/2+4,fill:ink,'font-size':12,'font-weight':600,'font-family':cssv('--sans')});
+    vt.style.fontVariantNumeric='tabular-nums';
+    vt.textContent=opts.fmt(r.v); g.appendChild(vt);
+    if(r.sub){
+      var st=E('text',{x:lw+w+10,y:y+bh/2+4,fill:ink3,'font-size':11,'font-family':cssv('--sans')});
+      st.style.fontVariantNumeric='tabular-nums';
+      st.setAttribute('dx',(opts.subdx||58)); st.textContent=r.sub; g.appendChild(st);
+    }
+    var ht=E('rect',{x:lw,y:y-4,width:cw+pr,height:bh+8,fill:'transparent'});
+    g.appendChild(ht);
+    g.addEventListener('mousemove',function(){
+      var b=svg.getBoundingClientRect();
+      showTip(tip,host,(lw+w/2)*(b.width/W),y*(b.height/H),
+        '<b>'+r.l+'</b><br>'+(r.tip||('<span class="k">'+opts.title+'</span> <b>'+opts.fmt(r.v)+'</b>')));
+    });
+    g.addEventListener('mouseleave',function(){hideTip(tip);});
+    svg.appendChild(g);
+  });
+
+  /* referencia dibujada encima de las barras */
+  if(opts.avg!==undefined){
+    var ax=lw+cw*opts.avg/mx;
+    svg.appendChild(E('line',{x1:ax,x2:ax,y1:pt-6,y2:pt+n*(bh+gap)-gap+3,
+      stroke:cssv('--ink'),'stroke-width':1,opacity:.34}));
+    var at=E('text',{x:ax,y:11,'text-anchor':ax>W-150?'end':'middle',fill:ink3,'font-size':10.5,'font-family':cssv('--sans')});
+    at.textContent=opts.avgLabel; svg.appendChild(at);
+  }
+  host.appendChild(svg);
+  mkTable(id,opts.head||['Concepto',opts.title],rows.map(function(r){return r.row||[r.l,opts.fmt(r.v)];}));
+}
+
+/* ============ Barras verticales ============ */
+function vbar(id,opts){
+  var host=document.getElementById(id); if(!host)return;
+  host.innerHTML=''; var tip=mkTip(host);
+  var rows=opts.rows,n=rows.length;
+  var W=host.clientWidth||760,H=opts.h||220;
+  var pl=opts.pl||52,pr=12,pt=16,pb=opts.pb||34;
+  var cw=W-pl-pr,ch=H-pt-pb;
+  var mx=Math.max.apply(null,rows.map(function(r){return r.v;}))*1.1||1;
+  var svg=E('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':opts.aria||opts.title});
+  var ink=cssv('--ink'),ink3=cssv('--ink3'),rule=cssv('--rule');
+  var G=4;
+  for(var i=0;i<=G;i++){
+    var y=pt+ch-(ch*i/G);
+    svg.appendChild(E('line',{x1:pl,x2:pl+cw,y1:y,y2:y,stroke:rule,'stroke-width':1}));
+    var t=E('text',{x:pl-9,y:y+4,'text-anchor':'end',fill:ink3,'font-size':10.5,'font-family':cssv('--sans')});
+    t.style.fontVariantNumeric='tabular-nums';
+    t.textContent=opts.fmtAxis(mx*i/G); svg.appendChild(t);
+  }
+  var slot=cw/n, bw=Math.min(opts.bw||30,slot-2);
+  rows.forEach(function(r,i){
+    var x=pl+slot*i+(slot-bw)/2, h=Math.max(1,ch*r.v/mx), y=pt+ch-h;
+    var g=E('g');
+    g.appendChild(E('rect',{x:x,y:y,width:bw,height:h,rx:3,fill:r.c||cssv('--s1')}));
+    var lt=E('text',{x:x+bw/2,y:pt+ch+18,'text-anchor':'middle',fill:ink3,'font-size':10.5,'font-family':cssv('--sans')});
+    lt.textContent=r.l; svg.appendChild(lt);
+    if(r.hi){
+      var vt=E('text',{x:x+bw/2,y:y-7,'text-anchor':'middle',fill:ink,'font-size':11,'font-weight':700,'font-family':cssv('--sans')});
+      vt.textContent=opts.fmt(r.v); g.appendChild(vt);
+    }
+    var ht=E('rect',{x:pl+slot*i,y:pt,width:slot,height:ch,fill:'transparent'});
+    g.appendChild(ht);
+    g.addEventListener('mousemove',function(){
+      var b=svg.getBoundingClientRect();
+      showTip(tip,host,(x+bw/2)*(b.width/W),y*(b.height/H),
+        '<b>'+(r.full||r.l)+'</b><br>'+(r.tip||('<span class="k">'+opts.title+'</span> <b>'+opts.fmt(r.v)+'</b>')));
+    });
+    g.addEventListener('mouseleave',function(){hideTip(tip);});
+    svg.appendChild(g);
+  });
+  svg.appendChild(E('line',{x1:pl,x2:pl+cw,y1:pt+ch,y2:pt+ch,stroke:cssv('--base'),'stroke-width':1}));
+  host.appendChild(svg);
+  mkTable(id,opts.head||['Concepto',opts.title],rows.map(function(r){return r.row||[r.full||r.l,opts.fmt(r.v)];}));
+}
+
+/* ============ Barras divergentes (índice) ============ */
+function dbar(id,rows){
+  var host=document.getElementById(id); if(!host)return;
+  host.innerHTML=''; var tip=mkTip(host);
+  var n=rows.length, lw=176, bh=22, gap=8;
+  var W=host.clientWidth||700, H=n*(bh+gap)+24;
+  var cw=W-lw-58;
+  var mx=Math.max.apply(null,rows.map(function(r){return Math.abs(r[1]);}))*1.06;
+  var zero=lw+cw*0.30;
+  var negW=zero-lw, posW=W-58-zero;
+  var svg=E('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Variación porcentual de cada indicador entre junio y julio'});
+  var ink=cssv('--ink'),ink2=cssv('--ink2'),ink3=cssv('--ink3');
+  svg.appendChild(E('line',{x1:zero,x2:zero,y1:0,y2:n*(bh+gap)-gap+2,stroke:cssv('--base'),'stroke-width':1}));
+  rows.forEach(function(r,i){
+    var y=i*(bh+gap), v=r[1], pos=v>=0;
+    var w=Math.max(2,(pos?posW:negW)*Math.abs(v)/mx);
+    var x=pos?zero:zero-w;
+    var lt=E('text',{x:lw-12,y:y+bh/2+4,'text-anchor':'end',fill:ink2,'font-size':12,'font-family':cssv('--sans')});
+    lt.textContent=r[0]; svg.appendChild(lt);
+    var g=E('g');
+    g.appendChild(E('rect',{x:x,y:y,width:w,height:bh,rx:3,fill:pos?cssv('--s1'):cssv('--s2')}));
+    var vt=E('text',{x:pos?x+w+9:x-9,y:y+bh/2+4,'text-anchor':pos?'start':'end',fill:ink,'font-size':11.5,'font-weight':600,'font-family':cssv('--sans')});
+    vt.style.fontVariantNumeric='tabular-nums';
+    vt.textContent=(pos?'+':'−')+nf(Math.abs(v),1)+'%'; g.appendChild(vt);
+    var ht=E('rect',{x:lw,y:y-3,width:W-lw,height:bh+6,fill:'transparent'});
+    g.appendChild(ht);
+    g.addEventListener('mousemove',function(){
+      var b=svg.getBoundingClientRect();
+      showTip(tip,host,(x+w/2)*(b.width/W),y*(b.height/H),
+        '<b>'+r[0]+'</b><br><span class="k">Índice jul</span> <b>'+nf(100+v,1)+'</b> (jun = 100)');
+    });
+    g.addEventListener('mouseleave',function(){hideTip(tip);});
+    svg.appendChild(g);
+  });
+  var z=E('text',{x:zero,y:n*(bh+gap)+15,'text-anchor':'middle',fill:ink3,'font-size':10.5,'font-family':cssv('--sans')});
+  z.textContent='junio = 100'; svg.appendChild(z);
+  host.appendChild(svg);
+  mkTable(id,['Indicador','Índice julio (jun = 100)','Variación'],
+    rows.map(function(r){return [r[0],nf(100+r[1],1),(r[1]>=0?'+':'−')+nf(Math.abs(r[1]),1)+'%'];}));
+}
+
+/* ============ Embudo ============ */
+function drawFunnel(){
+  var host=document.getElementById('funnels'); if(!host)return;
+  var ramp=['--o1','--o2','--o3','--o4','--o5','--o6'].map(cssv);
+  var html='';
+  [['jun','Junio 2026','--s2'],['jul','Julio 2026','--s1']].forEach(function(m){
+    var d=EMBUDO[m[0]], mx=d[0][1];
+    html+='<h3 style="margin-top:'+(m[0]==='jun'?'8px':'46px')+'">'+m[1]+'</h3><div class="fn">';
+    d.forEach(function(s,i){
+      var w=Math.max(2.2,100*s[1]/mx);
+      var inside=w>26;
+      html+='<div class="fnrow"><div class="fnlbl">'+s[0]+'</div><div class="fnbarwrap">'+
+        '<div class="fnbar" style="width:'+w+'%;background:'+ramp[i]+'">'+
+        (inside?'<span style="color:'+(i>=3?'#fff':cssv('--ink'))+'">'+nf(s[1])+'</span>':'')+'</div>'+
+        (inside?'':'<span class="fnout">'+nf(s[1])+'</span>')+'</div></div>';
+      if(i<d.length-1){
+        var r=d[i+1][1]/s[1]*100;
+        var bad=(i===4 && r<6);
+        html+='<div class="fnstep"><div class="r'+(bad?' bad':'')+'">↓ <b>'+pc(r,1)+'</b> '+
+          (i===0?'de las impresiones fueron personas distintas':
+           i===1?'de las personas alcanzadas hizo clic':
+           i===2?'de los clics fue a un enlace':
+           i===3?'de los clics en enlace abrió conversación':
+           'de las conversaciones calificó como lead')+'</div></div>';
+      }
+    });
+    html+='</div>';
+    if(m[0]==='jul'){
+      html+='<div class="fnrow" style="margin-top:14px"><div class="fnlbl" style="color:var(--ink);font-weight:600">Compras</div>'+
+        '<div class="fnbarwrap"><span class="fnout" style="padding-left:0">21 &nbsp;<span style="color:var(--ink3);font-weight:400">· 52,5% de los leads · $71.638 c/u</span></span></div></div>';
+    }
+  });
+  host.innerHTML=html;
+}
+
+/* ============ Render ============ */
+function redraw(){
+  var s1=cssv('--s1'), o6=cssv('--emph');
+
+  lineChart('c-spend',{title:'Inversión',h:250,
+    data:DIA.map(function(r){return {k:r[0],v:r[1]};}),
+    fmt:cop, fmtAxis:function(v){return '$'+nf(Math.round(v/1000))+'k';},
+    aria:'Inversión diaria del 8 de junio al 28 de julio de 2026'});
+
+  lineChart('c-imp',{title:'Impresiones',h:250,
+    data:DIA.map(function(r){return {k:r[0],v:r[2]};}),
+    fmt:function(v){return nf(v);}, fmtAxis:function(v){return nf(Math.round(v/1000))+'k';},
+    aria:'Impresiones diarias del 8 de junio al 28 de julio de 2026'});
+
+  lineChart('c-ctr',{title:'CTR',h:230,
+    data:DIA.filter(function(r){return r[2]>200;}).map(function(r){return {k:r[0],v:r[3]/r[2]*100};}),
+    fmt:function(v){return pc(v);}, fmtAxis:function(v){return nf(v,1)+'%';},
+    aria:'CTR diario del 8 de junio al 28 de julio de 2026'});
+
+  lineChart('c-conv',{title:'Conversaciones',h:250,
+    data:DIA.map(function(r){return {k:r[0],v:r[4]};}),
+    fmt:function(v){return nf(v);}, fmtAxis:function(v){return nf(Math.round(v));},
+    aria:'Conversaciones de WhatsApp iniciadas por día'});
+
+  function conv(n){return nf(n)+(n===1?' conv.':' conv.');}
+  function mk(r,lbl){return {l:r[0],v:r[3],c:r[3]<1902?o6:s1,sub:conv(r[2]),
+      tip:'<span class="k">Inversión</span> <b>'+cop(r[1])+'</b><br><span class="k">Conversaciones</span> <b>'+nf(r[2])+'</b><br><span class="k">Costo/conv.</span> <b>'+cop(r[3])+'</b>',
+      row:[r[0],cop(r[1]),nf(r[2]),cop(r[3])]};}
+
+  hbar('c-camp',{title:'Costo por conversación',lw:186,pr:150,subdx:60,avg:1902,avgLabel:'promedio de la cuenta · $1.902',
+    fmt:cop,head:['Campaña','Inversión','Conversaciones','Costo/conversación'],
+    rows:CAMP.map(mk)});
+
+  hbar('c-adset',{title:'Costo por conversación',lw:206,pr:150,subdx:60,avg:1902,avgLabel:'promedio de la cuenta · $1.902',
+    fmt:cop,head:['Conjunto','Inversión','Conversaciones','Costo/conversación'],
+    rows:ADSET.map(mk)});
+
+  hbar('c-ads',{title:'Costo por conversación',lw:212,pr:150,subdx:60,avg:1902,avgLabel:'promedio de la cuenta · $1.902',
+    fmt:cop,head:['Anuncio','Inversión','Conversaciones','Costo/conversación'],
+    rows:ADS.map(mk)});
+
+  vbar('c-hour',{title:'Conversaciones',h:240,bw:22,fmt:function(v){return nf(v);},
+    fmtAxis:function(v){return nf(Math.round(v));},
+    head:['Hora','Conversaciones','Inversión','Costo/conversación'],
+    aria:'Conversaciones por hora del día; las horas más eficientes se marcan en tono oscuro',
+    rows:HORA.map(function(r){var cc=r[1]/r[2];return {l:(r[0]%3===0?r[0]+'h':''),full:r[0]+':00 – '+r[0]+':59',v:r[2],
+      c:cc<1500?o6:s1, hi:(r[0]===21||r[0]===12),
+      tip:'<span class="k">Conversaciones</span> <b>'+nf(r[2])+'</b><br><span class="k">Inversión</span> <b>'+cop(r[1])+'</b><br><span class="k">Costo/conv.</span> <b>'+cop(cc)+'</b>',
+      row:[r[0]+':00 – '+r[0]+':59',nf(r[2]),cop(r[1]),cop(cc)]};})});
+
+  var totA=2382876;
+
+  hbar('c-dow',{title:'Costo por conversación',lw:96,bh:24,pr:150,subdx:60,fmt:cop,
+    avg:1902,avgLabel:'promedio de la cuenta · $1.902',
+    head:['Día','Inversión','Conversaciones','Costo/conversación'],
+    rows:DOW.map(function(r){return {l:r[0],v:r[3],c:r[3]<1902?o6:s1,sub:nf(r[2])+' conv.',
+      tip:'<span class="k">Inversión</span> <b>'+cop(r[1])+'</b><br><span class="k">Conversaciones</span> <b>'+nf(r[2])+'</b><br><span class="k">Costo/conv.</span> <b>'+cop(r[3])+'</b>',
+      row:[r[0],cop(r[1]),nf(r[2]),cop(r[3])]};})});
+
+  hbar('c-age',{title:'Costo por conversación',lw:60,bh:24,pr:146,subdx:58,fmt:cop,
+    head:['Edad','% del presupuesto','Conversaciones','Costo/conversación'],
+    rows:EDAD.map(function(r,i){return {l:r[0],v:r[3],c:cssv(['--o1','--o2','--o3','--o4','--o5','--o6'][i]),
+      sub:pc(r[1]/totA*100,1)+' del gasto',
+      tip:'<span class="k">Inversión</span> <b>'+cop(r[1])+'</b> ('+pc(r[1]/totA*100,1)+')<br><span class="k">Conversaciones</span> <b>'+nf(r[2])+'</b><br><span class="k">Costo/conv.</span> <b>'+cop(r[3])+'</b>',
+      row:[r[0],pc(r[1]/totA*100,1),nf(r[2]),cop(r[3])]};})});
+
+  hbar('c-gen',{title:'Costo por conversación',lw:74,bh:26,pr:146,subdx:58,fmt:cop,
+    head:['Género','% del presupuesto','Conversaciones','Costo/conversación'],
+    rows:GEN.map(function(r){return {l:r[0],v:r[3],c:r[3]<1902?o6:s1,
+      sub:pc(r[1]/totA*100,1)+' del gasto',
+      tip:'<span class="k">Inversión</span> <b>'+cop(r[1])+'</b> ('+pc(r[1]/totA*100,1)+')<br><span class="k">Conversaciones</span> <b>'+nf(r[2])+'</b><br><span class="k">Costo/conv.</span> <b>'+cop(r[3])+'</b>',
+      row:[r[0],pc(r[1]/totA*100,1),nf(r[2]),cop(r[3])]};})});
+
+  hbar('c-plc',{title:'Costo por conversación',lw:172,bh:24,pr:158,subdx:60,fmt:cop,
+    avg:1902,avgLabel:'promedio de la cuenta · $1.902',
+    head:['Ubicación','Inversión','% del gasto','Conversaciones','Costo/conversación'],
+    rows:PLC.map(function(r){return {l:r[0],v:r[3],c:r[3]<1902?o6:s1,sub:nf(r[2])+' conv.',
+      tip:'<span class="k">Inversión</span> <b>'+cop(r[1])+'</b> ('+pc(r[1]/totA*100,1)+')<br><span class="k">Conversaciones</span> <b>'+nf(r[2])+'</b><br><span class="k">Costo/conv.</span> <b>'+cop(r[3])+'</b>',
+      row:[r[0],cop(r[1]),pc(r[1]/totA*100,1),nf(r[2]),cop(r[3])]};})});
+
+  dbar('c-idx',IDX);
+  drawFunnel();
+}
+redraw();
+var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(redraw,180);});
+</script>
+</body>
+</html>
