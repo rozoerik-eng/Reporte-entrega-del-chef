@@ -3,7 +3,7 @@
 Informes de desempeño publicitario para **Entrega del Chef**, construidos con datos
 extraídos directamente de la API de Meta Ads (cuenta `1019117777447861`, COP).
 
-## Informe ejecutivo — Junio–Julio 2026
+## Informe ejecutivo — Mayo–Julio 2026
 
 **Archivo:** [`index.html`](index.html)
 
@@ -14,7 +14,7 @@ en cualquier navegador.
 **Contenido:** portada · resumen ejecutivo · objetivos de las campañas · inversión ·
 alcance y reconocimiento · rendimiento del tráfico · conversiones · rendimiento por
 campaña, conjunto y anuncio · embudo · comparación mensual · hallazgos ·
-recomendaciones · plan de agosto.
+recomendaciones · plan de acción.
 
 **Características**
 
@@ -32,8 +32,10 @@ recomendaciones · plan de agosto.
 
 ## Nota sobre los datos
 
-Ventana de atribución de 1 día por visualización y 7 días por clic. El período con
-entrega efectiva va del 8 de junio al 28 de julio de 2026. Las cifras de alcance no
+Ventana de atribución de 1 día por visualización y 7 días por clic. El período
+analizado es el trimestre mayo–julio 2026; mayo no registra actividad porque la
+primera campaña de la cuenta se lanzó el 8 de junio, de modo que la actividad
+efectiva con entrega va del 8 de junio al 28 de julio de 2026. Las cifras de alcance no
 son aditivas entre meses ni entre campañas. **No se reporta ROAS**: la cuenta no tiene
 configurado el valor de conversión, por lo que Meta registra las compras sin monto
 asociado.
